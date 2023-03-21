@@ -4,6 +4,17 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  box-sizing: border-box;
+}
+
+.incridients {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item__bun {
+  margin-left: 32px;
 }
 
 .list {
@@ -13,7 +24,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 656px;
+  height: 464px;
+  overflow-y: auto;
+  overflow: overlay;
+  scrollbar-gutter: stable;
+  position: relative;
 }
 
 .list__item {
@@ -23,19 +38,12 @@
   gap: 8px;
 }
 
-.list_available {
-  overflow-y: auto;
-  overflow: overlay;
-  scrollbar-gutter: stable;
-  position: relative;
-}
-
-.list_available::-webkit-scrollbar {
+.list::-webkit-scrollbar {
   width: 8px;
   overflow: visible;
 }
 
-.list_available::-webkit-scrollbar-thumb {
+.list::-webkit-scrollbar-thumb {
   background-color: #8585ad;
 }
 
