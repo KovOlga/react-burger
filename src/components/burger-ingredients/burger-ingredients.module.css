@@ -6,6 +6,19 @@
 
 .ingredients__list {
   margin-top: 40px;
+  overflow-y: auto;
+  overflow: overlay;
+  scrollbar-gutter: stable;
+  position: relative;
+  height: 716px;
+}
+.ingredients__list::-webkit-scrollbar {
+  width: 8px;
+  overflow: visible;
+}
+
+.ingredients__list::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
 }
 
 .list {
