@@ -1,13 +1,15 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = React.useState("Булки");
 
   return (
-    <>
-      <h1>Соберите бургер</h1>
+    <section className={styles.burger__ingredients}>
+      <h1 className="text text_type_main-large">Соберите бургер</h1>
+
       <div style={{ display: "flex" }}>
         <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
           Булки
@@ -23,7 +25,21 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-    </>
+
+      <div className={styles.ingredients__list}>
+        <h2 className="text text_type_main-medium">Булки</h2>
+        <ul className={`${styles.list} pl-4 pr-4`}>
+          {data.map((item) => {
+            const { id, ...itemProps } = item;
+            return <BurgerIngredientsItem key={item._id} {...itemProps} />;
+          })}
+        </ul>
+        <h2 className="text text_type_main-medium">Соусы</h2>
+        <ul className={`${styles.list} pl-4 pr-4`}></ul>
+        <h2 className="text text_type_main-medium">Начинки</h2>
+        <ul className={`${styles.list} pl-4 pr-4`}></ul>
+      </div>
+    </section>
   );
 };
 
