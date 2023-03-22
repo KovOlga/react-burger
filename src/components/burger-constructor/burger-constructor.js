@@ -21,19 +21,21 @@ const BurgerConstructor = ({ data }) => {
         />
 
         <ul className={styles.list}>
-          {data.map((item) => {
-            return (
-              <li key={item._id} className={styles.list__item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  key={item._id}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                />
-              </li>
-            );
-          })}
+          {data
+            .filter((item) => item.type !== "bun")
+            .map((item) => {
+              return (
+                <li key={item._id} className={styles.list__item}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    key={item._id}
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image}
+                  />
+                </li>
+              );
+            })}
         </ul>
 
         <ConstructorElement
