@@ -9,13 +9,15 @@ const AppHeader = () => {
     <header className={`p-4 ${styles.header}`}>
       <nav className={`${styles.nav} ${styles.nav_type_links}`}>
         <ul className={styles.list}>
-          <li className={styles.list__item}>
+          <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <BurgerIcon type="primary" />
             <p className="text text_type_main-default">Конструктор</p>
           </li>
-          <li className={styles.list__item}>
+          <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ListIcon type="secondary" />
-            <p className="text text_type_main-default">Лента заказов</p>
+            <p className="text text_type_main-default text_color_inactive">
+              Лента заказов
+            </p>
           </li>
         </ul>
       </nav>
@@ -24,9 +26,11 @@ const AppHeader = () => {
 
       <nav className={`${styles.nav} ${styles.nav_type_lk}`}>
         <ul className={styles.list}>
-          <li className={styles.list__item}>
+          <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default">Личный кабинет</p>
+            <p className="text text_type_main-default text_color_inactive">
+              Личный кабинет
+            </p>
           </li>
         </ul>
       </nav>

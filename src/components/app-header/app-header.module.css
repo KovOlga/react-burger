@@ -10,7 +10,6 @@
 }
 
 .nav {
-  padding: 20px;
   box-sizing: border-box;
   display: block;
 }
@@ -34,7 +33,6 @@
 }
 
 .list__item {
-  padding: 0;
   margin: 0;
   list-style-type: none;
   display: flex;
