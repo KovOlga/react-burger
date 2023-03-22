@@ -1,9 +1,9 @@
-.burger__ingredients {
+.section__ingredients {
   max-width: 600px;
   padding-top: 40px;
 }
 
-.ingredients__list {
+.list__total {
   margin-top: 40px;
   overflow-y: auto;
   overflow: overlay;
@@ -11,16 +11,16 @@
   position: relative;
   height: 716px;
 }
-.ingredients__list::-webkit-scrollbar {
+.list__total::-webkit-scrollbar {
   width: 8px;
   overflow: visible;
 }
 
-.ingredients__list::-webkit-scrollbar-thumb {
+.list__total::-webkit-scrollbar-thumb {
   background-color: #8585ad;
 }
 
-.list {
+.sublist__type {
   padding-top: 24px;
   padding-bottom: 40px;
   margin: 0;

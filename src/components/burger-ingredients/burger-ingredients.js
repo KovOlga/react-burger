@@ -11,7 +11,7 @@ const BurgerIngredients = ({ data }) => {
   const mainList = data.filter((item) => item.type === "main");
 
   return (
-    <section className={styles.burger__ingredients}>
+    <section className={styles.section__ingredients}>
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
       <div style={{ display: "flex" }}>
@@ -30,23 +30,23 @@ const BurgerIngredients = ({ data }) => {
         </Tab>
       </div>
 
-      <div className={styles.ingredients__list}>
+      <div className={styles.list__total}>
         <h2 className="text text_type_main-medium">Булки</h2>
-        <ul className={`${styles.list} pl-4 pr-4`}>
+        <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {bunList.map((item) => {
             const { id, ...itemProps } = item;
             return <BurgerIngredientsItem key={item._id} {...itemProps} />;
           })}
         </ul>
         <h2 className="text text_type_main-medium">Соусы</h2>
-        <ul className={`${styles.list} pl-4 pr-4`}>
+        <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {sauceList.map((item) => {
             const { id, ...itemProps } = item;
             return <BurgerIngredientsItem key={item._id} {...itemProps} />;
           })}
         </ul>
         <h2 className="text text_type_main-medium">Начинки</h2>
-        <ul className={`${styles.list} pl-4 pr-4`}>
+        <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {mainList.map((item) => {
             const { id, ...itemProps } = item;
             return <BurgerIngredientsItem key={item._id} {...itemProps} />;
