@@ -3,6 +3,11 @@
   padding-top: 40px;
 }
 
+.tabs {
+  display: flex;
+  flex-direction: row;
+}
+
 .list__total {
   margin-top: 40px;
   overflow-y: auto;

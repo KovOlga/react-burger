@@ -4,15 +4,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
-
-const ingridients = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-});
+import ingredientType from "../../utils/types";
 
 const BurgerConstructor = ({ data }) => {
   return (
@@ -69,7 +61,7 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingridients),
+  data: PropTypes.arrayOf(ingredientType),
 };
 
 export default BurgerConstructor;

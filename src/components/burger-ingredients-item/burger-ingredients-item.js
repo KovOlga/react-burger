@@ -1,9 +1,11 @@
 import styles from "./burger-ingredients-item.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import ingredientType from "../../utils/types";
 
-const BurgerIngredientsItem = (props) => {
-  const { name, image, price } = props;
+const BurgerIngredientsItem = ({ ingredient }) => {
+  const { name, image, price } = ingredient;
 
   return (
     <li className={styles.burger__item}>
