@@ -2,7 +2,7 @@ import { useEffect, createRef } from "react";
 import styles from "./modal-overlay.module.css";
 import Modal from "../modal/modal";
 
-const ModalOverlay = ({ onClose }) => {
+const ModalOverlay = ({ onClose, children }) => {
   const modalContainer = createRef();
 
   useEffect(() => {
@@ -29,7 +29,9 @@ const ModalOverlay = ({ onClose }) => {
 
   return (
     <div className={styles.overlay}>
-      <Modal ref={modalContainer} onClose={onClose} />
+      <Modal ref={modalContainer} onClose={onClose}>
+        {children}
+      </Modal>
     </div>
   );
 };

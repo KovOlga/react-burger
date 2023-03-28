@@ -6,6 +6,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
+import OrderDetails from "../order-details/order-details";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -58,7 +59,12 @@ const App = () => {
         )}
       </main>
       {popupIsOpen &&
-        createPortal(<ModalOverlay onClose={togglePopup} />, modalRoot)}
+        createPortal(
+          <ModalOverlay onClose={togglePopup}>
+            <OrderDetails />
+          </ModalOverlay>,
+          modalRoot
+        )}
     </>
   );
 };
