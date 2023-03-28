@@ -1,16 +1,42 @@
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { forwardRef } from "react";
+import { useRef, useEffect } from "react";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 
-const Modal = forwardRef(({ onClose, children }, ref) => {
+const Modal = ({ onClose, children }) => {
+  const modalContainer = useRef();
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("mousedown", handleOverlayClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+      document.removeEventListener("mousedown", handleOverlayClose);
+    };
+  }, []);
+
+  const handleEscClose = (evt) => {
+    if (evt.key === "Escape") {
+      onClose();
+    }
+  };
+
+  const handleOverlayClose = (evt) => {
+    if (!modalContainer.current.contains(evt.target)) {
+      onClose();
+    }
+  };
   return (
-    <div ref={ref} className={styles.modal}>
-      <div onClick={onClose} className={styles.close_icon}>
-        <CloseIcon type="primary" />
+    <ModalOverlay>
+      <div ref={modalContainer} className={styles.modal}>
+        <div onClick={onClose} className={styles.close_icon}>
+          <CloseIcon type="primary" />
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    </ModalOverlay>
   );
-});
+};
 
 export default Modal;

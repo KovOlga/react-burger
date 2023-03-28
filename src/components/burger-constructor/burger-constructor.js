@@ -7,12 +7,7 @@ import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
 
 const BurgerConstructor = ({ data, onOpenPopup }) => {
-  // useEffect(() => {
-  //   console.log("render");
-  // });
-
   const onButtonClick = () => {
-    console.log("confirm");
     onOpenPopup();
   };
 
