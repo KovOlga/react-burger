@@ -7,6 +7,8 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
 
+const modalRoot = document.getElementById("react-modals");
+
 const App = () => {
   const [popupIsOpen, setPopup] = useState(false);
 
@@ -56,7 +58,7 @@ const App = () => {
         )}
       </main>
       {popupIsOpen &&
-        createPortal(<ModalOverlay onClose={togglePopup} />, document.body)}
+        createPortal(<ModalOverlay onClose={togglePopup} />, modalRoot)}
     </>
   );
 };
