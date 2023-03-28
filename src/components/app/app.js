@@ -4,8 +4,21 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import { createPortal } from "react-dom";
+
+// const node = document.createElement("div");
+// node.setAttribute("id", "react-modals");
+// document.body.appendChild(node);
+// const modalRoot = document.getElementById("react-modals");
 
 const App = () => {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
   const baseUrl = "https://norma.nomoreparties.space/api/ingredients";
   const getResponse = (res) => {
     if (res.ok) {
@@ -47,6 +60,10 @@ const App = () => {
           </>
         )}
       </main>
+      <footer>
+        <button onClick={toggleModal}>vrvrvr</button>
+        {modal && createPortal(<ModalOverlay />, document.body)}
+      </footer>
     </>
   );
 };
