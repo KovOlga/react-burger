@@ -5,8 +5,18 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
+import { useState, useEffect } from "react";
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = ({ data, onOpenPopup }) => {
+  // useEffect(() => {
+  //   console.log("render");
+  // });
+
+  const onButtonClick = () => {
+    console.log("confirm");
+    onOpenPopup();
+  };
+
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div className={styles.incridients}>
@@ -54,7 +64,12 @@ const BurgerConstructor = ({ data }) => {
           <p className="text text_type_digits-medium">610</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          onClick={onButtonClick}
+          htmlType="button"
+          type="primary"
+          size="large"
+        >
           Оформить заказ
         </Button>
       </div>

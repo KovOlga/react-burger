@@ -1,17 +1,11 @@
-import { createPortal } from "react-dom";
 import { useState } from "react";
 import styles from "./modal-overlay.module.css";
 import Modal from "../modal/modal";
 
-const node = document.createElement("div");
-document.body.appendChild(node);
-node.setAttribute("id", "react-modals");
-const modalRoot = document.getElementById("react-modals");
-
-const ModalOverlay = () => {
+const ModalOverlay = ({ onClose }) => {
   return (
     <div className={styles.overlay}>
-      <Modal />
+      <Modal onClose={onClose} />
     </div>
   );
 };
