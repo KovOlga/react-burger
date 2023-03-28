@@ -53,7 +53,7 @@ const App = () => {
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && state.data.length && (
           <>
-            <BurgerIngredients data={state.data} />
+            <BurgerIngredients data={state.data} onOpenPopup={togglePopup} />
             <BurgerConstructor data={state.data} onOpenPopup={togglePopup} />
           </>
         )}

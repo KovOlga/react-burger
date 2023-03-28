@@ -5,7 +5,7 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, onOpenPopup }) => {
   const [current, setCurrent] = React.useState("Булки");
 
   const bunList = data.filter((item) => item.type === "bun");
@@ -36,19 +36,37 @@ const BurgerIngredients = ({ data }) => {
         <h2 className="text text_type_main-medium">Булки</h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {bunList.map((item) => {
-            return <BurgerIngredientsItem key={item._id} ingredient={item} />;
+            return (
+              <BurgerIngredientsItem
+                key={item._id}
+                onIngredientClick={onOpenPopup}
+                ingredient={item}
+              />
+            );
           })}
         </ul>
         <h2 className="text text_type_main-medium">Соусы</h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {sauceList.map((item) => {
-            return <BurgerIngredientsItem key={item._id} ingredient={item} />;
+            return (
+              <BurgerIngredientsItem
+                key={item._id}
+                onIngredientClick={onOpenPopup}
+                ingredient={item}
+              />
+            );
           })}
         </ul>
         <h2 className="text text_type_main-medium">Начинки</h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {mainList.map((item) => {
-            return <BurgerIngredientsItem key={item._id} ingredient={item} />;
+            return (
+              <BurgerIngredientsItem
+                key={item._id}
+                onIngredientClick={onOpenPopup}
+                ingredient={item}
+              />
+            );
           })}
         </ul>
       </div>
