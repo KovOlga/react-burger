@@ -5,7 +5,6 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
-import { useState, useEffect } from "react";
 
 const BurgerConstructor = ({ data, onOpenPopup }) => {
   // useEffect(() => {
