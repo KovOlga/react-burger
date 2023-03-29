@@ -1,7 +1,8 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
+import { memo } from "react";
 
-const OrderDetails = () => {
+const OrderDetails = memo(() => {
   return (
     <div className={styles.container}>
       <h1 className={`text text_type_digits-large ${styles.identificator}`}>
@@ -17,5 +18,5 @@ const OrderDetails = () => {
       </p>
     </div>
   );
-};
+});
 export default OrderDetails;

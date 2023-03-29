@@ -4,8 +4,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
+import { memo } from "react";
 
-const BurgerIngredients = ({ data, onOpenIngredientInfo }) => {
+const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   const [current, setCurrent] = React.useState("Булки");
 
   const bunList = data.filter((item) => item.type === "bun");
@@ -72,7 +73,7 @@ const BurgerIngredients = ({ data, onOpenIngredientInfo }) => {
       </div>
     </section>
   );
-};
+});
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,

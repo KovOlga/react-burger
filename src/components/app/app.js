@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, forwardRef, createRef } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -46,11 +46,22 @@ const App = () => {
       });
   };
 
-  const [currentUngredient, setIngredient] = useState(null);
+  const [currentIngredient, setIngredient] = useState(null);
 
-  const changeIngredient = (item) => {
+  // const currentIngRef = useRef();
+
+  const openIngredientInfo = (item) => {
+    // currentIngRef.current = item;
     setIngredient(item);
     togglePopup();
+  };
+
+  const [confirm, setConfirm] = useState(false);
+
+  const openConfirm = () => {
+    setConfirm(true);
+    // togglePopup();
+    console.log("confirm");
   };
 
   return (
@@ -63,12 +74,12 @@ const App = () => {
           <>
             <BurgerIngredients
               data={state.data}
-              onOpenIngredientInfo={changeIngredient}
+              onOpenIngredientInfo={openIngredientInfo}
             />
             <BurgerConstructor
               data={state.data}
-              onOpenIngredientInfo={changeIngredient}
-              onOpenConfirm={togglePopup}
+              onOpenIngredientInfo={openIngredientInfo}
+              onOpenConfirm={openConfirm}
             />
           </>
         )}
@@ -76,7 +87,7 @@ const App = () => {
       {popupIsOpen &&
         createPortal(
           <Modal onClose={togglePopup}>
-            <IngredientDetails ingredient={currentUngredient} />
+            <IngredientDetails ingredient={currentIngredient} />
             {/* <OrderDetails /> */}
           </Modal>,
           modalRoot
