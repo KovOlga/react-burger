@@ -6,11 +6,7 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
 
-const BurgerConstructor = ({ data, onOpenPopup }) => {
-  const onButtonClick = () => {
-    onOpenPopup();
-  };
-
+const BurgerConstructor = ({ data, onOpenIngredientInfo, onOpenConfirm }) => {
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div className={styles.incridients}>
@@ -29,7 +25,11 @@ const BurgerConstructor = ({ data, onOpenPopup }) => {
             .filter((item) => item.type !== "bun")
             .map((item) => {
               return (
-                <li key={item._id} className={styles.list__item}>
+                <li
+                  key={item._id}
+                  className={styles.list__item}
+                  onClick={() => onOpenIngredientInfo(item)}
+                >
                   <DragIcon type="primary" />
                   <ConstructorElement
                     key={item._id}
@@ -59,7 +59,7 @@ const BurgerConstructor = ({ data, onOpenPopup }) => {
           <CurrencyIcon type="primary" />
         </div>
         <Button
-          onClick={onButtonClick}
+          onClick={onOpenConfirm}
           htmlType="button"
           type="primary"
           size="large"

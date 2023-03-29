@@ -5,7 +5,7 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
 
-const BurgerIngredients = ({ data, onOpenPopup }) => {
+const BurgerIngredients = ({ data, onOpenIngredientInfo }) => {
   const [current, setCurrent] = React.useState("Булки");
 
   const bunList = data.filter((item) => item.type === "bun");
@@ -39,7 +39,7 @@ const BurgerIngredients = ({ data, onOpenPopup }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={onOpenPopup}
+                onIngredientClick={() => onOpenIngredientInfo(item)}
                 ingredient={item}
               />
             );
@@ -51,7 +51,7 @@ const BurgerIngredients = ({ data, onOpenPopup }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={onOpenPopup}
+                onIngredientClick={() => onOpenIngredientInfo(item)}
                 ingredient={item}
               />
             );
@@ -63,7 +63,7 @@ const BurgerIngredients = ({ data, onOpenPopup }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={onOpenPopup}
+                onIngredientClick={() => onOpenIngredientInfo(item)}
                 ingredient={item}
               />
             );
