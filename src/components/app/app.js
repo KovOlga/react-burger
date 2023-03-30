@@ -9,23 +9,12 @@ import { createPortal } from "react-dom";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import Api from "../api/api";
 
-const baseUrl = "https://norma.nomoreparties.space/api/ingredients";
-const getResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-};
 const modalRoot = document.getElementById("react-modals");
+const api = new Api();
 
 const App = () => {
-  const [popupIsOpen, setPopup] = useState(false);
-
-  const togglePopup = () => {
-    setPopup(!popupIsOpen);
-  };
-
   const [state, setState] = useState({
     isLoading: false,
     hasError: false,
@@ -33,17 +22,21 @@ const App = () => {
   });
 
   useEffect(() => {
-    getData();
+    (() => {
+      setState({ ...state, hasError: false, isLoading: true });
+      api
+        .getIngredientsList()
+        .then(({ data }) => setState({ ...state, data, isLoading: false }))
+        .catch((e) => {
+          setState({ ...state, hasError: true, isLoading: false });
+        });
+    })();
   }, []);
 
-  const getData = () => {
-    setState({ ...state, hasError: false, isLoading: true });
-    fetch(baseUrl)
-      .then(getResponse)
-      .then(({ data }) => setState({ ...state, data, isLoading: false }))
-      .catch((e) => {
-        setState({ ...state, hasError: true, isLoading: false });
-      });
+  const [popupIsOpen, setPopup] = useState(false);
+
+  const togglePopup = () => {
+    setPopup(!popupIsOpen);
   };
 
   const [currentIngredient, setIngredient] = useState(null);
