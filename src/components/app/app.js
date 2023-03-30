@@ -4,7 +4,6 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 import { createPortal } from "react-dom";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -40,21 +39,19 @@ const App = () => {
   };
 
   const [currentIngredient, setIngredient] = useState(null);
-
-  // const currentIngRef = useRef();
+  const [confirm, setConfirm] = useState(false);
+  const [modalChild, setModalChild] = useState("");
 
   const openIngredientInfo = (item) => {
-    // currentIngRef.current = item;
     setIngredient(item);
+    setModalChild("ingredient");
     togglePopup();
   };
 
-  const [confirm, setConfirm] = useState(false);
-
   const openConfirm = () => {
     setConfirm(true);
-    // togglePopup();
-    console.log("confirm");
+    setModalChild("order");
+    togglePopup();
   };
 
   return (
@@ -80,8 +77,12 @@ const App = () => {
       {popupIsOpen &&
         createPortal(
           <Modal onClose={togglePopup}>
-            <IngredientDetails ingredient={currentIngredient} />
-            {/* <OrderDetails /> */}
+            {modalChild === "ingredient" && (
+              <IngredientDetails ingredient={currentIngredient} />
+            )}
+            {modalChild === "order" && confirm && (
+              <OrderDetails orderId="034536" />
+            )}
           </Modal>,
           modalRoot
         )}

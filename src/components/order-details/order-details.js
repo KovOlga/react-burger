@@ -2,11 +2,11 @@ import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
 import { memo } from "react";
 
-const OrderDetails = memo(() => {
+const OrderDetails = memo(({ orderId }) => {
   return (
     <div className={styles.container}>
       <h1 className={`text text_type_digits-large ${styles.identificator}`}>
-        034536
+        {orderId}
       </h1>
       <h2 className="text text_type_main-medium">идентификатор заказа</h2>
       <img className="mb-15 mt-15" src={doneIcon} alt="Заказ подтвержден" />
