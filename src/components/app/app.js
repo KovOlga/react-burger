@@ -22,8 +22,7 @@ const App = () => {
 
   const [popupIsOpen, setPopup] = useState(false);
   const [currentIngredient, setIngredient] = useState(null);
-  const [confirm, setConfirm] = useState(false);
-  const [modalChild, setModalChild] = useState("");
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     (() => {
@@ -43,13 +42,12 @@ const App = () => {
 
   const openIngredientInfo = useCallback((item) => {
     setIngredient(item);
-    setModalChild("ingredient");
+    setIsActive(true);
     togglePopup();
   }, []);
 
   const openConfirm = useCallback(() => {
-    setConfirm(true);
-    setModalChild("order");
+    setIsActive(false);
     togglePopup();
   }, []);
 
@@ -76,10 +74,9 @@ const App = () => {
       {popupIsOpen &&
         createPortal(
           <Modal onClose={togglePopup}>
-            {modalChild === "ingredient" && (
+            {isActive ? (
               <IngredientDetails ingredient={currentIngredient} />
-            )}
-            {modalChild === "order" && confirm && (
+            ) : (
               <OrderDetails orderId="034536" />
             )}
           </Modal>,
