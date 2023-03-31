@@ -5,10 +5,21 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 const BurgerConstructor = memo(
   ({ data, onOpenIngredientInfo, onOpenConfirm }) => {
+    const ingredientsList = useMemo(
+      () =>
+        data.filter((item) => {
+          console.log("Меня вызвали!");
+          return item.type !== "bun";
+        }),
+      [data]
+    );
+
+    const random = Math.random() * 3;
+    console.log(`BurgerConstructor ${random}`);
     return (
       <section className={`${styles.section_constructor} pl-4 pr-4`}>
         <div className={styles.incridients}>
@@ -23,25 +34,23 @@ const BurgerConstructor = memo(
           />
 
           <ul className={styles.list}>
-            {data
-              .filter((item) => item.type !== "bun")
-              .map((item) => {
-                return (
-                  <li
+            {ingredientsList.map((item) => {
+              return (
+                <li
+                  key={item._id}
+                  className={styles.list__item}
+                  onClick={() => onOpenIngredientInfo(item)}
+                >
+                  <DragIcon type="primary" />
+                  <ConstructorElement
                     key={item._id}
-                    className={styles.list__item}
-                    onClick={() => onOpenIngredientInfo(item)}
-                  >
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      key={item._id}
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                    />
-                  </li>
-                );
-              })}
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image}
+                  />
+                </li>
+              );
+            })}
           </ul>
 
           <ConstructorElement

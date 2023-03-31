@@ -54,9 +54,12 @@ const App = () => {
     togglePopup();
   };
 
+  const random = Math.random() * 3;
+  console.log(`app ${random}`);
+
   return (
     <>
-      <AppHeader />
+      {/* <AppHeader /> */}
       <main className={styles.main}>
         {state.isLoading && "Загрузка..."}
         {state.hasError && "Произошла ошибка"}
@@ -66,11 +69,11 @@ const App = () => {
               data={state.data}
               onOpenIngredientInfo={openIngredientInfo}
             />
-            <BurgerConstructor
+            {/* <BurgerConstructor
               data={state.data}
               onOpenIngredientInfo={openIngredientInfo}
               onOpenConfirm={openConfirm}
-            />
+            /> */}
           </>
         )}
       </main>
@@ -80,9 +83,9 @@ const App = () => {
             {modalChild === "ingredient" && (
               <IngredientDetails ingredient={currentIngredient} />
             )}
-            {modalChild === "order" && confirm && (
+            {/* {modalChild === "order" && confirm && (
               <OrderDetails orderId="034536" />
-            )}
+            )} */}
           </Modal>,
           modalRoot
         )}

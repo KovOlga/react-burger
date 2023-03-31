@@ -4,14 +4,40 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   const [current, setCurrent] = React.useState("Булки");
 
-  const bunList = data.filter((item) => item.type === "bun");
-  const sauceList = data.filter((item) => item.type === "sauce");
-  const mainList = data.filter((item) => item.type === "main");
+  const bunList = useMemo(
+    () =>
+      data.filter((item) => {
+        console.log("Меня вызвали!");
+        return item.type === "bun";
+      }),
+    [data]
+  );
+
+  const sauceList = useMemo(
+    () =>
+      data.filter((item) => {
+        console.log("Меня вызвали!");
+        return item.type === "sauce";
+      }),
+    [data]
+  );
+
+  const mainList = useMemo(
+    () =>
+      data.filter((item) => {
+        console.log("Меня вызвали!");
+        return item.type === "main";
+      }),
+    [data]
+  );
+
+  const random = Math.random() * 3;
+  console.log(`BurgerIngredients ${random}`);
 
   return (
     <section className={styles.section__ingredients}>

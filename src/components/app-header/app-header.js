@@ -6,6 +6,8 @@ import styles from "./app-header.module.css";
 import { memo } from "react";
 
 const AppHeader = memo(() => {
+  const random = Math.random() * 3;
+  console.log(`AppHeader ${random}`);
   return (
     <header className={`p-4 ${styles.header}`}>
       <nav className={`${styles.nav} ${styles.nav_type_links}`}>
