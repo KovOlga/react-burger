@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useRef, forwardRef, createRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -42,24 +42,23 @@ const App = () => {
   const [confirm, setConfirm] = useState(false);
   const [modalChild, setModalChild] = useState("");
 
-  const openIngredientInfo = (item) => {
+  const openIngredientInfo = useCallback((item) => {
     setIngredient(item);
     setModalChild("ingredient");
     togglePopup();
-  };
+  }, []);
 
-  const openConfirm = () => {
+  const openConfirm = useCallback(() => {
     setConfirm(true);
     setModalChild("order");
     togglePopup();
-  };
+  }, []);
 
-  const random = Math.random() * 3;
-  console.log(`app ${random}`);
+  console.log("компонент App заново родилсya!");
 
   return (
     <>
-      {/* <AppHeader /> */}
+      <AppHeader />
       <main className={styles.main}>
         {state.isLoading && "Загрузка..."}
         {state.hasError && "Произошла ошибка"}
@@ -69,11 +68,11 @@ const App = () => {
               data={state.data}
               onOpenIngredientInfo={openIngredientInfo}
             />
-            {/* <BurgerConstructor
+            <BurgerConstructor
               data={state.data}
               onOpenIngredientInfo={openIngredientInfo}
               onOpenConfirm={openConfirm}
-            /> */}
+            />
           </>
         )}
       </main>
@@ -83,9 +82,9 @@ const App = () => {
             {modalChild === "ingredient" && (
               <IngredientDetails ingredient={currentIngredient} />
             )}
-            {/* {modalChild === "order" && confirm && (
+            {modalChild === "order" && confirm && (
               <OrderDetails orderId="034536" />
-            )} */}
+            )}
           </Modal>,
           modalRoot
         )}

@@ -2,8 +2,9 @@ import styles from "./burger-ingredients-item.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../utils/types";
+import { memo } from "react";
 
-const BurgerIngredientsItem = ({ ingredient, onIngredientClick }) => {
+const BurgerIngredientsItem = memo(({ ingredient, onIngredientClick }) => {
   const { name, image, price } = ingredient;
 
   return (
@@ -17,7 +18,7 @@ const BurgerIngredientsItem = ({ ingredient, onIngredientClick }) => {
       <h3 className="text text_type_main-default">{name}</h3>
     </li>
   );
-};
+});
 
 BurgerIngredientsItem.propTypes = {
   ingredient: ingredientType.isRequired,

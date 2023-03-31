@@ -12,7 +12,6 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   const bunList = useMemo(
     () =>
       data.filter((item) => {
-        console.log("Меня вызвали!");
         return item.type === "bun";
       }),
     [data]
@@ -21,7 +20,6 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   const sauceList = useMemo(
     () =>
       data.filter((item) => {
-        console.log("Меня вызвали!");
         return item.type === "sauce";
       }),
     [data]
@@ -30,14 +28,10 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   const mainList = useMemo(
     () =>
       data.filter((item) => {
-        console.log("Меня вызвали!");
         return item.type === "main";
       }),
     [data]
   );
-
-  const random = Math.random() * 3;
-  console.log(`BurgerIngredients ${random}`);
 
   return (
     <section className={styles.section__ingredients}>

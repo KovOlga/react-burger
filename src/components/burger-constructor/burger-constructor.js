@@ -12,14 +12,11 @@ const BurgerConstructor = memo(
     const ingredientsList = useMemo(
       () =>
         data.filter((item) => {
-          console.log("Меня вызвали!");
           return item.type !== "bun";
         }),
       [data]
     );
 
-    const random = Math.random() * 3;
-    console.log(`BurgerConstructor ${random}`);
     return (
       <section className={`${styles.section_constructor} pl-4 pr-4`}>
         <div className={styles.incridients}>
