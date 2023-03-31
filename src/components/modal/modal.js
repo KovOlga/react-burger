@@ -6,9 +6,6 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 const Modal = ({ onClose, children }) => {
   const modalContainer = useRef();
 
-  const random = Math.random() * 3;
-  console.log(`Modal ${random}`);
-
   useEffect(() => {
     document.addEventListener("keydown", handleEscClose);
     document.addEventListener("mousedown", handleOverlayClose);

@@ -20,6 +20,11 @@ const App = () => {
     data: {},
   });
 
+  const [popupIsOpen, setPopup] = useState(false);
+  const [currentIngredient, setIngredient] = useState(null);
+  const [confirm, setConfirm] = useState(false);
+  const [modalChild, setModalChild] = useState("");
+
   useEffect(() => {
     (() => {
       setState({ ...state, hasError: false, isLoading: true });
@@ -32,15 +37,9 @@ const App = () => {
     })();
   }, []);
 
-  const [popupIsOpen, setPopup] = useState(false);
-
   const togglePopup = () => {
     setPopup(!popupIsOpen);
   };
-
-  const [currentIngredient, setIngredient] = useState(null);
-  const [confirm, setConfirm] = useState(false);
-  const [modalChild, setModalChild] = useState("");
 
   const openIngredientInfo = useCallback((item) => {
     setIngredient(item);
@@ -53,8 +52,6 @@ const App = () => {
     setModalChild("order");
     togglePopup();
   }, []);
-
-  console.log("компонент App заново родилсya!");
 
   return (
     <>
