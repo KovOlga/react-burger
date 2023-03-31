@@ -1,6 +1,7 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
 import { memo } from "react";
+import PropTypes from "prop-types";
 
 const OrderDetails = memo(({ orderId }) => {
   return (
@@ -19,4 +20,9 @@ const OrderDetails = memo(({ orderId }) => {
     </div>
   );
 });
+
+OrderDetails.propTypes = {
+  orderId: PropTypes.string.isRequired,
+};
+
 export default OrderDetails;

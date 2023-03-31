@@ -1,4 +1,5 @@
 import styles from "./ingredient-details.module.css";
+import ingredientType from "../../utils/types";
 
 const IngredientDetails = ({ ingredient }) => {
   return (
@@ -50,6 +51,10 @@ const IngredientDetails = ({ ingredient }) => {
       </div>
     </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  ingredient: ingredientType.isRequired,
 };
 
 export default IngredientDetails;
