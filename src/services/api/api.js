@@ -8,7 +8,7 @@ class Api extends React.Component {
   }
 
   getResourse = async (url) => {
-    let res = await fetch(url);
+    const res = await fetch(url);
 
     if (res.ok) {
       return await res.json();

@@ -3,6 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../utils/types";
 import { memo } from "react";
+import PropTypes from "prop-types";
 
 const BurgerIngredientsItem = memo(({ ingredient, onIngredientClick }) => {
   const { name, image, price } = ingredient;
@@ -22,6 +23,7 @@ const BurgerIngredientsItem = memo(({ ingredient, onIngredientClick }) => {
 
 BurgerIngredientsItem.propTypes = {
   ingredient: ingredientType.isRequired,
+  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientsItem;

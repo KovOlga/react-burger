@@ -8,6 +8,18 @@ const Modal = ({ onClose, children }) => {
   const modalContainer = useRef();
 
   useEffect(() => {
+    const handleEscClose = (evt) => {
+      if (evt.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const handleOverlayClose = (evt) => {
+      if (!modalContainer.current.contains(evt.target)) {
+        onClose();
+      }
+    };
+
     document.addEventListener("keydown", handleEscClose);
     document.addEventListener("mousedown", handleOverlayClose);
 
@@ -17,17 +29,6 @@ const Modal = ({ onClose, children }) => {
     };
   }, []);
 
-  const handleEscClose = (evt) => {
-    if (evt.key === "Escape") {
-      onClose();
-    }
-  };
-
-  const handleOverlayClose = (evt) => {
-    if (!modalContainer.current.contains(evt.target)) {
-      onClose();
-    }
-  };
   return (
     <ModalOverlay>
       <div ref={modalContainer} className={styles.modal}>

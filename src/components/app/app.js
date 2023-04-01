@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import Api from "../api/api";
+import Api from "../../services/api/api";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
