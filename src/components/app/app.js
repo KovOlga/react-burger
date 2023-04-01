@@ -4,7 +4,6 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { createPortal } from "react-dom";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -71,17 +70,15 @@ const App = () => {
           </>
         )}
       </main>
-      {popupIsOpen &&
-        createPortal(
-          <Modal onClose={togglePopup}>
-            {isActive ? (
-              <IngredientDetails ingredient={currentIngredient} />
-            ) : (
-              <OrderDetails orderId="034536" />
-            )}
-          </Modal>,
-          modalRoot
-        )}
+      {popupIsOpen && (
+        <Modal onClose={togglePopup} container={modalRoot}>
+          {isActive ? (
+            <IngredientDetails ingredient={currentIngredient} />
+          ) : (
+            <OrderDetails orderId="034536" />
+          )}
+        </Modal>
+      )}
     </>
   );
 };

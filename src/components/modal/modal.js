@@ -3,8 +3,9 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef, useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
+import { createPortal } from "react-dom";
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ onClose, children, container }) => {
   const modalContainer = useRef();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Modal = ({ onClose, children }) => {
     };
   }, []);
 
-  return (
+  return createPortal(
     <ModalOverlay>
       <div ref={modalContainer} className={styles.modal}>
         <div onClick={onClose} className={styles.close_icon}>
@@ -37,12 +38,14 @@ const Modal = ({ onClose, children }) => {
         </div>
         {children}
       </div>
-    </ModalOverlay>
+    </ModalOverlay>,
+    container
   );
 };
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  container: PropTypes.object,
 };
 
 export default Modal;
