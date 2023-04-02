@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# Проект: stellar-burger
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![stellar-burger App image](./src/images/stellarBurger.jpg)
 
-## Available Scripts
+### Обзор
 
-In the project directory, you can run:
+- Интро
+- Основные компоненты
+- Figma
 
-### `npm start`
+**Интро**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Проект создается на базе React.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Проект был выполнен в соответствии с предоставленным макетом.
 
-### `npm test`
+Использована установленная в зависимости библиотека Yandex с заготовками UI-компонентов для данного проекта.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Возможности на данный момент:
 
-### `npm run build`
+- При клике на ингредиент открывается модальное окно с описанием конкретного ингредиента в компоненте IngredientDetails. При клике по кнопке «Оформить заказ» открывается модальное окно с описанием заказа в компоненте OrderDetails. Для рендера компонента модального окна используется React.createPortal. Выбор рендера вложенного в Modal компонента происходит через тернарный оператор.
+- Модальное окно закрывается при клике на крестик, на ModalOverlay или нажатием на клавишу "Esc"
+- С целью избежать лишних ререндеров в проекте используются хуки useMemo, useCallback
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Основные компоненты**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Проект состоит из следующих основных компонентов:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- В header находится компонент AppHeader - шапка приложения
+- В main расположены два основных компонента: BurgerIngredients(список ингредиентов) и BurgerConstructor(текущий состав бургера). Оба компонента отражают список ингредиентов, получаемых в результате запроса на сервер в компоненте Api
 
-### `npm run eject`
+так же имеются:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- компоненты Modal, ModalOverlay(фоновая подложка под модальным окном)
+- IngredientDetails
+- OrderDetails
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Figma**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Ссылка на макет в Figma](https://bit.ly/3IZ7rSr)

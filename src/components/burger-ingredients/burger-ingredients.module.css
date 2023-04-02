@@ -1,0 +1,37 @@
+.section__ingredients {
+  max-width: 600px;
+  padding-top: 40px;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+}
+
+.list__total {
+  margin-top: 40px;
+  overflow-y: auto;
+  overflow: overlay;
+  scrollbar-gutter: stable;
+  position: relative;
+  height: 716px;
+}
+.list__total::-webkit-scrollbar {
+  width: 8px;
+  overflow: visible;
+}
+
+.list__total::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.sublist__type {
+  padding-top: 24px;
+  padding-bottom: 40px;
+  margin: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  column-gap: 24px;
+  row-gap: 32px;
+}

@@ -1,0 +1,62 @@
+.section_constructor {
+  max-width: 600px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  box-sizing: border-box;
+}
+
+.incridients {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item__bun {
+  margin-left: 32px;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 464px;
+  overflow-y: auto;
+  overflow: overlay;
+  scrollbar-gutter: stable;
+  position: relative;
+}
+
+.list__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+  overflow: visible;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.total {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
