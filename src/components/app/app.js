@@ -35,15 +35,16 @@ const App = () => {
     data: {},
   });
 
+  const [bun, setBun] = useState(defaultBun);
+  const [constructorIngredients, setConstructorIngredients] = useState([
+    defaultIngredient,
+  ]);
   const [totalPriceState, totalPriceDispatcher] = useReducer(
     reducer,
     totalPriceInitialValue,
     undefined
   );
-  const [constructorIngredients, setConstructorIngredients] = useState([
-    defaultIngredient,
-  ]);
-  const [bun, setBun] = useState(defaultBun);
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const [popupIsOpen, setPopup] = useState(false);
   const [currentIngredient, setIngredient] = useState(null);
@@ -72,9 +73,26 @@ const App = () => {
   }, []);
 
   const openConfirm = useCallback(() => {
-    setIsActive(false);
-    togglePopup();
-  }, []);
+    const orderArr = constructorIngredients
+      .map((ingredient) => {
+        return ingredient._id;
+      })
+      .concat(bun._id);
+    api
+      .getOrderNumber(orderArr)
+      .then((res) => {
+        if (res.success) {
+          setOrderNumber(res.order.number);
+        }
+      })
+      .then(() => {
+        setIsActive(false);
+        togglePopup();
+      })
+      .catch((e) => {
+        console.log("error");
+      });
+  }, [constructorIngredients, togglePopup, bun._id]);
 
   return (
     <>
@@ -111,7 +129,7 @@ const App = () => {
           {isActive ? (
             <IngredientDetails ingredient={currentIngredient} />
           ) : (
-            <OrderDetails orderId="034536" />
+            <OrderDetails orderId={orderNumber} />
           )}
         </Modal>
       )}

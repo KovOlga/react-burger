@@ -78,8 +78,9 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
   );
 });
 
-// BurgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(ingredientType).isRequired,
-// };
+BurgerConstructor.propTypes = {
+  onOpenIngredientInfo: PropTypes.func.isRequired,
+  onOpenConfirm: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

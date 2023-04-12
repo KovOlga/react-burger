@@ -5,19 +5,33 @@ class Api extends React.Component {
     super(props);
     this.baseUrl = "https://norma.nomoreparties.space/api";
     this.ingredientsEndPoint = "ingredients";
+    this.orderEndPoint = "orders";
+    this.headers = {
+      "Content-Type": "application/json",
+    };
   }
 
-  getResourse = async (url) => {
-    const res = await fetch(url);
-
+  getResponse(res) {
     if (res.ok) {
-      return await res.json();
+      return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
-  };
+  }
 
   getIngredientsList = () => {
-    return this.getResourse(`${this.baseUrl}/${this.ingredientsEndPoint}`);
+    return fetch(`${this.baseUrl}/${this.ingredientsEndPoint}`).then(
+      this.getResponse
+    );
+  };
+
+  getOrderNumber = (ingredientsArr) => {
+    return fetch(`${this.baseUrl}/${this.orderEndPoint}`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        ingredients: ingredientsArr,
+      }),
+    }).then(this.getResponse);
   };
 }
 

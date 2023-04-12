@@ -135,8 +135,8 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
   );
 });
 
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(ingredientType).isRequired,
-// };
+BurgerIngredients.propTypes = {
+  onOpenIngredientInfo: PropTypes.func.isRequired,
+};
 
 export default BurgerIngredients;
