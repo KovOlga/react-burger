@@ -8,6 +8,7 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Api from "../../services/api/api";
+import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
@@ -57,17 +58,13 @@ const App = () => {
         {state.isLoading && "Загрузка..."}
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && state.data.length && (
-          <>
-            <BurgerIngredients
-              data={state.data}
-              onOpenIngredientInfo={openIngredientInfo}
-            />
+          <IngredientsContext.Provider value={state.data}>
+            <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
             <BurgerConstructor
-              data={state.data}
               onOpenIngredientInfo={openIngredientInfo}
               onOpenConfirm={openConfirm}
             />
-          </>
+          </IngredientsContext.Provider>
         )}
       </main>
       {popupIsOpen && (

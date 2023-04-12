@@ -4,9 +4,11 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext } from "react";
+import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 
-const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
+const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
+  const data = useContext(IngredientsContext);
   const [current, setCurrent] = React.useState("Булки");
 
   const bunList = useMemo(
@@ -95,8 +97,8 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
   );
 });
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(ingredientType).isRequired,
+// };
 
 export default BurgerIngredients;

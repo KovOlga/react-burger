@@ -5,83 +5,84 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext } from "react";
+import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 
-const BurgerConstructor = memo(
-  ({ data, onOpenIngredientInfo, onOpenConfirm }) => {
-    const ingredientsList = useMemo(
-      () =>
-        data.filter((item) => {
-          return item.type !== "bun";
-        }),
-      [data]
-    );
+const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
+  const data = useContext(IngredientsContext);
+  const ingredientsList = useMemo(
+    () =>
+      data.filter((item) => {
+        return item.type !== "bun";
+      }),
+    [data]
+  );
+  const bun = useMemo(() => data.find((item) => item.type === "bun"), [data]);
 
-    return (
-      <section className={`${styles.section_constructor} pl-4 pr-4`}>
-        <div className={styles.incridients}>
-          <ConstructorElement
-            extraClass={styles.item__bun}
-            key={"top"}
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={data[0].image}
-          />
+  return (
+    <section className={`${styles.section_constructor} pl-4 pr-4`}>
+      <div className={styles.incridients}>
+        <ConstructorElement
+          extraClass={styles.item__bun}
+          key={"top"}
+          type="top"
+          isLocked={true}
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
 
-          <ul className={styles.list}>
-            {ingredientsList.map((item) => {
-              return (
-                <li
+        <ul className={styles.list}>
+          {ingredientsList.map((item) => {
+            return (
+              <li
+                key={item._id}
+                className={styles.list__item}
+                onClick={() => onOpenIngredientInfo(item)}
+              >
+                <DragIcon type="primary" />
+                <ConstructorElement
                   key={item._id}
-                  className={styles.list__item}
-                  onClick={() => onOpenIngredientInfo(item)}
-                >
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    key={item._id}
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                  />
-                </li>
-              );
-            })}
-          </ul>
+                  text={item.name}
+                  price={item.price}
+                  thumbnail={item.image}
+                />
+              </li>
+            );
+          })}
+        </ul>
 
-          <ConstructorElement
-            extraClass={styles.item__bun}
-            key={"bottom"}
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={data[0].image}
-          />
+        <ConstructorElement
+          extraClass={styles.item__bun}
+          key={"bottom"}
+          type="bottom"
+          isLocked={true}
+          text={`${bun.name} (низ)`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
+      </div>
+
+      <div className={styles.total}>
+        <div className={styles.price}>
+          <p className="text text_type_digits-medium">610</p>
+          <CurrencyIcon type="primary" />
         </div>
+        <Button
+          onClick={onOpenConfirm}
+          htmlType="button"
+          type="primary"
+          size="large"
+        >
+          Оформить заказ
+        </Button>
+      </div>
+    </section>
+  );
+});
 
-        <div className={styles.total}>
-          <div className={styles.price}>
-            <p className="text text_type_digits-medium">610</p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button
-            onClick={onOpenConfirm}
-            htmlType="button"
-            type="primary"
-            size="large"
-          >
-            Оформить заказ
-          </Button>
-        </div>
-      </section>
-    );
-  }
-);
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-};
+// BurgerConstructor.propTypes = {
+//   data: PropTypes.arrayOf(ingredientType).isRequired,
+// };
 
 export default BurgerConstructor;
