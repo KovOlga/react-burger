@@ -6,13 +6,13 @@ import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
 import { memo, useMemo, useContext, useEffect } from "react";
-import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 
 const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
   const { bun, constructorIngredients } = useContext(ConstructorContext);
-  const { totalPrice } = useContext(TotalPriceContext);
+  const { totalPriceState, totalPriceDispatcher } =
+    useContext(TotalPriceContext);
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
@@ -60,7 +60,9 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
 
       <div className={styles.total}>
         <div className={styles.price}>
-          <p className="text text_type_digits-medium">{totalPrice}</p>
+          <p className="text text_type_digits-medium">
+            {totalPriceState.totalPrice}
+          </p>
           <CurrencyIcon type="primary" />
         </div>
         <Button

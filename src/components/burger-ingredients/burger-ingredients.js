@@ -7,8 +7,10 @@ import ingredientType from "../../utils/types";
 import { memo, useMemo, useContext } from "react";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
+  const { totalPriceDispatcher } = useContext(TotalPriceContext);
   const data = useContext(IngredientsContext);
   const { setBun, setConstructorIngredients, constructorIngredients } =
     useContext(ConstructorContext);
@@ -90,6 +92,10 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                       ...constructorIngredients,
                       item,
                     ]);
+                    totalPriceDispatcher({
+                      type: "add",
+                      payload: item.price,
+                    });
                   }
                 }}
                 ingredient={item}
@@ -113,6 +119,10 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                       ...constructorIngredients,
                       item,
                     ]);
+                    totalPriceDispatcher({
+                      type: "add",
+                      payload: item.price,
+                    });
                   }
                 }}
                 ingredient={item}

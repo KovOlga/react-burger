@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useReducer } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -17,6 +17,17 @@ import { defaultBun } from "../../utils/defaultData";
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
 
+const totalPriceInitialValue = { totalPrice: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "add":
+      return { totalPrice: state.totalPrice + action.payload };
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
+
 const App = () => {
   const [state, setState] = useState({
     isLoading: false,
@@ -24,7 +35,11 @@ const App = () => {
     data: {},
   });
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPriceState, totalPriceDispatcher] = useReducer(
+    reducer,
+    totalPriceInitialValue,
+    undefined
+  );
   const [constructorIngredients, setConstructorIngredients] = useState([
     defaultIngredient,
   ]);
@@ -77,8 +92,11 @@ const App = () => {
                 setConstructorIngredients,
               }}
             >
-              <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
-              <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
+              <TotalPriceContext.Provider
+                value={{ totalPriceState, totalPriceDispatcher }}
+              >
+                <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
+
                 <BurgerConstructor
                   onOpenIngredientInfo={openIngredientInfo}
                   onOpenConfirm={openConfirm}
