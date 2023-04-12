@@ -9,6 +9,10 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Api from "../../services/api/api";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
+import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
+import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import { defaultIngredient } from "../../utils/defaultData";
+import { defaultBun } from "../../utils/defaultData";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
@@ -19,6 +23,12 @@ const App = () => {
     hasError: false,
     data: {},
   });
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [constructorIngredients, setConstructorIngredients] = useState([
+    defaultIngredient,
+  ]);
+  const [bun, setBun] = useState(defaultBun);
 
   const [popupIsOpen, setPopup] = useState(false);
   const [currentIngredient, setIngredient] = useState(null);
@@ -59,11 +69,22 @@ const App = () => {
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && state.data.length && (
           <IngredientsContext.Provider value={state.data}>
-            <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
-            <BurgerConstructor
-              onOpenIngredientInfo={openIngredientInfo}
-              onOpenConfirm={openConfirm}
-            />
+            <ConstructorContext.Provider
+              value={{
+                bun,
+                setBun,
+                constructorIngredients,
+                setConstructorIngredients,
+              }}
+            >
+              <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
+              <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
+                <BurgerConstructor
+                  onOpenIngredientInfo={openIngredientInfo}
+                  onOpenConfirm={openConfirm}
+                />
+              </TotalPriceContext.Provider>
+            </ConstructorContext.Provider>
           </IngredientsContext.Provider>
         )}
       </main>

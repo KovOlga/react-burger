@@ -5,19 +5,14 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import ingredientType from "../../utils/types";
-import { memo, useMemo, useContext } from "react";
+import { memo, useMemo, useContext, useEffect } from "react";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
+import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
+import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 
 const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
-  const data = useContext(IngredientsContext);
-  const ingredientsList = useMemo(
-    () =>
-      data.filter((item) => {
-        return item.type !== "bun";
-      }),
-    [data]
-  );
-  const bun = useMemo(() => data.find((item) => item.type === "bun"), [data]);
+  const { bun, constructorIngredients } = useContext(ConstructorContext);
+  const { totalPrice } = useContext(TotalPriceContext);
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
@@ -33,7 +28,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
         />
 
         <ul className={styles.list}>
-          {ingredientsList.map((item) => {
+          {constructorIngredients.map((item) => {
             return (
               <li
                 key={item._id}
@@ -65,7 +60,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
 
       <div className={styles.total}>
         <div className={styles.price}>
-          <p className="text text_type_digits-medium">610</p>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button

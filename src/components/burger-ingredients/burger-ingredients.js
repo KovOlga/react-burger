@@ -6,9 +6,12 @@ import PropTypes from "prop-types";
 import ingredientType from "../../utils/types";
 import { memo, useMemo, useContext } from "react";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
+import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
   const data = useContext(IngredientsContext);
+  const { setBun, setConstructorIngredients, constructorIngredients } =
+    useContext(ConstructorContext);
   const [current, setCurrent] = React.useState("Булки");
 
   const bunList = useMemo(
@@ -62,7 +65,10 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  setBun(item);
+                }}
                 ingredient={item}
               />
             );
@@ -74,7 +80,18 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  const isAdded = constructorIngredients.some((ingredient) => {
+                    return ingredient._id === item._id;
+                  });
+                  if (!isAdded) {
+                    setConstructorIngredients((constructorIngredients) => [
+                      ...constructorIngredients,
+                      item,
+                    ]);
+                  }
+                }}
                 ingredient={item}
               />
             );
@@ -86,7 +103,18 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  const isAdded = constructorIngredients.some((ingredient) => {
+                    return ingredient._id === item._id;
+                  });
+                  if (!isAdded) {
+                    setConstructorIngredients((constructorIngredients) => [
+                      ...constructorIngredients,
+                      item,
+                    ]);
+                  }
+                }}
                 ingredient={item}
               />
             );
