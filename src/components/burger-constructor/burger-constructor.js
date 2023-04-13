@@ -19,7 +19,8 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
     const initialArray = data.slice(0, 5).filter((item) => {
       return item.type !== "bun";
     });
-    setBun(data[0]);
+    const initialBun = data.find((item) => item.type === "bun");
+    setBun(initialBun);
     setConstructorIngredients(initialArray);
   }, []);
 
