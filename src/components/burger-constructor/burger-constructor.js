@@ -12,7 +12,7 @@ import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 
 const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
   const data = useContext(IngredientsContext);
-  const { bun, constructorIngredients, setConstructorIngredients } =
+  const { bun, setBun, constructorIngredients, setConstructorIngredients } =
     useContext(ConstructorContext);
   const { totalPriceState, totalPriceDispatcher } =
     useContext(TotalPriceContext);
@@ -22,6 +22,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
       return item.type !== "bun";
     });
     setConstructorIngredients(initialArray);
+    setBun(data[0]);
   }, []);
 
   return (

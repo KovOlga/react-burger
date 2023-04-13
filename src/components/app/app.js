@@ -15,12 +15,25 @@ import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
 
-const totalPriceInitialValue = { totalPrice: 0 };
+const totalPriceInitialValue = { totalPrice: 0, bun: 0 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "add":
-      return { totalPrice: state.totalPrice + action.payload };
+      return {
+        ...state,
+        totalPrice: state.totalPrice + action.payload,
+      };
+    case "newBun":
+      return {
+        ...state,
+        bun: action.payload,
+      };
+    case "total":
+      return {
+        ...state,
+        totalPrice: state.totalPrice + state.bun,
+      };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
@@ -35,6 +48,7 @@ const App = () => {
 
   const [bun, setBun] = useState({});
   const [constructorIngredients, setConstructorIngredients] = useState([]);
+
   const [totalPriceState, totalPriceDispatcher] = useReducer(
     reducer,
     totalPriceInitialValue,
@@ -53,13 +67,14 @@ const App = () => {
         .getIngredientsList()
         .then(({ data }) => {
           setState({ ...state, data, isLoading: false });
-          setBun(data[0]);
         })
         .catch((e) => {
           setState({ ...state, hasError: true, isLoading: false });
         });
     })();
   }, []);
+
+  console.log("app");
 
   const togglePopup = () => {
     setPopup(!popupIsOpen);

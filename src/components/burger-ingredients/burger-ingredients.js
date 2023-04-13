@@ -70,6 +70,10 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
                   setBun(item);
+                  totalPriceDispatcher({
+                    type: "newBun",
+                    payload: item.price,
+                  });
                 }}
                 ingredient={item}
               />
