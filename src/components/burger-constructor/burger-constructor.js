@@ -15,6 +15,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
     useContext(ConstructorContext);
   const { totalPriceState } = useContext(TotalPriceContext);
 
+  //создаем набор дефолтных ингредиентов
   useEffect(() => {
     const initialArray = data.slice(0, 5).filter((item) => {
       return item.type !== "bun";

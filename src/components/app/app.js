@@ -49,6 +49,7 @@ const App = () => {
   const [currentIngredient, setIngredient] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
+  //получаем и устанавливаем массив ингредиентов
   useEffect(() => {
     (() => {
       setState({ ...state, hasError: false, isLoading: true });
@@ -63,6 +64,7 @@ const App = () => {
     })();
   }, []);
 
+  //подсчитываем полную сумму при изменениях в конструкторе
   useEffect(() => {
     if (Object.keys(bun).length > 0 && constructorIngredients.length > 0) {
       let totalIngredients = 0;
@@ -71,12 +73,10 @@ const App = () => {
       );
       totalPriceDispatcher({
         type: "total",
-        payload: bun.price + totalIngredients,
+        payload: bun.price * 2 + totalIngredients,
       });
     }
   }, [bun, constructorIngredients]);
-
-  // console.log("app");
 
   const togglePopup = () => {
     setPopup(!popupIsOpen);
@@ -88,6 +88,7 @@ const App = () => {
     togglePopup();
   }, []);
 
+  //при клике на оформить собираем массив id и отправляем/получаем/открываем модальное окно с новым номером
   const openConfirm = useCallback(() => {
     const orderArr = constructorIngredients
       .map((ingredient) => {
