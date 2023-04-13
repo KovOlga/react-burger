@@ -15,24 +15,13 @@ import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
 
-const totalPriceInitialValue = { totalPrice: 0, bun: 0 };
+const totalPriceInitialValue = { totalPrice: 0 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "add":
-      return {
-        ...state,
-        totalPrice: state.totalPrice + action.payload,
-      };
-    case "newBun":
-      return {
-        ...state,
-        bun: action.payload,
-      };
     case "total":
       return {
-        ...state,
-        totalPrice: state.totalPrice + state.bun,
+        totalPrice: action.payload,
       };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
@@ -74,7 +63,20 @@ const App = () => {
     })();
   }, []);
 
-  console.log("app");
+  useEffect(() => {
+    if (Object.keys(bun).length > 0 && constructorIngredients.length > 0) {
+      let totalIngredients = 0;
+      constructorIngredients.forEach(
+        (item) => (totalIngredients += item.price)
+      );
+      totalPriceDispatcher({
+        type: "total",
+        payload: bun.price + totalIngredients,
+      });
+    }
+  }, [bun, constructorIngredients]);
+
+  // console.log("app");
 
   const togglePopup = () => {
     setPopup(!popupIsOpen);

@@ -4,8 +4,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
-import ingredientType from "../../utils/types";
-import { memo, useMemo, useContext, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
@@ -14,15 +13,14 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
   const data = useContext(IngredientsContext);
   const { bun, setBun, constructorIngredients, setConstructorIngredients } =
     useContext(ConstructorContext);
-  const { totalPriceState, totalPriceDispatcher } =
-    useContext(TotalPriceContext);
+  const { totalPriceState } = useContext(TotalPriceContext);
 
   useEffect(() => {
     const initialArray = data.slice(0, 5).filter((item) => {
       return item.type !== "bun";
     });
-    setConstructorIngredients(initialArray);
     setBun(data[0]);
+    setConstructorIngredients(initialArray);
   }, []);
 
   return (

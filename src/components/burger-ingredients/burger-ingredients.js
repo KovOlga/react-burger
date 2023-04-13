@@ -3,14 +3,11 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import ingredientType from "../../utils/types";
 import { memo, useMemo, useContext } from "react";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
-import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
-  const { totalPriceDispatcher } = useContext(TotalPriceContext);
   const data = useContext(IngredientsContext);
   const { setBun, setConstructorIngredients, constructorIngredients } =
     useContext(ConstructorContext);
@@ -70,10 +67,6 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
                   setBun(item);
-                  totalPriceDispatcher({
-                    type: "newBun",
-                    payload: item.price,
-                  });
                 }}
                 ingredient={item}
               />
@@ -96,10 +89,6 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                       ...constructorIngredients,
                       item,
                     ]);
-                    totalPriceDispatcher({
-                      type: "add",
-                      payload: item.price,
-                    });
                   }
                 }}
                 ingredient={item}
@@ -123,10 +112,6 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                       ...constructorIngredients,
                       item,
                     ]);
-                    totalPriceDispatcher({
-                      type: "add",
-                      payload: item.price,
-                    });
                   }
                 }}
                 ingredient={item}
