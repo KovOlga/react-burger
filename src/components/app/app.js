@@ -11,8 +11,6 @@ import Api from "../../services/api/api";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
-import { defaultIngredient } from "../../utils/defaultData";
-import { defaultBun } from "../../utils/defaultData";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
@@ -35,10 +33,8 @@ const App = () => {
     data: {},
   });
 
-  const [bun, setBun] = useState(defaultBun);
-  const [constructorIngredients, setConstructorIngredients] = useState([
-    defaultIngredient,
-  ]);
+  const [bun, setBun] = useState({});
+  const [constructorIngredients, setConstructorIngredients] = useState([]);
   const [totalPriceState, totalPriceDispatcher] = useReducer(
     reducer,
     totalPriceInitialValue,
@@ -55,7 +51,10 @@ const App = () => {
       setState({ ...state, hasError: false, isLoading: true });
       api
         .getIngredientsList()
-        .then(({ data }) => setState({ ...state, data, isLoading: false }))
+        .then(({ data }) => {
+          setState({ ...state, data, isLoading: false });
+          setBun(data[0]);
+        })
         .catch((e) => {
           setState({ ...state, hasError: true, isLoading: false });
         });

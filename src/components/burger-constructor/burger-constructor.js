@@ -8,11 +8,21 @@ import ingredientType from "../../utils/types";
 import { memo, useMemo, useContext, useEffect } from "react";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 
 const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
-  const { bun, constructorIngredients } = useContext(ConstructorContext);
+  const data = useContext(IngredientsContext);
+  const { bun, constructorIngredients, setConstructorIngredients } =
+    useContext(ConstructorContext);
   const { totalPriceState, totalPriceDispatcher } =
     useContext(TotalPriceContext);
+
+  useEffect(() => {
+    const initialArray = data.slice(0, 5).filter((item) => {
+      return item.type !== "bun";
+    });
+    setConstructorIngredients(initialArray);
+  }, []);
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
