@@ -3,11 +3,26 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import ingredientType from "../../utils/types";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext, useRef } from "react";
+import { IngredientsContext } from "../../services/contexts/ingredientsContext";
+import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 
-const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
+const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
+  const data = useContext(IngredientsContext);
+  const { setBun, setConstructorIngredients, constructorIngredients } =
+    useContext(ConstructorContext);
   const [current, setCurrent] = React.useState("Булки");
+
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
+
+  const handleTabClick = (ref) => {
+    const elmnt = ref;
+    elmnt.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   const bunList = useMemo(
     () =>
@@ -38,53 +53,101 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
       <div className={styles.tabs}>
-        <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+        <Tab
+          value="Булки"
+          active={current === "Булки"}
+          onClick={() => {
+            setCurrent("Булки");
+            handleTabClick(bunRef);
+          }}
+        >
           Булки
         </Tab>
-        <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+        <Tab
+          value="Соусы"
+          active={current === "Соусы"}
+          onClick={() => {
+            setCurrent("Соусы");
+            handleTabClick(sauceRef);
+          }}
+        >
           Соусы
         </Tab>
         <Tab
           value="Начинки"
           active={current === "Начинки"}
-          onClick={setCurrent}
+          onClick={() => {
+            setCurrent("Начинки");
+            handleTabClick(mainRef);
+          }}
         >
           Начинки
         </Tab>
       </div>
 
       <div className={styles.list__total}>
-        <h2 className="text text_type_main-medium">Булки</h2>
+        <h2 ref={bunRef} className="text text_type_main-medium">
+          Булки
+        </h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {bunList.map((item) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  setBun(item);
+                }}
                 ingredient={item}
               />
             );
           })}
         </ul>
-        <h2 className="text text_type_main-medium">Соусы</h2>
+        <h2 ref={sauceRef} className="text text_type_main-medium">
+          Соусы
+        </h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {sauceList.map((item) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  const isAdded = constructorIngredients.some((ingredient) => {
+                    return ingredient._id === item._id;
+                  });
+                  if (!isAdded) {
+                    setConstructorIngredients((constructorIngredients) => [
+                      ...constructorIngredients,
+                      item,
+                    ]);
+                  }
+                }}
                 ingredient={item}
               />
             );
           })}
         </ul>
-        <h2 className="text text_type_main-medium">Начинки</h2>
+        <h2 ref={mainRef} className="text text_type_main-medium">
+          Начинки
+        </h2>
         <ul className={`${styles.sublist__type} pl-4 pr-4`}>
           {mainList.map((item) => {
             return (
               <BurgerIngredientsItem
                 key={item._id}
-                onIngredientClick={() => onOpenIngredientInfo(item)}
+                onIngredientClick={() => {
+                  onOpenIngredientInfo(item);
+                  const isAdded = constructorIngredients.some((ingredient) => {
+                    return ingredient._id === item._id;
+                  });
+                  if (!isAdded) {
+                    setConstructorIngredients((constructorIngredients) => [
+                      ...constructorIngredients,
+                      item,
+                    ]);
+                  }
+                }}
                 ingredient={item}
               />
             );
@@ -96,7 +159,7 @@ const BurgerIngredients = memo(({ data, onOpenIngredientInfo }) => {
 });
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
+  onOpenIngredientInfo: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;
