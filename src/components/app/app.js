@@ -11,6 +11,7 @@ import Api from "../../services/api/api";
 import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import Loader from "../loader/loader";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
@@ -88,8 +89,11 @@ const App = () => {
     togglePopup();
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
   //при клике на оформить собираем массив id и отправляем/получаем/открываем модальное окно с новым номером
   const openConfirm = useCallback(() => {
+    setLoading(true);
     const orderArr = constructorIngredients
       .map((ingredient) => {
         return ingredient._id;
@@ -101,6 +105,7 @@ const App = () => {
         if (res.success) {
           setOrderNumber(res.order.number);
         }
+        setLoading(false);
       })
       .then(() => {
         setIsActive(false);
@@ -115,7 +120,9 @@ const App = () => {
     <>
       <AppHeader />
       <main className={styles.main}>
-        {state.isLoading && "Загрузка..."}
+        {state.isLoading && (
+          <Loader loadingText={"Идет загрузка космической станции"} />
+        )}
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && state.data.length && (
           <IngredientsContext.Provider value={state.data}>
@@ -135,6 +142,7 @@ const App = () => {
                 <BurgerConstructor
                   onOpenIngredientInfo={openIngredientInfo}
                   onOpenConfirm={openConfirm}
+                  loading={loading}
                 />
               </TotalPriceContext.Provider>
             </ConstructorContext.Provider>
