@@ -18,20 +18,22 @@ class Api extends React.Component {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  _request(url, options) {
+    return fetch(url, options).then(this.getResponse);
+  }
+
   getIngredientsList = () => {
-    return fetch(`${this.baseUrl}/${this.ingredientsEndPoint}`).then(
-      this.getResponse
-    );
+    return this._request(`${this.baseUrl}/${this.ingredientsEndPoint}`);
   };
 
   getOrderNumber = (ingredientsArr) => {
-    return fetch(`${this.baseUrl}/${this.orderEndPoint}`, {
+    return this._request(`${this.baseUrl}/${this.orderEndPoint}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         ingredients: ingredientsArr,
       }),
-    }).then(this.getResponse);
+    });
   };
 }
 
