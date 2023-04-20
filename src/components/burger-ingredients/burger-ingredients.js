@@ -3,15 +3,19 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import { memo, useMemo, useContext, useRef } from "react";
-import { IngredientsContext } from "../../services/contexts/ingredientsContext";
-import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import { memo, useMemo, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+// import { ConstructorContext } from "../../services/contexts/ingredientsContext";
+import { SET_CURRENT_BUN } from "../../services/actions";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
-  const data = useContext(IngredientsContext);
-  const { setBun, setConstructorIngredients, constructorIngredients } =
-    useContext(ConstructorContext);
+  // const { setConstructorIngredients, constructorIngredients } =
+  //   useContext(ConstructorContext);
   const [current, setCurrent] = React.useState("Булки");
+
+  const dispatch = useDispatch();
+
+  const ingredients = useSelector((store) => store.ingredients.data);
 
   const bunRef = useRef();
   const sauceRef = useRef();
@@ -26,26 +30,26 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
 
   const bunList = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.filter((item) => {
         return item.type === "bun";
       }),
-    [data]
+    [ingredients]
   );
 
   const sauceList = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.filter((item) => {
         return item.type === "sauce";
       }),
-    [data]
+    [ingredients]
   );
 
   const mainList = useMemo(
     () =>
-      data.filter((item) => {
+      ingredients.filter((item) => {
         return item.type === "main";
       }),
-    [data]
+    [ingredients]
   );
 
   return (
@@ -95,8 +99,8 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
               <BurgerIngredientsItem
                 key={item._id}
                 onIngredientClick={() => {
+                  dispatch({ type: SET_CURRENT_BUN, payload: item });
                   onOpenIngredientInfo(item);
-                  setBun(item);
                 }}
                 ingredient={item}
               />
@@ -113,15 +117,15 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 key={item._id}
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
-                  const isAdded = constructorIngredients.some((ingredient) => {
-                    return ingredient._id === item._id;
-                  });
-                  if (!isAdded) {
-                    setConstructorIngredients((constructorIngredients) => [
-                      ...constructorIngredients,
-                      item,
-                    ]);
-                  }
+                  // const isAdded = constructorIngredients.some((ingredient) => {
+                  //   return ingredient._id === item._id;
+                  // });
+                  // if (!isAdded) {
+                  //   setConstructorIngredients((constructorIngredients) => [
+                  //     ...constructorIngredients,
+                  //     item,
+                  //   ]);
+                  // }
                 }}
                 ingredient={item}
               />
@@ -138,15 +142,15 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 key={item._id}
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
-                  const isAdded = constructorIngredients.some((ingredient) => {
-                    return ingredient._id === item._id;
-                  });
-                  if (!isAdded) {
-                    setConstructorIngredients((constructorIngredients) => [
-                      ...constructorIngredients,
-                      item,
-                    ]);
-                  }
+                  // const isAdded = constructorIngredients.some((ingredient) => {
+                  //   return ingredient._id === item._id;
+                  // });
+                  // if (!isAdded) {
+                  //   setConstructorIngredients((constructorIngredients) => [
+                  //     ...constructorIngredients,
+                  //     item,
+                  //   ]);
+                  // }
                 }}
                 ingredient={item}
               />

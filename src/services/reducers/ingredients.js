@@ -1,8 +1,14 @@
-import { DELETE_INGREDIENT } from "../actions";
 import {
   GET_INGREDIENT_REQUEST,
   GET_INGREDIENT_SUCCESS,
   GET_INGREDIENT_FAILED,
+  SET_CURRENT_INGREDIENT,
+  SET_CURRENT_BUN,
+  SET_CONSTRUCTOR_INGREDIENTS,
+  CLEAR_CURRENT_INGREDIENT,
+  GET_ORDER_NUMBER_REQUEST,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_NUMBER_FAILED,
 } from "../actions";
 
 const initialState = {
@@ -10,8 +16,12 @@ const initialState = {
   dataRequest: false,
   dataFailed: false,
   constructorIngredients: [],
+  currentBun: {},
   currentIngredient: {},
-  order: {},
+  orderIngredients: [],
+  orderNumber: null,
+  orderNumberRequest: false,
+  orderNumberFailed: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -33,18 +43,35 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENT_FAILED: {
       return { ...state, dataFailed: true, dataRequest: false };
     }
-    // case ADD_INGREDIENT:
-    //   return [
-    //     ...state,
-    //     {
-    //       action,
-    //     },
-    //   ];
-    // case DELETE_INGREDIENT:
-    //   return {
-    //     ...state,
-    //     data: [...state.data].filter((item) => item._id !== action.id),
-    //   };
+    case SET_CURRENT_INGREDIENT: {
+      return { ...state, currentIngredient: action.payload };
+    }
+    case SET_CURRENT_BUN: {
+      return { ...state, currentBun: action.payload };
+    }
+    case SET_CONSTRUCTOR_INGREDIENTS: {
+      return { ...state, constructorIngredients: action.payload };
+    }
+    case GET_ORDER_NUMBER_REQUEST: {
+      return {
+        ...state,
+        orderNumberRequest: true,
+      };
+    }
+    case GET_ORDER_NUMBER_SUCCESS: {
+      return {
+        ...state,
+        orderNumberRequest: false,
+        orderNumberFailed: false,
+        orderNumber: action.payload,
+      };
+    }
+    case GET_ORDER_NUMBER_FAILED: {
+      return { ...state, orderNumberFailed: true, orderNumberRequest: false };
+    }
+    case CLEAR_CURRENT_INGREDIENT: {
+      return { ...state, currentIngredient: {} };
+    }
     default:
       return state;
   }
