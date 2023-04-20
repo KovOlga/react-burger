@@ -12,6 +12,8 @@ import { IngredientsContext } from "../../services/contexts/ingredientsContext";
 import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import { ConstructorContext } from "../../services/contexts/ingredientsContext";
 import Loader from "../loader/loader";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions";
 
 const modalRoot = document.getElementById("react-modals");
 const api = new Api();
@@ -30,12 +32,6 @@ function reducer(state, action) {
 }
 
 const App = () => {
-  const [state, setState] = useState({
-    isLoading: false,
-    hasError: false,
-    data: {},
-  });
-
   const [bun, setBun] = useState({});
   const [constructorIngredients, setConstructorIngredients] = useState([]);
 
@@ -50,20 +46,15 @@ const App = () => {
   const [currentIngredient, setIngredient] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
-  //получаем и устанавливаем массив ингредиентов
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    (() => {
-      setState({ ...state, hasError: false, isLoading: true });
-      api
-        .getIngredientsList()
-        .then(({ data }) => {
-          setState({ ...state, data, isLoading: false });
-        })
-        .catch((e) => {
-          setState({ ...state, hasError: true, isLoading: false });
-        });
-    })();
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const data = useSelector((store) => store.ingredients.data);
+  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
+  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
 
   //подсчитываем полную сумму при изменениях в конструкторе
   useEffect(() => {
@@ -120,12 +111,12 @@ const App = () => {
     <>
       <AppHeader />
       <main className={styles.main}>
-        {state.isLoading && (
+        {dataRequest && (
           <Loader loadingText={"Идет загрузка космической станции"} />
         )}
-        {state.hasError && "Произошла ошибка"}
-        {!state.isLoading && !state.hasError && state.data.length && (
-          <IngredientsContext.Provider value={state.data}>
+        {dataFailed && "Произошла ошибка"}
+        {!dataRequest && !dataFailed && data.length && (
+          <IngredientsContext.Provider value={data}>
             <ConstructorContext.Provider
               value={{
                 bun,
