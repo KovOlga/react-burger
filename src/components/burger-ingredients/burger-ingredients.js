@@ -4,16 +4,10 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
 import { memo, useMemo, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-// import { ConstructorContext } from "../../services/contexts/ingredientsContext";
-import { SET_CURRENT_BUN } from "../../services/actions";
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
-  // const { setConstructorIngredients, constructorIngredients } =
-  //   useContext(ConstructorContext);
   const [current, setCurrent] = React.useState("Булки");
-
-  const dispatch = useDispatch();
 
   const ingredients = useSelector((store) => store.ingredients.data);
 
@@ -99,10 +93,10 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
               <BurgerIngredientsItem
                 key={item._id}
                 onIngredientClick={() => {
-                  dispatch({ type: SET_CURRENT_BUN, payload: item });
                   onOpenIngredientInfo(item);
                 }}
                 ingredient={item}
+                type="bun"
               />
             );
           })}
@@ -117,17 +111,9 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 key={item._id}
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
-                  // const isAdded = constructorIngredients.some((ingredient) => {
-                  //   return ingredient._id === item._id;
-                  // });
-                  // if (!isAdded) {
-                  //   setConstructorIngredients((constructorIngredients) => [
-                  //     ...constructorIngredients,
-                  //     item,
-                  //   ]);
-                  // }
                 }}
                 ingredient={item}
+                type="ingredient"
               />
             );
           })}
@@ -142,17 +128,9 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
                 key={item._id}
                 onIngredientClick={() => {
                   onOpenIngredientInfo(item);
-                  // const isAdded = constructorIngredients.some((ingredient) => {
-                  //   return ingredient._id === item._id;
-                  // });
-                  // if (!isAdded) {
-                  //   setConstructorIngredients((constructorIngredients) => [
-                  //     ...constructorIngredients,
-                  //     item,
-                  //   ]);
-                  // }
                 }}
                 ingredient={item}
+                type="ingredient"
               />
             );
           })}

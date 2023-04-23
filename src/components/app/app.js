@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useCallback, useReducer } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -7,40 +7,20 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import Api from "../../services/api/api";
-import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
 import Loader from "../loader/loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients, getOrderNumber } from "../../services/actions";
 import { SET_CURRENT_INGREDIENT } from "../../services/actions";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const modalRoot = document.getElementById("react-modals");
-const api = new Api();
-
-const totalPriceInitialValue = { totalPrice: 0 };
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "total":
-      return {
-        totalPrice: action.payload,
-      };
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 const App = () => {
-  const [totalPriceState, totalPriceDispatcher] = useReducer(
-    reducer,
-    totalPriceInitialValue,
-    undefined
-  );
+  const dispatch = useDispatch();
 
   const [popupIsOpen, setPopup] = useState(false);
   const [isActive, setIsActive] = useState(false);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -59,20 +39,6 @@ const App = () => {
   const orderNumberRequest = useSelector(
     (store) => store.ingredients.orderNumberRequest
   );
-
-  //подсчитываем полную сумму при изменениях в конструкторе
-  // useEffect(() => {
-  //   if (Object.keys(bun).length > 0 && constructorIngredients.length > 0) {
-  //     let totalIngredients = 0;
-  //     constructorIngredients.forEach(
-  //       (item) => (totalIngredients += item.price)
-  //     );
-  //     totalPriceDispatcher({
-  //       type: "total",
-  //       payload: bun.price * 2 + totalIngredients,
-  //     });
-  //   }
-  // }, [bun, constructorIngredients]);
 
   const togglePopup = () => {
     setPopup(!popupIsOpen);
@@ -104,16 +70,14 @@ const App = () => {
         )}
         {dataFailed && "Произошла ошибка"}
         {!dataRequest && !dataFailed && data.length && (
-          <TotalPriceContext.Provider
-            value={{ totalPriceState, totalPriceDispatcher }}
-          >
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
 
             <BurgerConstructor
               onOpenIngredientInfo={openIngredientInfo}
               onOpenConfirm={openConfirm}
             />
-          </TotalPriceContext.Provider>
+          </DndProvider>
         )}
       </main>
       {popupIsOpen && (

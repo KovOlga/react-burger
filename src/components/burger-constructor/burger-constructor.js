@@ -4,20 +4,21 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
-import { memo, useContext, useEffect } from "react";
-import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
+import { memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  SET_INITIAL_BUN,
   SET_CURRENT_BUN,
-  SET_CONSTRUCTOR_INGREDIENTS,
+  SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
+  ADD_CONSTRUCTOR_ITEM,
 } from "../../services/actions";
+import { useDrop } from "react-dnd/dist/hooks";
 
 const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
-  const { totalPriceState } = useContext(TotalPriceContext);
-
   const dispatch = useDispatch();
-
   const data = useSelector((store) => store.ingredients.data);
+  const totalPrice = useSelector((store) => store.ingredients.totalPrice);
+
   const currentBun = useSelector((store) => store.ingredients.currentBun);
   const constructorIngredients = useSelector(
     (store) => store.ingredients.constructorIngredients
@@ -26,14 +27,36 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
     (store) => store.ingredients.orderNumberRequest
   );
 
+  const changeConstructorBun = (item) => {
+    dispatch({ type: SET_CURRENT_BUN, item });
+  };
+
+  const addConstructorIngredient = (item) => {
+    dispatch({ type: ADD_CONSTRUCTOR_ITEM, item });
+  };
+
+  const [, dropTarget] = useDrop({
+    accept: ["ingredient", "bun"],
+    drop(itemId) {
+      if (itemId.type === "ingredient") {
+        addConstructorIngredient(itemId);
+      } else {
+        changeConstructorBun(itemId);
+      }
+    },
+  });
+
   //создаем набор дефолтных ингредиентов
   useEffect(() => {
     const initialArray = data.slice(0, 5).filter((item) => {
       return item.type !== "bun";
     });
     const initialBun = data.find((item) => item.type === "bun");
-    dispatch({ type: SET_CURRENT_BUN, payload: initialBun });
-    dispatch({ type: SET_CONSTRUCTOR_INGREDIENTS, payload: initialArray });
+    dispatch({ type: SET_INITIAL_BUN, initialBun });
+    dispatch({
+      type: SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
+      payload: initialArray,
+    });
   }, []);
 
   return (
@@ -49,7 +72,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
           thumbnail={currentBun.image}
         />
 
-        <ul className={styles.list}>
+        <ul ref={dropTarget} className={styles.list}>
           {constructorIngredients.map((item) => {
             return (
               <li
@@ -82,9 +105,7 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
 
       <div className={styles.total}>
         <div className={styles.price}>
-          <p className="text text_type_digits-medium">
-            {totalPriceState.totalPrice}
-          </p>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button
