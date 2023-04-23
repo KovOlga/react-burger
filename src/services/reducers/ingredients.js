@@ -12,7 +12,6 @@ import {
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  CHANGE_CURRENT_BUN,
 } from "../actions";
 
 const initialState = {
@@ -104,14 +103,14 @@ export const ingredientsReducer = (state = initialState, action) => {
         ],
       };
     }
-    // case CHANGE_CURRENT_BUN: {
-    //   return {
-    //     ...state,
-    //     currentBun: {
-    //       ...state.data.filter((item) => item._id === action.item._id),
-    //     },
-    //   };
-    // }
+    case DELETE_CONSTRUCTOR_ITEM: {
+      return {
+        ...state,
+        constructorIngredients: [...state.constructorIngredients].filter(
+          (item) => item._id !== action.itemId
+        ),
+      };
+    }
     default:
       return state;
   }

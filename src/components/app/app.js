@@ -73,10 +73,7 @@ const App = () => {
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
 
-            <BurgerConstructor
-              onOpenIngredientInfo={openIngredientInfo}
-              onOpenConfirm={openConfirm}
-            />
+            <BurgerConstructor onOpenConfirm={openConfirm} />
           </DndProvider>
         )}
       </main>

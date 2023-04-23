@@ -11,10 +11,11 @@ import {
   SET_CURRENT_BUN,
   SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_ITEM,
+  DELETE_CONSTRUCTOR_ITEM,
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 
-const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
+const BurgerConstructor = memo(({ onOpenConfirm }) => {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.ingredients.data);
   const totalPrice = useSelector((store) => store.ingredients.totalPrice);
@@ -59,6 +60,10 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
     });
   }, []);
 
+  const handleClose = (itemId) => {
+    dispatch({ type: DELETE_CONSTRUCTOR_ITEM, itemId });
+  };
+
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div className={styles.incridients}>
@@ -75,17 +80,16 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
         <ul ref={dropTarget} className={styles.list}>
           {constructorIngredients.map((item) => {
             return (
-              <li
-                key={item._id}
-                className={styles.list__item}
-                onClick={() => onOpenIngredientInfo(item)}
-              >
+              <li key={item._id} className={styles.list__item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   key={item._id}
                   text={item.name}
                   price={item.price}
                   thumbnail={item.image}
+                  handleClose={() => {
+                    handleClose(item._id);
+                  }}
                 />
               </li>
             );
@@ -122,7 +126,6 @@ const BurgerConstructor = memo(({ onOpenIngredientInfo, onOpenConfirm }) => {
 });
 
 BurgerConstructor.propTypes = {
-  onOpenIngredientInfo: PropTypes.func.isRequired,
   onOpenConfirm: PropTypes.func.isRequired,
 };
 
