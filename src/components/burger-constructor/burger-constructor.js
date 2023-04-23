@@ -66,7 +66,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
-      <div className={styles.incridients}>
+      <div ref={dropTarget} className={styles.incridients}>
         <ConstructorElement
           extraClass={styles.item__bun}
           key={"top"}
@@ -77,7 +77,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
           thumbnail={currentBun.image}
         />
 
-        <ul ref={dropTarget} className={styles.list}>
+        <ul className={styles.list}>
           {constructorIngredients.map((item) => {
             return (
               <li key={item._id} className={styles.list__item}>
