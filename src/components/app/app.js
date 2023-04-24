@@ -13,6 +13,7 @@ import { getIngredients, getOrderNumber } from "../../services/actions";
 import { SET_CURRENT_INGREDIENT } from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import Skeleton from "../skeleton/skeleton";
 
 const modalRoot = document.getElementById("react-modals");
 

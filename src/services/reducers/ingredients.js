@@ -8,7 +8,9 @@ import {
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
   CLEAR_CURRENT_INGREDIENT,
+  UPDATE_TOTAL_PRICE,
 } from "../actions";
+import { current } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
@@ -25,7 +27,9 @@ const initialState = {
   orderNumberRequest: false,
   orderNumberFailed: false,
 
-  totalPrice: 100,
+  totalPrice: 0,
+
+  ingredientsPrice: {},
 
   //popupCurrentContent: "",
 };
@@ -63,6 +67,17 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         currentBun: state.data.find((item) => item._id === action.item._id),
+      };
+    }
+    case UPDATE_TOTAL_PRICE: {
+      let ingredientsPrice = 0;
+      state.constructorIngredients.forEach((item) => {
+        ingredientsPrice = ingredientsPrice + item.price;
+      });
+      const totalPrice = state.currentBun.price + ingredientsPrice;
+      return {
+        ...state,
+        //totalPrice: totalPrice === 0 ? 0 : totalPrice,
       };
     }
     case ADD_CONSTRUCTOR_ITEM: {

@@ -16,6 +16,8 @@ export const SET_CURRENT_BUN = "SET_CURRENT_BUN";
 export const ADD_CONSTRUCTOR_ITEM = "ADD_CONSTRUCTOR_ITEM";
 export const DELETE_CONSTRUCTOR_ITEM = "DELETE_CONSTRUCTOR_ITEM";
 
+export const UPDATE_TOTAL_PRICE = "UPDATE_TOTAL_PRICE";
+
 const api = new Api();
 
 export function getIngredients() {

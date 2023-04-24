@@ -10,8 +10,10 @@ import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
+  UPDATE_TOTAL_PRICE,
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
+import Skeleton from "../skeleton/skeleton";
 
 const BurgerConstructor = memo(({ onOpenConfirm }) => {
   const dispatch = useDispatch();
@@ -49,47 +51,62 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
     dispatch({ type: DELETE_CONSTRUCTOR_ITEM, itemId });
   };
 
+  useEffect(() => {
+    dispatch({ type: UPDATE_TOTAL_PRICE });
+  }, [currentBun, constructorIngredients]);
+
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div ref={dropTarget} className={styles.incridients}>
-        <ConstructorElement
-          extraClass={styles.item__bun}
-          key={"top"}
-          type="top"
-          isLocked={true}
-          text={`${currentBun.name} (верх)`}
-          price={currentBun.price}
-          thumbnail={currentBun.image}
-        />
+        {constructorIngredients.length ||
+        Object.keys(currentBun).length !== 0 ? (
+          <>
+            {Object.keys(currentBun).length !== 0 && (
+              <ConstructorElement
+                extraClass={styles.item__bun}
+                key={"top"}
+                type="top"
+                isLocked={true}
+                text={`${currentBun.name} (верх)`}
+                price={currentBun.price}
+                thumbnail={currentBun.image}
+              />
+            )}
 
-        <ul className={styles.list}>
-          {constructorIngredients.map((item) => {
-            return (
-              <li key={item.uniqueId} className={styles.list__item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  key={item._id}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  handleClose={() => {
-                    handleClose(item.uniqueId);
-                  }}
-                />
-              </li>
-            );
-          })}
-        </ul>
+            <ul className={styles.list}>
+              {constructorIngredients.map((item) => {
+                return (
+                  <li key={item.uniqueId} className={styles.list__item}>
+                    <DragIcon type="primary" />
+                    <ConstructorElement
+                      key={item._id}
+                      text={item.name}
+                      price={item.price}
+                      thumbnail={item.image}
+                      handleClose={() => {
+                        handleClose(item.uniqueId);
+                      }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
 
-        <ConstructorElement
-          extraClass={styles.item__bun}
-          key={"bottom"}
-          type="bottom"
-          isLocked={true}
-          text={`${currentBun.name} (низ)`}
-          price={currentBun.price}
-          thumbnail={currentBun.image}
-        />
+            {Object.keys(currentBun).length !== 0 && (
+              <ConstructorElement
+                extraClass={styles.item__bun}
+                key={"bottom"}
+                type="bottom"
+                isLocked={true}
+                text={`${currentBun.name} (низ)`}
+                price={currentBun.price}
+                thumbnail={currentBun.image}
+              />
+            )}
+          </>
+        ) : (
+          <Skeleton />
+        )}
       </div>
 
       <div className={styles.total}>
