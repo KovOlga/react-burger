@@ -8,9 +8,6 @@ import {
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
   CLEAR_CURRENT_INGREDIENT,
-  GET_ORDER_NUMBER_REQUEST,
-  GET_ORDER_NUMBER_SUCCESS,
-  GET_ORDER_NUMBER_FAILED,
 } from "../actions";
 
 const initialState = {
@@ -55,23 +52,6 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENT_FAILED: {
       return { ...state, dataFailed: true, dataRequest: false };
-    }
-    case GET_ORDER_NUMBER_REQUEST: {
-      return {
-        ...state,
-        orderNumberRequest: true,
-      };
-    }
-    case GET_ORDER_NUMBER_SUCCESS: {
-      return {
-        ...state,
-        orderNumberRequest: false,
-        orderNumberFailed: false,
-        orderNumber: action.payload,
-      };
-    }
-    case GET_ORDER_NUMBER_FAILED: {
-      return { ...state, orderNumberFailed: true, orderNumberRequest: false };
     }
     case SET_CURRENT_INGREDIENT: {
       return { ...state, currentIngredient: action.payload };

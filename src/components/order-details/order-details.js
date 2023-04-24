@@ -1,11 +1,10 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
 import { memo } from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 const OrderDetails = memo(() => {
-  const orderNumber = useSelector((store) => store.ingredients.orderNumber);
+  const orderNumber = useSelector((store) => store.orderNumber.orderNumber);
 
   return (
     <div className={styles.container}>

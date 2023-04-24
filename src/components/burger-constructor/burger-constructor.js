@@ -23,7 +23,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
     (store) => store.ingredients.constructorIngredients
   );
   const orderNumberRequest = useSelector(
-    (store) => store.ingredients.orderNumberRequest
+    (store) => store.orderNumber.orderNumberRequest
   );
 
   const changeConstructorBun = (item) => {
