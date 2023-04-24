@@ -7,9 +7,7 @@ import styles from "./burger-constructor.module.css";
 import { memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  SET_INITIAL_BUN,
   SET_CURRENT_BUN,
-  SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
 } from "../../services/actions";
@@ -46,19 +44,6 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
       }
     },
   });
-
-  //создаем набор дефолтных ингредиентов
-  useEffect(() => {
-    const initialArray = data.slice(0, 5).filter((item) => {
-      return item.type !== "bun";
-    });
-    const initialBun = data.find((item) => item.type === "bun");
-    dispatch({ type: SET_INITIAL_BUN, initialBun });
-    dispatch({
-      type: SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
-      payload: initialArray,
-    });
-  }, []);
 
   const handleClose = (itemId) => {
     dispatch({ type: DELETE_CONSTRUCTOR_ITEM, itemId });

@@ -3,8 +3,6 @@ import {
   GET_INGREDIENT_SUCCESS,
   GET_INGREDIENT_FAILED,
   SET_CURRENT_INGREDIENT,
-  SET_INITIAL_BUN,
-  SET_INITIAL_CONSTRUCTOR_INGREDIENTS,
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
@@ -69,18 +67,6 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_ORDER_NUMBER_FAILED: {
       return { ...state, orderNumberFailed: true, orderNumberRequest: false };
-    }
-    case SET_INITIAL_BUN: {
-      return {
-        ...state,
-        currentBun: action.initialBun,
-      };
-    }
-    case SET_INITIAL_CONSTRUCTOR_INGREDIENTS: {
-      return {
-        ...state,
-        constructorIngredients: action.payload,
-      };
     }
     case SET_CURRENT_INGREDIENT: {
       return { ...state, currentIngredient: action.payload };

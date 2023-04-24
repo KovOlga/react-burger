@@ -11,11 +11,8 @@ export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const CLEAR_CURRENT_INGREDIENT = "CLEAR_CURRENT_INGREDIENT";
 
-export const SET_INITIAL_BUN = "SET_INITIAL_BUN";
 export const SET_CURRENT_BUN = "SET_CURRENT_BUN";
 
-export const SET_INITIAL_CONSTRUCTOR_INGREDIENTS =
-  "SET_INITIAL_CONSTRUCTOR_INGREDIENTS";
 export const ADD_CONSTRUCTOR_ITEM = "ADD_CONSTRUCTOR_ITEM";
 export const DELETE_CONSTRUCTOR_ITEM = "DELETE_CONSTRUCTOR_ITEM";
 
@@ -62,3 +59,5 @@ export function getOrderNumber(orderArr) {
       });
   };
 }
+
+export function addIngredient(id) {}

@@ -10,6 +10,8 @@ const BurgerIngredientsItem = memo(
   ({ ingredient, onIngredientClick, type }) => {
     const { name, image, price, _id } = ingredient;
 
+    const counter = 0;
+
     const [, ref] = useDrag({
       type: type,
       item: { _id, type },
@@ -17,7 +19,7 @@ const BurgerIngredientsItem = memo(
 
     return (
       <li ref={ref} className={styles.burger__item} onClick={onIngredientClick}>
-        <Counter count={1} size="default" extraClass="m-1" />
+        <Counter count={counter} size="default" extraClass="m-1" />
         <img className="pl-4 pr-4" src={image} alt={name}></img>
         <div className={`${styles.price_field} pb-1 pt-1`}>
           <p className="text text_type_digits-default">{price}</p>
