@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   GET_INGREDIENT_REQUEST,
   GET_INGREDIENT_SUCCESS,
@@ -45,7 +46,11 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         dataRequest: false,
         dataFailed: false,
-        data: action.data,
+        data: action.data.map((item) => {
+          let uniqueId = uuidv4();
+
+          return { ...item, uniqueId: uniqueId };
+        }),
       };
     }
     case GET_INGREDIENT_FAILED: {
@@ -81,19 +86,20 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_CONSTRUCTOR_ITEM: {
+      const addedItem = state.data.find((item) => item._id === action.item._id);
+      let uniqueId = uuidv4();
+      const updatedItem = { ...addedItem, uniqueId };
+
       return {
         ...state,
-        constructorIngredients: [
-          ...state.constructorIngredients,
-          ...state.data.filter((item) => item._id === action.item._id),
-        ],
+        constructorIngredients: [...state.constructorIngredients, updatedItem],
       };
     }
     case DELETE_CONSTRUCTOR_ITEM: {
       return {
         ...state,
         constructorIngredients: [...state.constructorIngredients].filter(
-          (item) => item._id !== action.itemId
+          (item) => item.uniqueId !== action.itemId
         ),
       };
     }

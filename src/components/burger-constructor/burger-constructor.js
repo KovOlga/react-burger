@@ -65,7 +65,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
         <ul className={styles.list}>
           {constructorIngredients.map((item) => {
             return (
-              <li key={item._id} className={styles.list__item}>
+              <li key={item.uniqueId} className={styles.list__item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   key={item._id}
@@ -73,7 +73,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
                   price={item.price}
                   thumbnail={item.image}
                   handleClose={() => {
-                    handleClose(item._id);
+                    handleClose(item.uniqueId);
                   }}
                 />
               </li>
