@@ -8,9 +8,7 @@ import { useDrag } from "react-dnd";
 
 const BurgerIngredientsItem = memo(
   ({ ingredient, onIngredientClick, type }) => {
-    const { name, image, price, _id } = ingredient;
-
-    const counter = 0;
+    const { name, image, price, _id, counter } = ingredient;
 
     const [, ref] = useDrag({
       type: type,

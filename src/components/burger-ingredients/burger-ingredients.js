@@ -3,8 +3,9 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import { memo, useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
+import { memo, useMemo, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { UPDATE_COUNTER } from "../../services/reducers/ingredients";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
   const [current, setCurrent] = React.useState("Булки");
