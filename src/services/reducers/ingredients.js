@@ -9,6 +9,8 @@ import {
   DELETE_CONSTRUCTOR_ITEM,
   CLEAR_CURRENT_INGREDIENT,
   UPDATE_TOTAL_PRICE,
+  UPDATE_INGREDIENT_COUNTER,
+  UPDATE_BUN_COUNTER,
 } from "../actions";
 
 const initialState = {
@@ -30,8 +32,6 @@ const initialState = {
   //popupCurrentContent: "",
 };
 
-export const UPDATE_COUNTER = "UPDATE_COUNTER";
-
 export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENT_REQUEST: {
@@ -46,9 +46,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         dataRequest: false,
         dataFailed: false,
         data: action.data.map((item) => {
-          let uniqueId = uuidv4();
-
-          return { ...item, uniqueId: uniqueId, counter: 0 };
+          return { ...item, counter: 0 };
         }),
       };
     }
@@ -91,7 +89,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         constructorIngredients: [...state.constructorIngredients, updatedItem],
       };
     }
-    case UPDATE_COUNTER: {
+    case UPDATE_INGREDIENT_COUNTER: {
       return {
         ...state,
         data: state.data.map((ingredient) => {
@@ -100,6 +98,21 @@ export const ingredientsReducer = (state = initialState, action) => {
               return item._id === action.itemId;
             }).length;
             return { ...ingredient, counter: counter };
+          }
+          return ingredient;
+        }),
+      };
+    }
+    case UPDATE_BUN_COUNTER: {
+      console.log(action);
+      console.log(state.currentBun);
+      return {
+        ...state,
+        data: state.data.map((ingredient) => {
+          if (ingredient.type === "bun") {
+            return ingredient._id === action.itemId
+              ? { ...ingredient, counter: 1 }
+              : { ...ingredient, counter: 0 };
           }
           return ingredient;
         }),

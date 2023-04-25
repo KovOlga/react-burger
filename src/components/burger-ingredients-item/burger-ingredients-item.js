@@ -17,7 +17,9 @@ const BurgerIngredientsItem = memo(
 
     return (
       <li ref={ref} className={styles.burger__item} onClick={onIngredientClick}>
-        <Counter count={counter} size="default" extraClass="m-1" />
+        {counter > 0 && (
+          <Counter count={counter} size="default" extraClass="m-1" />
+        )}
         <img className="pl-4 pr-4" src={image} alt={name}></img>
         <div className={`${styles.price_field} pb-1 pt-1`}>
           <p className="text text_type_digits-default">{price}</p>

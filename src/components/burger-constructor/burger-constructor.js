@@ -14,11 +14,13 @@ import {
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
-import { UPDATE_COUNTER } from "../../services/reducers/ingredients";
+import {
+  UPDATE_INGREDIENT_COUNTER,
+  UPDATE_BUN_COUNTER,
+} from "../../services/actions/index";
 
 const BurgerConstructor = memo(({ onOpenConfirm }) => {
   const dispatch = useDispatch();
-  const data = useSelector((store) => store.ingredients.data);
   const totalPrice = useSelector((store) => store.ingredients.totalPrice);
 
   const currentBun = useSelector((store) => store.ingredients.currentBun);
@@ -30,13 +32,15 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
   );
 
   const changeConstructorBun = (item) => {
+    const itemId = item._id;
     dispatch({ type: SET_CURRENT_BUN, item });
+    dispatch({ type: UPDATE_BUN_COUNTER, itemId });
   };
 
   const addConstructorIngredient = (item) => {
     const itemId = item._id;
     dispatch({ type: ADD_CONSTRUCTOR_ITEM, item });
-    dispatch({ type: UPDATE_COUNTER, itemId });
+    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 
   const [, dropTarget] = useDrop({
@@ -52,7 +56,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
 
   const handleClose = (uniqueId, itemId) => {
     dispatch({ type: DELETE_CONSTRUCTOR_ITEM, uniqueId });
-    dispatch({ type: UPDATE_COUNTER, itemId });
+    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 
   useEffect(() => {
