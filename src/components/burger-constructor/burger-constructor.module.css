@@ -31,13 +31,6 @@
   position: relative;
 }
 
-.list__item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-}
-
 .list::-webkit-scrollbar {
   width: 8px;
   overflow: visible;

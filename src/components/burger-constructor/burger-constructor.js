@@ -1,7 +1,6 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import { memo, useEffect } from "react";
@@ -12,12 +11,13 @@ import {
   DELETE_CONSTRUCTOR_ITEM,
   UPDATE_TOTAL_PRICE,
 } from "../../services/actions";
-import { useDrop } from "react-dnd/dist/hooks";
+import { useDrop, useDrag } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import {
   UPDATE_INGREDIENT_COUNTER,
   UPDATE_BUN_COUNTER,
 } from "../../services/actions/index";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 const BurgerConstructor = memo(({ onOpenConfirm }) => {
   const dispatch = useDispatch();
@@ -54,11 +54,6 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
     },
   });
 
-  const handleClose = (uniqueId, itemId) => {
-    dispatch({ type: DELETE_CONSTRUCTOR_ITEM, uniqueId });
-    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
-  };
-
   useEffect(() => {
     dispatch({ type: UPDATE_TOTAL_PRICE });
   }, [currentBun, constructorIngredients]);
@@ -84,18 +79,11 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
             <ul className={styles.list}>
               {constructorIngredients.map((item) => {
                 return (
-                  <li key={item.uniqueId} className={styles.list__item}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      key={item._id}
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      handleClose={() => {
-                        handleClose(item.uniqueId, item._id);
-                      }}
-                    />
-                  </li>
+                  <BurgerConstructorItem
+                    key={item.uniqueId}
+                    ingredient={item}
+                    type="ingredient"
+                  />
                 );
               })}
             </ul>
