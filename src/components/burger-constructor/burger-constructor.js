@@ -63,17 +63,19 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
         {constructorIngredients.length ||
         Object.keys(currentBun).length !== 0 ? (
           <>
-            {Object.keys(currentBun).length !== 0 && (
-              <ConstructorElement
-                extraClass={styles.item__bun}
-                key={"top"}
-                type="top"
-                isLocked={true}
-                text={`${currentBun.name} (верх)`}
-                price={currentBun.price}
-                thumbnail={currentBun.image}
-              />
-            )}
+            <div>
+              {Object.keys(currentBun).length !== 0 && (
+                <ConstructorElement
+                  extraClass={styles.item__bun}
+                  key={"top"}
+                  type="top"
+                  isLocked={true}
+                  text={`${currentBun.name} (верх)`}
+                  price={currentBun.price}
+                  thumbnail={currentBun.image}
+                />
+              )}
+            </div>
 
             <ul className={styles.list}>
               {constructorIngredients.map((item, index) => {
@@ -88,17 +90,19 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
               })}
             </ul>
 
-            {Object.keys(currentBun).length !== 0 && (
-              <ConstructorElement
-                extraClass={styles.item__bun}
-                key={"bottom"}
-                type="bottom"
-                isLocked={true}
-                text={`${currentBun.name} (низ)`}
-                price={currentBun.price}
-                thumbnail={currentBun.image}
-              />
-            )}
+            <div>
+              {Object.keys(currentBun).length !== 0 && (
+                <ConstructorElement
+                  extraClass={styles.item__bun}
+                  key={"bottom"}
+                  type="bottom"
+                  isLocked={true}
+                  text={`${currentBun.name} (низ)`}
+                  price={currentBun.price}
+                  thumbnail={currentBun.image}
+                />
+              )}
+            </div>
           </>
         ) : (
           <Skeleton />

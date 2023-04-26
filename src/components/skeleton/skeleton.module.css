@@ -5,8 +5,9 @@
   justify-content: space-evenly;
   width: 568px;
   min-height: 500px;
+  height: 100%;
 }
 
 .drop_available {
-  border: 1px solid #9090f3;
+  outline: 1px solid #9090f3;
 }
