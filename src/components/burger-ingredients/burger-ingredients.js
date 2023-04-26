@@ -3,7 +3,7 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import { memo, useMemo, useRef } from "react";
+import { memo, useMemo, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
@@ -46,11 +46,33 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
     [ingredients]
   );
 
+  const tabsRef = useRef();
+
+  const getPosition = () => {
+    const tabsPosition = Math.floor(tabsRef.current.getBoundingClientRect().y);
+    const bunsPosition = Math.floor(bunRef.current.getBoundingClientRect().y);
+    const saucePosition = Math.floor(
+      sauceRef.current.getBoundingClientRect().y
+    );
+    const mainPosition = Math.floor(mainRef.current.getBoundingClientRect().y);
+
+    const first = Math.abs(tabsPosition - bunsPosition);
+    const second = Math.abs(tabsPosition - saucePosition);
+    const fird = Math.abs(tabsPosition - mainPosition);
+    if (first < second && first < fird) {
+      setCurrent("Булки");
+    } else if (second < first && second < fird) {
+      setCurrent("Соусы");
+    } else if (fird < first && fird < second) {
+      setCurrent("Начинки");
+    }
+  };
+
   return (
     <section className={styles.section__ingredients}>
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
-      <div className={styles.tabs}>
+      <div ref={tabsRef} className={styles.tabs}>
         <Tab
           value="Булки"
           active={current === "Булки"}
@@ -83,7 +105,7 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
         </Tab>
       </div>
 
-      <div className={styles.list__total}>
+      <div onScroll={getPosition} className={styles.list__total}>
         <h2 ref={bunRef} className="text text_type_main-medium">
           Булки
         </h2>
