@@ -11,6 +11,8 @@ import {
   UPDATE_TOTAL_PRICE,
   UPDATE_INGREDIENT_COUNTER,
   UPDATE_BUN_COUNTER,
+  SET_ITEM_IS_DRAGGING,
+  SORT_DRAGGING_ITEM,
 } from "../actions";
 
 const initialState = {
@@ -28,6 +30,8 @@ const initialState = {
   totalPrice: 0,
 
   ingredientsPrice: {},
+
+  isDragging: false,
 
   //popupCurrentContent: "",
 };
@@ -104,8 +108,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case UPDATE_BUN_COUNTER: {
-      console.log(action);
-      console.log(state.currentBun);
       return {
         ...state,
         data: state.data.map((ingredient) => {
@@ -124,6 +126,25 @@ export const ingredientsReducer = (state = initialState, action) => {
         constructorIngredients: [...state.constructorIngredients].filter(
           (item) => item.uniqueId !== action.uniqueId
         ),
+      };
+    }
+    case SET_ITEM_IS_DRAGGING: {
+      return { ...state, isDragging: !state.isDragging };
+    }
+    case SORT_DRAGGING_ITEM: {
+      const newConstructorArr = state.constructorIngredients.map(
+        (item) => item
+      );
+
+      newConstructorArr[action.hoverIndex] = newConstructorArr.splice(
+        action.dragIndex,
+        1,
+        newConstructorArr[action.hoverIndex]
+      )[0];
+
+      return {
+        ...state,
+        constructorIngredients: newConstructorArr,
       };
     }
     default:

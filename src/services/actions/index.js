@@ -21,6 +21,10 @@ export const UPDATE_BUN_COUNTER = "UPDATE_BUN_COUNTER";
 
 export const UPDATE_TOTAL_PRICE = "UPDATE_TOTAL_PRICE";
 
+export const SET_ITEM_IS_DRAGGING = "SET_ITEM_IS_DRAGGING";
+
+export const SORT_DRAGGING_ITEM = "SORT_DRAGGING_ITEM";
+
 const api = new Api();
 
 export function getIngredients() {
@@ -64,5 +68,3 @@ export function getOrderNumber(orderArr) {
       });
   };
 }
-
-export function addIngredient(id) {}

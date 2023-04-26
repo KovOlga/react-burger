@@ -6,3 +6,7 @@
   width: 568px;
   min-height: 500px;
 }
+
+.drop_available {
+  border: 1px solid #9090f3;
+}

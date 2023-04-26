@@ -8,10 +8,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
-  DELETE_CONSTRUCTOR_ITEM,
   UPDATE_TOTAL_PRICE,
 } from "../../services/actions";
-import { useDrop, useDrag } from "react-dnd/dist/hooks";
+import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import {
   UPDATE_INGREDIENT_COUNTER,
@@ -77,12 +76,13 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
             )}
 
             <ul className={styles.list}>
-              {constructorIngredients.map((item) => {
+              {constructorIngredients.map((item, index) => {
                 return (
                   <BurgerConstructorItem
                     key={item.uniqueId}
                     ingredient={item}
-                    type="ingredient"
+                    type="constructorItem"
+                    index={index}
                   />
                 );
               })}
