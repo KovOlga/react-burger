@@ -40,7 +40,6 @@ const BurgerConstructor = memo(() => {
   const addConstructorIngredient = (item) => {
     const itemId = item._id;
     dispatch({ type: ADD_CONSTRUCTOR_ITEM, item });
-    dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: false });
     dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 
@@ -60,6 +59,8 @@ const BurgerConstructor = memo(() => {
       Object.keys(currentBun).length === 0
     ) {
       dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: true });
+    } else {
+      dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: false });
     }
   }, [constructorIngredients, currentBun]);
 
