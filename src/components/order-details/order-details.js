@@ -4,7 +4,9 @@ import { memo } from "react";
 import { useSelector } from "react-redux";
 
 const OrderDetails = memo(() => {
-  const orderNumber = useSelector((store) => store.orderNumber.orderNumber);
+  const orderNumber = useSelector(
+    (store) => store.orderNumber.orderInfo.order.number
+  );
 
   return (
     <div className={styles.container}>

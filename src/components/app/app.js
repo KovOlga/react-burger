@@ -13,7 +13,6 @@ import { getIngredients, getOrderNumber } from "../../services/actions";
 import { SET_CURRENT_INGREDIENT } from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Skeleton from "../skeleton/skeleton";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -37,8 +36,8 @@ const App = () => {
   const currentIngredient = useSelector(
     (store) => store.ingredients.currentIngredient
   );
-  const orderNumberRequest = useSelector(
-    (store) => store.ingredients.orderNumberRequest
+  const orderNumberSuccess = useSelector(
+    (store) => store.orderNumber.orderNumberSuccess
   );
 
   const togglePopup = () => {
@@ -52,11 +51,12 @@ const App = () => {
   }, []);
 
   const openConfirm = useCallback(() => {
-    const orderArr = constructorIngredients
-      .map((ingredient) => {
+    const orderArr = [
+      constructorIngredients.map((ingredient) => {
         return ingredient._id;
-      })
-      .concat(currentBun._id);
+      }),
+      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
+    ].flatMap((i) => i);
     dispatch(getOrderNumber(orderArr));
     setIsActive(false);
     togglePopup();
@@ -78,12 +78,12 @@ const App = () => {
           </DndProvider>
         )}
       </main>
-      {popupIsOpen && (
+      {popupIsOpen && (orderNumberSuccess || isActive) && (
         <Modal onClose={togglePopup} container={modalRoot}>
           {isActive ? (
             <IngredientDetails ingredient={currentIngredient} />
           ) : (
-            !orderNumberRequest && <OrderDetails />
+            orderNumberSuccess && <OrderDetails />
           )}
         </Modal>
       )}

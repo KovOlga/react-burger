@@ -9,6 +9,7 @@ import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   UPDATE_TOTAL_PRICE,
+  ORDER_NUMBER_IS_EMPTY,
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
@@ -39,6 +40,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
   const addConstructorIngredient = (item) => {
     const itemId = item._id;
     dispatch({ type: ADD_CONSTRUCTOR_ITEM, item });
+    dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: false });
     dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 

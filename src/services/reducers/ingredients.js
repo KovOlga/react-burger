@@ -20,20 +20,13 @@ const initialState = {
   dataRequest: false,
   dataFailed: false,
 
-  currentIngredient: {},
-
   currentBun: {},
   constructorIngredients: [],
 
-  orderIngredients: [],
-
-  totalPrice: 0,
-
-  ingredientsPrice: {},
+  currentIngredient: {},
 
   isDragging: false,
-
-  //popupCurrentContent: "",
+  totalPrice: 0,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {

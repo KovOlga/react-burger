@@ -2,12 +2,15 @@ import {
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
+  ORDER_NUMBER_IS_EMPTY,
 } from "../actions";
 
 const initialState = {
-  orderNumber: null,
+  orderInfo: {},
   orderNumberRequest: false,
   orderNumberFailed: false,
+  orderNumberIsEmpty: false,
+  orderNumberSuccess: false,
 };
 
 export const orderNumberReducer = (state = initialState, action) => {
@@ -23,11 +26,19 @@ export const orderNumberReducer = (state = initialState, action) => {
         ...state,
         orderNumberRequest: false,
         orderNumberFailed: false,
-        orderNumber: action.payload,
+        orderInfo: action.payload,
+        orderNumberSuccess: true,
       };
     }
     case GET_ORDER_NUMBER_FAILED: {
       return { ...state, orderNumberFailed: true, orderNumberRequest: false };
+    }
+    case ORDER_NUMBER_IS_EMPTY: {
+      return {
+        ...state,
+        orderNumberIsEmpty: action.payload,
+        orderNumberSuccess: false,
+      };
     }
     default:
       return state;

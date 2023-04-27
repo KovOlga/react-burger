@@ -11,3 +11,7 @@
 .drop_available {
   outline: 1px solid #9090f3;
 }
+
+.text {
+  text-align: center;
+}

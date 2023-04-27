@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 const Skeleton = () => {
   const isDragging = useSelector((store) => store.ingredients.isDragging);
 
+  const orderNumberIsEmpty = useSelector(
+    (store) => store.orderNumber.orderNumberIsEmpty
+  );
+
   const containerClassName = isDragging
     ? `${styles.container} ${styles.drop_available}`
     : styles.container;
@@ -12,8 +16,10 @@ const Skeleton = () => {
   return (
     <div className={containerClassName}>
       <img src={burger} alt="burger-icon" />
-      <h1 className="text text_type_main-default">
-        Drop your first ingredient here
+      <h1 className={`text text_type_main-default ${styles.text}`}>
+        {orderNumberIsEmpty
+          ? "Галактический бургер не собран, не можем начать готовить"
+          : "Перетащите сюда первый ингредиент"}
       </h1>
     </div>
   );
