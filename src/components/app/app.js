@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -10,7 +10,12 @@ import Modal from "../modal/modal";
 import Loader from "../loader/loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients, getOrderNumber } from "../../services/actions";
-import { SET_CURRENT_INGREDIENT } from "../../services/actions";
+import {
+  SET_CURRENT_INGREDIENT,
+  TOGGLE_INGREDIENT_INFO_MODAL,
+  CLEAR_CURRENT_INGREDIENT,
+  TOGGLE_ORDER_INFO_MODAL,
+} from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -19,9 +24,6 @@ const modalRoot = document.getElementById("react-modals");
 const App = () => {
   const dispatch = useDispatch();
 
-  const [popupIsOpen, setPopup] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
@@ -29,38 +31,33 @@ const App = () => {
   const data = useSelector((store) => store.ingredients.data);
   const dataRequest = useSelector((store) => store.ingredients.dataRequest);
   const dataFailed = useSelector((store) => store.ingredients.dataFailed);
-  const currentBun = useSelector((store) => store.ingredients.currentBun);
-  const constructorIngredients = useSelector(
-    (store) => store.ingredients.constructorIngredients
-  );
+
   const currentIngredient = useSelector(
     (store) => store.ingredients.currentIngredient
   );
   const orderNumberSuccess = useSelector(
     (store) => store.orderNumber.orderNumberSuccess
   );
-
-  const togglePopup = () => {
-    setPopup(!popupIsOpen);
-  };
+  const isIngredientInfoModalShown = useSelector(
+    (store) => store.ingredients.isIngredientInfoModalShown
+  );
+  const isOrderDetailsInfoModalShown = useSelector(
+    (store) => store.ingredients.isOrderDetailsInfoModalShown
+  );
 
   const openIngredientInfo = useCallback((item) => {
-    setIsActive(true);
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
-    togglePopup();
+    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
   }, []);
 
-  const openConfirm = useCallback(() => {
-    const orderArr = [
-      constructorIngredients.map((ingredient) => {
-        return ingredient._id;
-      }),
-      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
-    ].flatMap((i) => i);
-    dispatch(getOrderNumber(orderArr));
-    setIsActive(false);
-    togglePopup();
-  }, [constructorIngredients, currentBun._id, dispatch]);
+  const closeIngredientInfoModal = useCallback(() => {
+    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
+    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+  }, []);
+
+  const closeOrderInfoModal = useCallback(() => {
+    dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
+  }, []);
 
   return (
     <>
@@ -74,17 +71,18 @@ const App = () => {
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients onOpenIngredientInfo={openIngredientInfo} />
 
-            <BurgerConstructor onOpenConfirm={openConfirm} />
+            <BurgerConstructor />
           </DndProvider>
         )}
       </main>
-      {popupIsOpen && (orderNumberSuccess || isActive) && (
-        <Modal onClose={togglePopup} container={modalRoot}>
-          {isActive ? (
-            <IngredientDetails ingredient={currentIngredient} />
-          ) : (
-            orderNumberSuccess && <OrderDetails />
-          )}
+      {isIngredientInfoModalShown && (
+        <Modal onClose={closeIngredientInfoModal} container={modalRoot}>
+          <IngredientDetails ingredient={currentIngredient} />
+        </Modal>
+      )}
+      {isOrderDetailsInfoModalShown && orderNumberSuccess && (
+        <Modal onClose={closeOrderInfoModal} container={modalRoot}>
+          <OrderDetails />
         </Modal>
       )}
     </>

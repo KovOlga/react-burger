@@ -4,16 +4,11 @@ import { useRef, useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
-import { useDispatch } from "react-redux";
-import { CLEAR_CURRENT_INGREDIENT } from "../../services/actions";
 
 const Modal = ({ onClose, children, container }) => {
   const modalContainer = useRef();
 
-  const dispatch = useDispatch();
-
   const close = () => {
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
     onClose();
   };
 

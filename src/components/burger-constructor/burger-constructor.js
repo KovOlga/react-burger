@@ -1,9 +1,8 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SET_CURRENT_BUN,
@@ -18,8 +17,9 @@ import {
   UPDATE_BUN_COUNTER,
 } from "../../services/actions/index";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import { getOrderNumber } from "../../services/actions";
 
-const BurgerConstructor = memo(({ onOpenConfirm }) => {
+const BurgerConstructor = memo(() => {
   const dispatch = useDispatch();
   const totalPrice = useSelector((store) => store.ingredients.totalPrice);
 
@@ -43,6 +43,16 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
     dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: false });
     dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
+
+  const openConfirm = useCallback(() => {
+    const orderArr = [
+      constructorIngredients.map((ingredient) => {
+        return ingredient._id;
+      }),
+      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
+    ].flatMap((i) => i);
+    dispatch(getOrderNumber(orderArr));
+  }, [constructorIngredients, currentBun, dispatch]);
 
   const [, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
@@ -117,7 +127,7 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
           <CurrencyIcon type="primary" />
         </div>
         <Button
-          onClick={onOpenConfirm}
+          onClick={openConfirm}
           htmlType="button"
           type="primary"
           size="large"
@@ -128,9 +138,5 @@ const BurgerConstructor = memo(({ onOpenConfirm }) => {
     </section>
   );
 });
-
-BurgerConstructor.propTypes = {
-  onOpenConfirm: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

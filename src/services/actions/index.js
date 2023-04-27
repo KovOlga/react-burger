@@ -26,6 +26,10 @@ export const SET_ITEM_IS_DRAGGING = "SET_ITEM_IS_DRAGGING";
 
 export const SORT_DRAGGING_ITEM = "SORT_DRAGGING_ITEM";
 
+export const TOGGLE_INGREDIENT_INFO_MODAL = "TOGGLE_INGREDIENT_INFO_MODAL";
+
+export const TOGGLE_ORDER_INFO_MODAL = "TOGGLE_ORDER_INFO_MODAL";
+
 const api = new Api();
 
 export function getIngredients() {
@@ -64,6 +68,9 @@ export function getOrderNumber(orderArr) {
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
           payload: res,
+        });
+        dispatch({
+          type: TOGGLE_ORDER_INFO_MODAL,
         });
       })
       .catch((e) => {

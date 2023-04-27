@@ -13,6 +13,8 @@ import {
   UPDATE_BUN_COUNTER,
   SET_ITEM_IS_DRAGGING,
   SORT_DRAGGING_ITEM,
+  TOGGLE_INGREDIENT_INFO_MODAL,
+  TOGGLE_ORDER_INFO_MODAL,
 } from "../actions";
 
 const initialState = {
@@ -27,6 +29,9 @@ const initialState = {
 
   isDragging: false,
   totalPrice: 0,
+
+  isIngredientInfoModalShown: false,
+  isOrderDetailsInfoModalShown: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -138,6 +143,18 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         constructorIngredients: newConstructorArr,
+      };
+    }
+    case TOGGLE_INGREDIENT_INFO_MODAL: {
+      return {
+        ...state,
+        isIngredientInfoModalShown: !state.isIngredientInfoModalShown,
+      };
+    }
+    case TOGGLE_ORDER_INFO_MODAL: {
+      return {
+        ...state,
+        isOrderDetailsInfoModalShown: !state.isOrderDetailsInfoModalShown,
       };
     }
     default:
