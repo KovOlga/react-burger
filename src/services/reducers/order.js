@@ -9,7 +9,7 @@ const initialState = {
   orderInfo: {},
   orderNumberRequest: false,
   orderNumberFailed: false,
-  orderNumberIsEmpty: false,
+  orderNumberIsEmpty: true,
   orderNumberSuccess: false,
 };
 

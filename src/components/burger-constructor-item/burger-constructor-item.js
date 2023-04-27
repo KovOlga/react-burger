@@ -20,13 +20,8 @@ const BurgerConstructorItem = ({ ingredient, type, index }) => {
     dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 
-  const [{ handlerId }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "constructorItem",
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
     hover(item, monitor) {
       if (!ref.current) {
         return;

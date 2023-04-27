@@ -11,7 +11,6 @@ import {
   UPDATE_TOTAL_PRICE,
   UPDATE_INGREDIENT_COUNTER,
   UPDATE_BUN_COUNTER,
-  SET_ITEM_IS_DRAGGING,
   SORT_DRAGGING_ITEM,
   TOGGLE_INGREDIENT_INFO_MODAL,
   TOGGLE_ORDER_INFO_MODAL,
@@ -27,7 +26,6 @@ const initialState = {
 
   currentIngredient: {},
 
-  isDragging: false,
   totalPrice: 0,
 
   isIngredientInfoModalShown: false,
@@ -125,9 +123,6 @@ export const ingredientsReducer = (state = initialState, action) => {
           (item) => item.uniqueId !== action.uniqueId
         ),
       };
-    }
-    case SET_ITEM_IS_DRAGGING: {
-      return { ...state, isDragging: !state.isDragging };
     }
     case SORT_DRAGGING_ITEM: {
       const newConstructorArr = state.constructorIngredients.map(

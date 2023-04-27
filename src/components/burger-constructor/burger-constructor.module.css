@@ -55,3 +55,7 @@
   gap: 8px;
   align-items: center;
 }
+
+.drop_available {
+  outline: 1px solid #9090f3;
+}

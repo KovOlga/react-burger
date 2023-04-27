@@ -54,7 +54,16 @@ const BurgerConstructor = memo(() => {
     dispatch(getOrderNumber(orderArr));
   }, [constructorIngredients, currentBun, dispatch]);
 
-  const [, dropTarget] = useDrop({
+  useEffect(() => {
+    if (
+      constructorIngredients.length === 0 &&
+      Object.keys(currentBun).length === 0
+    ) {
+      dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: true });
+    }
+  }, [constructorIngredients, currentBun]);
+
+  const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
     drop(itemId) {
       if (itemId.type === "ingredient") {
@@ -63,7 +72,19 @@ const BurgerConstructor = memo(() => {
         changeConstructorBun(itemId);
       }
     },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+    }),
   });
+
+  const orderNumberIsEmpty = useSelector(
+    (store) => store.orderNumber.orderNumberIsEmpty
+  );
+
+  const containerClassName =
+    canDrop && orderNumberIsEmpty
+      ? `${styles.incridients} ${styles.drop_available}`
+      : styles.incridients;
 
   useEffect(() => {
     dispatch({ type: UPDATE_TOTAL_PRICE });
@@ -71,7 +92,7 @@ const BurgerConstructor = memo(() => {
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
-      <div ref={dropTarget} className={styles.incridients}>
+      <div ref={dropTarget} className={containerClassName}>
         {constructorIngredients.length ||
         Object.keys(currentBun).length !== 0 ? (
           <>
@@ -131,6 +152,7 @@ const BurgerConstructor = memo(() => {
           htmlType="button"
           type="primary"
           size="large"
+          disabled={orderNumberIsEmpty}
         >
           {orderNumberRequest ? "Оформляется..." : "Оформить заказ"}
         </Button>
