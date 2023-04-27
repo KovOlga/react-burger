@@ -8,7 +8,7 @@ import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   UPDATE_TOTAL_PRICE,
-  ORDER_NUMBER_IS_EMPTY,
+  UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
@@ -58,9 +58,9 @@ const BurgerConstructor = memo(() => {
       constructorIngredients.length === 0 &&
       Object.keys(currentBun).length === 0
     ) {
-      dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: true });
+      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
     } else {
-      dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: false });
+      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
     }
   }, [constructorIngredients, currentBun]);
 
@@ -78,12 +78,12 @@ const BurgerConstructor = memo(() => {
     }),
   });
 
-  const orderNumberIsEmpty = useSelector(
-    (store) => store.orderNumber.orderNumberIsEmpty
+  const isConstructorEmpty = useSelector(
+    (store) => store.orderNumber.isConstructorEmpty
   );
 
   const containerClassName =
-    canDrop && orderNumberIsEmpty
+    canDrop && isConstructorEmpty
       ? `${styles.incridients} ${styles.drop_available}`
       : styles.incridients;
 
@@ -153,7 +153,7 @@ const BurgerConstructor = memo(() => {
           htmlType="button"
           type="primary"
           size="large"
-          disabled={orderNumberIsEmpty}
+          disabled={isConstructorEmpty}
         >
           {orderNumberRequest ? "Оформляется..." : "Оформить заказ"}
         </Button>

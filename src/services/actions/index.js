@@ -7,7 +7,7 @@ export const GET_INGREDIENT_FAILED = "GET_INGREDIENT_FAILED";
 export const GET_ORDER_NUMBER_REQUEST = "GET_ORDER_NUMBER_REQUEST";
 export const GET_ORDER_NUMBER_SUCCESS = "GET_ORDER_NUMBER_SUCCESS";
 export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
-export const ORDER_NUMBER_IS_EMPTY = "ORDER_NUMBER_IS_EMPTY";
+export const UPDATE_CONSTRUCTOR_EMPTINESS = "UPDATE_CONSTRUCTOR_EMPTINESS";
 
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const CLEAR_CURRENT_INGREDIENT = "CLEAR_CURRENT_INGREDIENT";
@@ -54,7 +54,7 @@ export function getIngredients() {
 export function getOrderNumber(orderArr) {
   return function (dispatch) {
     if (orderArr.length === 0) {
-      dispatch({ type: ORDER_NUMBER_IS_EMPTY, payload: true });
+      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
       return;
     }
     dispatch({

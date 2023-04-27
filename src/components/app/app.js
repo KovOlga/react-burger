@@ -9,7 +9,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Loader from "../loader/loader";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients, getOrderNumber } from "../../services/actions";
+import { getIngredients } from "../../services/actions";
 import {
   SET_CURRENT_INGREDIENT,
   TOGGLE_INGREDIENT_INFO_MODAL,

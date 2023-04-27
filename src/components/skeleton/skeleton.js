@@ -3,15 +3,15 @@ import burger from "../../images/burger.png";
 import { useSelector } from "react-redux";
 
 const Skeleton = () => {
-  const orderNumberIsEmpty = useSelector(
-    (store) => store.orderNumber.orderNumberIsEmpty
+  const isConstructorEmpty = useSelector(
+    (store) => store.orderNumber.isConstructorEmpty
   );
 
   return (
     <div className={styles.container}>
       <img src={burger} alt="burger-icon" />
       <h1 className={`text text_type_main-default ${styles.text}`}>
-        {orderNumberIsEmpty && "Перетащите сюда первый ингредиент"}
+        {isConstructorEmpty && "Перетащите сюда первый ингредиент"}
       </h1>
     </div>
   );

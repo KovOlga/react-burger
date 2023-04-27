@@ -3,7 +3,7 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import PropTypes from "prop-types";
-import { memo, useMemo, useRef, useEffect } from "react";
+import { memo, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
@@ -48,22 +48,23 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
 
   const tabsRef = useRef();
 
-  const getPosition = () => {
-    const tabsPosition = Math.floor(tabsRef.current.getBoundingClientRect().y);
-    const bunsPosition = Math.floor(bunRef.current.getBoundingClientRect().y);
-    const saucePosition = Math.floor(
+  const updatePosition = () => {
+    const tabsPositionY = Math.floor(tabsRef.current.getBoundingClientRect().y);
+    const bunsPositionY = Math.floor(bunRef.current.getBoundingClientRect().y);
+    const saucePositionY = Math.floor(
       sauceRef.current.getBoundingClientRect().y
     );
-    const mainPosition = Math.floor(mainRef.current.getBoundingClientRect().y);
+    const mainPositionY = Math.floor(mainRef.current.getBoundingClientRect().y);
 
-    const first = Math.abs(tabsPosition - bunsPosition);
-    const second = Math.abs(tabsPosition - saucePosition);
-    const fird = Math.abs(tabsPosition - mainPosition);
-    if (first < second && first < fird) {
+    const bunsDistance = Math.abs(tabsPositionY - bunsPositionY);
+    const sauceDistance = Math.abs(tabsPositionY - saucePositionY);
+    const mainDistance = Math.abs(tabsPositionY - mainPositionY);
+
+    if (bunsDistance < sauceDistance && bunsDistance < mainDistance) {
       setCurrent("Булки");
-    } else if (second < first && second < fird) {
+    } else if (sauceDistance < bunsDistance && sauceDistance < mainDistance) {
       setCurrent("Соусы");
-    } else if (fird < first && fird < second) {
+    } else if (mainDistance < bunsDistance && mainDistance < sauceDistance) {
       setCurrent("Начинки");
     }
   };
@@ -105,7 +106,7 @@ const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
         </Tab>
       </div>
 
-      <div onScroll={getPosition} className={styles.list__total}>
+      <div onScroll={updatePosition} className={styles.list__total}>
         <h2 ref={bunRef} className="text text_type_main-medium">
           Булки
         </h2>
