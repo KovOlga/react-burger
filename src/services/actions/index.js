@@ -30,6 +30,7 @@ export const TOGGLE_INGREDIENT_INFO_MODAL = "TOGGLE_INGREDIENT_INFO_MODAL";
 export const TOGGLE_ORDER_INFO_MODAL = "TOGGLE_ORDER_INFO_MODAL";
 
 export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
+export const RESET_COUNTERS = "RESET_COUNTERS";
 
 const api = new Api();
 
@@ -115,6 +116,7 @@ export const closeOrderModalAction = () => {
   return (dispatch) => {
     dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
     dispatch({ type: CLEAR_CONSTRUCTOR });
+    dispatch({ type: RESET_COUNTERS });
   };
 };
 

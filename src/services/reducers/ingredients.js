@@ -14,6 +14,7 @@ import {
   TOGGLE_INGREDIENT_INFO_MODAL,
   TOGGLE_ORDER_INFO_MODAL,
   CLEAR_CONSTRUCTOR,
+  RESET_COUNTERS,
 } from "../actions";
 
 const initialState = {
@@ -157,6 +158,14 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         currentBun: {},
         constructorIngredients: [],
+      };
+    }
+    case RESET_COUNTERS: {
+      return {
+        ...state,
+        data: state.data.map((item) => {
+          return { ...item, counter: 0 };
+        }),
       };
     }
     default:
