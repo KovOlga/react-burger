@@ -169,3 +169,24 @@ export const addConstructorItemAction = (item) => {
   const uuid = uuidv4();
   return { type: ADD_CONSTRUCTOR_ITEM, item, uuid };
 };
+
+export const openIngredientModal = (item) => {
+  return (dispatch) => {
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
+    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
+  };
+};
+
+export const closeIngredientModal = () => {
+  return (dispatch) => {
+    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
+    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+  };
+};
+
+export const closeOrderModal = () => {
+  return (dispatch) => {
+    dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
+    dispatch({ type: CLEAR_CONSTRUCTOR });
+  };
+};

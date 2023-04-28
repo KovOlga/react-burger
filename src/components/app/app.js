@@ -10,15 +10,13 @@ import Modal from "../modal/modal";
 import Loader from "../loader/loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions";
-import {
-  SET_CURRENT_INGREDIENT,
-  TOGGLE_INGREDIENT_INFO_MODAL,
-  CLEAR_CURRENT_INGREDIENT,
-  TOGGLE_ORDER_INFO_MODAL,
-  CLEAR_CONSTRUCTOR,
-} from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import {
+  openIngredientModal,
+  closeIngredientModal,
+  closeOrderModal,
+} from "../../services/reducers/ingredients";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -47,18 +45,15 @@ const App = () => {
   );
 
   const openIngredientInfo = useCallback((item) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
+    dispatch(openIngredientModal(item));
   }, []);
 
   const closeIngredientInfoModal = useCallback(() => {
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+    dispatch(closeIngredientModal());
   }, []);
 
   const closeOrderInfoModal = useCallback(() => {
-    dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
-    dispatch({ type: CLEAR_CONSTRUCTOR });
+    dispatch(closeOrderModal());
   }, []);
 
   return (
