@@ -82,7 +82,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case ADD_CONSTRUCTOR_ITEM: {
       const addedItem = state.data.find((item) => item._id === action.item._id);
-      let uniqueId = uuidv4();
+      const uniqueId = action.uuid;
       const updatedItem = { ...addedItem, uniqueId };
 
       return {
@@ -163,4 +163,9 @@ export const ingredientsReducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const addConstructorItemAction = (item) => {
+  const uuid = uuidv4();
+  return { type: ADD_CONSTRUCTOR_ITEM, item, uuid };
 };

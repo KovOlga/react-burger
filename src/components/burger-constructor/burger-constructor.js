@@ -6,7 +6,6 @@ import { memo, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SET_CURRENT_BUN,
-  ADD_CONSTRUCTOR_ITEM,
   UPDATE_TOTAL_PRICE,
   UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../../services/actions";
@@ -18,6 +17,7 @@ import {
 } from "../../services/actions/index";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { getOrderNumber } from "../../services/actions";
+import { addConstructorItemAction } from "../../services/reducers/ingredients";
 
 const BurgerConstructor = memo(() => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const BurgerConstructor = memo(() => {
 
   const addConstructorIngredient = (item) => {
     const itemId = item._id;
-    dispatch({ type: ADD_CONSTRUCTOR_ITEM, item });
+    dispatch(addConstructorItemAction(item));
     dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
   };
 
