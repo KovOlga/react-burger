@@ -28,6 +28,8 @@ export const TOGGLE_INGREDIENT_INFO_MODAL = "TOGGLE_INGREDIENT_INFO_MODAL";
 
 export const TOGGLE_ORDER_INFO_MODAL = "TOGGLE_ORDER_INFO_MODAL";
 
+export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
+
 const api = new Api();
 
 export function getIngredients() {

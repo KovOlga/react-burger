@@ -14,6 +14,7 @@ import {
   SORT_DRAGGING_ITEM,
   TOGGLE_INGREDIENT_INFO_MODAL,
   TOGGLE_ORDER_INFO_MODAL,
+  CLEAR_CONSTRUCTOR,
 } from "../actions";
 
 const initialState = {
@@ -150,6 +151,13 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         isOrderDetailsInfoModalShown: !state.isOrderDetailsInfoModalShown,
+      };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...state,
+        currentBun: {},
+        constructorIngredients: [],
       };
     }
     default:

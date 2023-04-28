@@ -15,6 +15,7 @@ import {
   TOGGLE_INGREDIENT_INFO_MODAL,
   CLEAR_CURRENT_INGREDIENT,
   TOGGLE_ORDER_INFO_MODAL,
+  CLEAR_CONSTRUCTOR,
 } from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -57,6 +58,7 @@ const App = () => {
 
   const closeOrderInfoModal = useCallback(() => {
     dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
+    dispatch({ type: CLEAR_CONSTRUCTOR });
   }, []);
 
   return (
