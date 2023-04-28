@@ -8,16 +8,20 @@ import { createPortal } from "react-dom";
 const Modal = ({ onClose, children, container }) => {
   const modalContainer = useRef();
 
+  const close = () => {
+    onClose();
+  };
+
   useEffect(() => {
     const handleEscClose = (evt) => {
       if (evt.key === "Escape") {
-        onClose();
+        close();
       }
     };
 
     const handleOverlayClose = (evt) => {
       if (!modalContainer.current.contains(evt.target)) {
-        onClose();
+        close();
       }
     };
 

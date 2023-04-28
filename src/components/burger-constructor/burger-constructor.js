@@ -1,100 +1,159 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
-import { memo, useContext, useEffect } from "react";
-import { TotalPriceContext } from "../../services/contexts/totalPriceContext";
-import { ConstructorContext } from "../../services/contexts/ingredientsContext";
-import { IngredientsContext } from "../../services/contexts/ingredientsContext";
+import { memo, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  UPDATE_TOTAL_PRICE,
+  UPDATE_CONSTRUCTOR_EMPTINESS,
+} from "../../services/actions";
+import { useDrop } from "react-dnd/dist/hooks";
+import Skeleton from "../skeleton/skeleton";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import {
+  getOrderNumber,
+  addConstructorItemAction,
+  swapConstructorBunAction,
+} from "../../services/actions";
 
-const BurgerConstructor = memo(
-  ({ onOpenIngredientInfo, onOpenConfirm, loading }) => {
-    const data = useContext(IngredientsContext);
-    const { bun, setBun, constructorIngredients, setConstructorIngredients } =
-      useContext(ConstructorContext);
-    const { totalPriceState } = useContext(TotalPriceContext);
+const BurgerConstructor = memo(() => {
+  const dispatch = useDispatch();
+  const totalPrice = useSelector((store) => store.ingredients.totalPrice);
 
-    //создаем набор дефолтных ингредиентов
-    useEffect(() => {
-      const initialArray = data.slice(0, 5).filter((item) => {
-        return item.type !== "bun";
-      });
-      const initialBun = data.find((item) => item.type === "bun");
-      setBun(initialBun);
-      setConstructorIngredients(initialArray);
-    }, []);
+  const currentBun = useSelector((store) => store.ingredients.currentBun);
+  const constructorIngredients = useSelector(
+    (store) => store.ingredients.constructorIngredients
+  );
+  const orderNumberRequest = useSelector(
+    (store) => store.orderNumber.orderNumberRequest
+  );
 
-    return (
-      <section className={`${styles.section_constructor} pl-4 pr-4`}>
-        <div className={styles.incridients}>
-          <ConstructorElement
-            extraClass={styles.item__bun}
-            key={"top"}
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
+  const changeConstructorBun = (item) => {
+    dispatch(swapConstructorBunAction(item._id));
+  };
 
-          <ul className={styles.list}>
-            {constructorIngredients.map((item) => {
-              return (
-                <li
-                  key={item._id}
-                  className={styles.list__item}
-                  onClick={() => onOpenIngredientInfo(item)}
-                >
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    key={item._id}
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
+  const addConstructorIngredient = (item) => {
+    dispatch(addConstructorItemAction(item._id));
+  };
+
+  const openConfirm = useCallback(() => {
+    const orderArr = [
+      constructorIngredients.map((ingredient) => {
+        return ingredient._id;
+      }),
+      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
+    ].flatMap((i) => i);
+    dispatch(getOrderNumber(orderArr));
+  }, [constructorIngredients, currentBun, dispatch]);
+
+  useEffect(() => {
+    if (
+      constructorIngredients.length === 0 &&
+      Object.keys(currentBun).length === 0
+    ) {
+      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
+    } else {
+      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
+    }
+  }, [constructorIngredients, currentBun]);
+
+  const [{ canDrop }, dropTarget] = useDrop({
+    accept: ["ingredient", "bun"],
+    drop(itemId) {
+      if (itemId.type === "ingredient") {
+        addConstructorIngredient(itemId);
+      } else {
+        changeConstructorBun(itemId);
+      }
+    },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
+  const isConstructorEmpty = useSelector(
+    (store) => store.orderNumber.isConstructorEmpty
+  );
+
+  const containerClassName =
+    canDrop && isConstructorEmpty
+      ? `${styles.incridients} ${styles.drop_available}`
+      : styles.incridients;
+
+  useEffect(() => {
+    dispatch({ type: UPDATE_TOTAL_PRICE });
+  }, [currentBun, constructorIngredients]);
+
+  return (
+    <section className={`${styles.section_constructor} pl-4 pr-4`}>
+      <div ref={dropTarget} className={containerClassName}>
+        {constructorIngredients.length ||
+        Object.keys(currentBun).length !== 0 ? (
+          <>
+            <div>
+              {Object.keys(currentBun).length !== 0 && (
+                <ConstructorElement
+                  extraClass={styles.item__bun}
+                  key={"top"}
+                  type="top"
+                  isLocked={true}
+                  text={`${currentBun.name} (верх)`}
+                  price={currentBun.price}
+                  thumbnail={currentBun.image}
+                />
+              )}
+            </div>
+
+            <ul className={styles.list}>
+              {constructorIngredients.map((item, index) => {
+                return (
+                  <BurgerConstructorItem
+                    key={item.uniqueId}
+                    ingredient={item}
+                    type="constructorItem"
+                    index={index}
                   />
-                </li>
-              );
-            })}
-          </ul>
+                );
+              })}
+            </ul>
 
-          <ConstructorElement
-            extraClass={styles.item__bun}
-            key={"bottom"}
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
+            <div>
+              {Object.keys(currentBun).length !== 0 && (
+                <ConstructorElement
+                  extraClass={styles.item__bun}
+                  key={"bottom"}
+                  type="bottom"
+                  isLocked={true}
+                  text={`${currentBun.name} (низ)`}
+                  price={currentBun.price}
+                  thumbnail={currentBun.image}
+                />
+              )}
+            </div>
+          </>
+        ) : (
+          <Skeleton />
+        )}
+      </div>
+
+      <div className={styles.total}>
+        <div className={styles.price}>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
+          <CurrencyIcon type="primary" />
         </div>
-
-        <div className={styles.total}>
-          <div className={styles.price}>
-            <p className="text text_type_digits-medium">
-              {totalPriceState.totalPrice}
-            </p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button
-            onClick={onOpenConfirm}
-            htmlType="button"
-            type="primary"
-            size="large"
-          >
-            {loading ? "Оформляется..." : "Оформить заказ"}
-          </Button>
-        </div>
-      </section>
-    );
-  }
-);
-
-BurgerConstructor.propTypes = {
-  onOpenIngredientInfo: PropTypes.func.isRequired,
-  onOpenConfirm: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-};
+        <Button
+          onClick={openConfirm}
+          htmlType="button"
+          type="primary"
+          size="large"
+          disabled={isConstructorEmpty}
+        >
+          {orderNumberRequest ? "Оформляется..." : "Оформить заказ"}
+        </Button>
+      </div>
+    </section>
+  );
+});
 
 export default BurgerConstructor;
