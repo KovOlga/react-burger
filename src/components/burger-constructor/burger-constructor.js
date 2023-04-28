@@ -5,19 +5,17 @@ import styles from "./burger-constructor.module.css";
 import { memo, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  SET_CURRENT_BUN,
   UPDATE_TOTAL_PRICE,
   UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
-import {
-  UPDATE_INGREDIENT_COUNTER,
-  UPDATE_BUN_COUNTER,
-} from "../../services/actions/index";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import { getOrderNumber } from "../../services/actions";
-import { addConstructorItemAction } from "../../services/reducers/ingredients";
+import {
+  getOrderNumber,
+  addConstructorItemAction,
+  swapConstructorBunAction,
+} from "../../services/actions";
 
 const BurgerConstructor = memo(() => {
   const dispatch = useDispatch();
@@ -32,15 +30,11 @@ const BurgerConstructor = memo(() => {
   );
 
   const changeConstructorBun = (item) => {
-    const itemId = item._id;
-    dispatch({ type: SET_CURRENT_BUN, item });
-    dispatch({ type: UPDATE_BUN_COUNTER, itemId });
+    dispatch(swapConstructorBunAction(item._id));
   };
 
   const addConstructorIngredient = (item) => {
-    const itemId = item._id;
-    dispatch(addConstructorItemAction(item));
-    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
+    dispatch(addConstructorItemAction(item._id));
   };
 
   const openConfirm = useCallback(() => {

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import {
   GET_INGREDIENT_REQUEST,
   GET_INGREDIENT_SUCCESS,
@@ -63,7 +62,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case SET_CURRENT_BUN: {
       return {
         ...state,
-        currentBun: state.data.find((item) => item._id === action.item._id),
+        currentBun: state.data.find((item) => item._id === action.itemId),
       };
     }
     case UPDATE_TOTAL_PRICE: {
@@ -81,7 +80,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_CONSTRUCTOR_ITEM: {
-      const addedItem = state.data.find((item) => item._id === action.item._id);
+      const addedItem = state.data.find((item) => item._id === action.itemId);
       const uniqueId = action.uuid;
       const updatedItem = { ...addedItem, uniqueId };
 
@@ -163,30 +162,4 @@ export const ingredientsReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export const addConstructorItemAction = (item) => {
-  const uuid = uuidv4();
-  return { type: ADD_CONSTRUCTOR_ITEM, item, uuid };
-};
-
-export const openIngredientModal = (item) => {
-  return (dispatch) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
-  };
-};
-
-export const closeIngredientModal = () => {
-  return (dispatch) => {
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
-  };
-};
-
-export const closeOrderModal = () => {
-  return (dispatch) => {
-    dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
-    dispatch({ type: CLEAR_CONSTRUCTOR });
-  };
 };

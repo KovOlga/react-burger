@@ -13,10 +13,10 @@ import { getIngredients } from "../../services/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
-  openIngredientModal,
-  closeIngredientModal,
-  closeOrderModal,
-} from "../../services/reducers/ingredients";
+  openIngredientModalAction,
+  closeIngredientModalAction,
+  closeOrderModalAction,
+} from "../../services/actions";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -45,15 +45,15 @@ const App = () => {
   );
 
   const openIngredientInfo = useCallback((item) => {
-    dispatch(openIngredientModal(item));
+    dispatch(openIngredientModalAction(item));
   }, []);
 
   const closeIngredientInfoModal = useCallback(() => {
-    dispatch(closeIngredientModal());
+    dispatch(closeIngredientModalAction());
   }, []);
 
   const closeOrderInfoModal = useCallback(() => {
-    dispatch(closeOrderModal());
+    dispatch(closeOrderModalAction());
   }, []);
 
   return (

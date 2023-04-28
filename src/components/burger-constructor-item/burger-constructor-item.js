@@ -4,9 +4,8 @@ import { useDrag, useDrop } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
 import { useDispatch } from "react-redux";
 import {
-  DELETE_CONSTRUCTOR_ITEM,
-  UPDATE_INGREDIENT_COUNTER,
   SORT_DRAGGING_ITEM,
+  deleteConstructorItemAction,
 } from "../../services/actions";
 import { useRef } from "react";
 
@@ -15,9 +14,8 @@ const BurgerConstructorItem = ({ ingredient, type, index }) => {
   const ref = useRef(null);
   const id = ingredient._id;
 
-  const handleClose = (uniqueId, itemId) => {
-    dispatch({ type: DELETE_CONSTRUCTOR_ITEM, uniqueId });
-    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
+  const handleDelete = (uniqueId, itemId) => {
+    dispatch(deleteConstructorItemAction(itemId, uniqueId));
   };
 
   const [, drop] = useDrop({
@@ -69,7 +67,7 @@ const BurgerConstructorItem = ({ ingredient, type, index }) => {
         price={ingredient.price}
         thumbnail={ingredient.image}
         handleClose={() => {
-          handleClose(ingredient.uniqueId, ingredient._id);
+          handleDelete(ingredient.uniqueId, ingredient._id);
         }}
       />
     </li>
