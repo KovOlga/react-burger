@@ -6,8 +6,8 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const LoginPage = () => {
   const [value, setValue] = useState({
-    email: "bob@example.com",
-    password: "password",
+    email: "",
+    password: "",
   });
 
   const onChange = (e) => {
@@ -22,12 +22,17 @@ export const LoginPage = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit}>
         <h1 className="text text_type_main-medium">Вход</h1>
-        <EmailInput onChange={onChange} value={value.mail} name={"email"} />
+        <EmailInput
+          onChange={onChange}
+          value={value.email}
+          name={"email"}
+          placeholder="E-mail"
+        />
         <PasswordInput
           onChange={onChange}
           value={value.password}
           name={"password"}
-          placeholder="Логин"
+          placeholder="Пароль"
         />
         <Button htmlType="button" type="primary" size="medium">
           Войти
