@@ -4,6 +4,7 @@ import { LayoutPage } from "./layout";
 import { RegisterPage } from "./register";
 import { ForgotPassword } from "./forgot-password";
 import { ResetPassword } from "./reset-password";
+import { ProfilePage } from "./profile";
 
 export {
   HomePage,
@@ -12,4 +13,5 @@ export {
   RegisterPage,
   ForgotPassword,
   ResetPassword,
+  ProfilePage,
 };

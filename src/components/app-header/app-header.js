@@ -4,6 +4,7 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 const AppHeader = memo(() => {
   return (
@@ -29,9 +30,12 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default text_color_inactive">
+            <Link
+              to={"/profile"}
+              className={`text text_type_main-default text_color_inactive ${styles.link}`}
+            >
               Личный кабинет
-            </p>
+            </Link>
           </li>
         </ul>
       </nav>

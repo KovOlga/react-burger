@@ -6,6 +6,7 @@ import {
   RegisterPage,
   ForgotPassword,
   ResetPassword,
+  ProfilePage,
 } from "../../pages";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </Router>
