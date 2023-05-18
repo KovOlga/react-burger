@@ -22,3 +22,8 @@
   align-items: center;
   gap: 16px;
 }
+
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

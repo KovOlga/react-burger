@@ -32,7 +32,57 @@ export const TOGGLE_ORDER_INFO_MODAL = "TOGGLE_ORDER_INFO_MODAL";
 export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
 export const RESET_COUNTERS = "RESET_COUNTERS";
 
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+
 const api = new Api();
+
+export function forgotPassword(email) {
+  return function (dispatch) {
+    dispatch({
+      type: FORGOT_PASSWORD_REQUEST,
+    });
+    api
+      .forgotPassword(email)
+      .then((res) => {
+        dispatch({
+          type: FORGOT_PASSWORD_SUCCESS,
+        });
+        console.log(res);
+      })
+      .catch((e) => {
+        dispatch({
+          type: FORGOT_PASSWORD_FAILED,
+        });
+      });
+  };
+}
+
+export function resetPassword(password, token) {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    });
+    api
+      .resetPassword(password, token)
+      .then((res) => {
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+        });
+        console.log(res);
+      })
+      .catch((e) => {
+        dispatch({
+          type: RESET_PASSWORD_FAILED,
+        });
+      });
+  };
+}
 
 export function getIngredients() {
   return function (dispatch) {

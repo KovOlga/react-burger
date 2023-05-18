@@ -1,9 +1,13 @@
-import styles from "./forgot-password.module.css";
+import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { forgotPassword } from "../services/actions";
+import { useDispatch } from "react-redux";
 
 export const ForgotPassword = () => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState({
     email: "",
   });
@@ -14,6 +18,7 @@ export const ForgotPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(forgotPassword(value.email));
   };
 
   return (
@@ -26,7 +31,12 @@ export const ForgotPassword = () => {
           name={"email"}
           placeholder="Укажите e-mail"
         />
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          onClick={onSubmit}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
           Восстановить
         </Button>
       </form>

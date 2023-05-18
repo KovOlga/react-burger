@@ -6,6 +6,8 @@ class Api extends React.Component {
     this.baseUrl = "https://norma.nomoreparties.space/api";
     this.ingredientsEndPoint = "ingredients";
     this.orderEndPoint = "orders";
+    this.forgotPasswordEndPoint = "password-reset";
+    this.resetPasswordEndPoint = "password-reset/reset";
     this.headers = {
       "Content-Type": "application/json",
     };
@@ -32,6 +34,27 @@ class Api extends React.Component {
       headers: this.headers,
       body: JSON.stringify({
         ingredients: ingredientsArr,
+      }),
+    });
+  };
+
+  forgotPassword = (email) => {
+    return this._request(`${this.baseUrl}/${this.forgotPasswordEndPoint}`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        email,
+      }),
+    });
+  };
+
+  resetPassword = (password, token) => {
+    return this._request(`${this.baseUrl}/${this.resetPasswordEndPoint}`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        password: password,
+        token: token,
       }),
     });
   };

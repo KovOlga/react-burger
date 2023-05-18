@@ -1,10 +1,14 @@
-import styles from "./reset-password.module.css";
+import styles from "./login-form.module.css";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { resetPassword } from "../services/actions";
+import { useDispatch } from "react-redux";
 
 export const ResetPassword = () => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState({
     password: "",
     code: "",
@@ -16,6 +20,7 @@ export const ResetPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(resetPassword(value.password, value.code));
   };
 
   return (
@@ -36,7 +41,12 @@ export const ResetPassword = () => {
           name={"code"}
           size={"default"}
         ></Input>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          onClick={onSubmit}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
           Сохранить
         </Button>
       </form>

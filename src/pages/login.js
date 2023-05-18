@@ -1,8 +1,9 @@
-import styles from "./login.module.css";
+import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const [value, setValue] = useState({
@@ -40,10 +41,16 @@ export const LoginPage = () => {
       </form>
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
-          Вы — новый пользователь? <span>Зарегистрироваться</span>
+          Вы — новый пользователь?{" "}
+          <Link className={styles.link} to={"/register"}>
+            Зарегистрироваться
+          </Link>
         </p>
         <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль? <span>Восстановить пароль</span>
+          Забыли пароль?{" "}
+          <Link className={styles.link} to={"/forgot-password"}>
+            Восстановить пароль
+          </Link>
         </p>
       </div>
     </div>

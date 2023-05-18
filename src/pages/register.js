@@ -1,9 +1,10 @@
-import styles from "./register.module.css";
+import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 
 export const RegisterPage = () => {
   const [value, setValue] = useState({
@@ -50,7 +51,10 @@ export const RegisterPage = () => {
       </form>
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
-          Уже зарегистрированы? <span>Войти</span>
+          Уже зарегистрированы?{" "}
+          <Link className={styles.link} to={"/login"}>
+            Войти
+          </Link>
         </p>
       </div>
     </div>
