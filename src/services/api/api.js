@@ -8,6 +8,7 @@ class Api extends React.Component {
     this.orderEndPoint = "orders";
     this.forgotPasswordEndPoint = "password-reset";
     this.resetPasswordEndPoint = "password-reset/reset";
+    this.createFakeUserEndPoint = "auth/register";
     this.headers = {
       "Content-Type": "application/json",
     };
@@ -53,8 +54,20 @@ class Api extends React.Component {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        password: password,
-        token: token,
+        password,
+        token,
+      }),
+    });
+  };
+
+  createFakeUser = () => {
+    return this._request(`${this.baseUrl}/${this.createFakeUserEndPoint}`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        email: "test-data@yandex.ru",
+        password: "password",
+        name: "Username",
       }),
     });
   };

@@ -13,7 +13,12 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
+            <Link
+              to={"/"}
+              className={`text text_type_main-default ${styles.link} ${styles.link_constructor}`}
+            >
+              Конструктор
+            </Link>
           </li>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ListIcon type="secondary" />

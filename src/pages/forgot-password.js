@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { forgotPassword } from "../services/actions";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,10 @@ export const ForgotPassword = () => {
       </form>
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
-          Вспомнили пароль? <span>Войти</span>
+          Вспомнили пароль?{" "}
+          <Link className={styles.link} to={"/login"}>
+            Войти
+          </Link>
         </p>
       </div>
     </div>

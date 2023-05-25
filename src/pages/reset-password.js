@@ -40,6 +40,7 @@ export const ResetPassword = () => {
           placeholder={"Введите код из письма"}
           name={"code"}
           size={"default"}
+          required
         ></Input>
         <Button
           onClick={onSubmit}

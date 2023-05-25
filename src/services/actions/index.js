@@ -84,6 +84,19 @@ export function resetPassword(password, token) {
   };
 }
 
+export function createFakeUser() {
+  return function (dispatch) {
+    api
+      .createFakeUser()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+}
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
