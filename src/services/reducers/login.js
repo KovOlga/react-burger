@@ -17,7 +17,7 @@ const initialState = {
   resetPasswordFailed: false,
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_PASSWORD_REQUEST: {
       return {

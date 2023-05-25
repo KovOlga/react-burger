@@ -5,20 +5,24 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
+import { registerUser } from "../services/actions";
+import { useDispatch } from "react-redux";
 
 export const RegisterPage = () => {
-  const [value, setValue] = useState({
+  const dispatch = useDispatch();
+  const [registerForm, setValue] = useState({
     name: "",
     email: "",
     password: "",
   });
 
   const onChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    setValue({ ...registerForm, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(registerUser(registerForm));
   };
 
   return (
@@ -28,24 +32,29 @@ export const RegisterPage = () => {
         <Input
           type={"text"}
           onChange={onChange}
-          value={value.name}
+          value={registerForm.name}
           placeholder={"Имя"}
           name={"name"}
           size={"default"}
         ></Input>
         <EmailInput
           onChange={onChange}
-          value={value.email}
+          value={registerForm.email}
           name={"email"}
           placeholder="E-mail"
         />
         <PasswordInput
           onChange={onChange}
-          value={value.password}
+          value={registerForm.password}
           name={"password"}
           placeholder="Пароль"
         />
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          onClick={onSubmit}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
           Зарегистрироваться
         </Button>
       </form>

@@ -1,5 +1,7 @@
 import Api from "../api/api";
 import { v4 as uuidv4 } from "uuid";
+import { useContext, useState, createContext } from "react";
+import { setCookie, deleteCookie } from "../../utils/cookies";
 
 export const GET_INGREDIENT_REQUEST = "GET_INGREDIENT_REQUEST";
 export const GET_INGREDIENT_SUCCESS = "GET_INGREDIENT_SUCCESS";
@@ -40,7 +42,85 @@ export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
+export const REGISTER_REQUEST = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILED = "REGISTER_FAILED";
+
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+
 const api = new Api();
+
+export const UserContext = createContext(undefined);
+
+export function ProvideAuth({ children }) {
+  const auth = useProvideAuth();
+
+  return <UserContext.Provider value={auth}>{children}</UserContext.Provider>;
+}
+
+export function useAuth() {
+  return useContext(UserContext);
+}
+
+export function useProvideAuth() {
+  const [user, setUser] = useState(null);
+
+  const loginUser = async (form) => {
+    const data = await api
+      .loginUser(form)
+      .then((res) => {
+        let authToken;
+        if (res.accessToken.indexOf("Bearer") === 0) {
+          authToken = res.accessToken.split("Bearer ")[1];
+        }
+        if (authToken) {
+          setCookie("token", authToken);
+        }
+        return res;
+      })
+      .then((data) => {
+        if (data.success) {
+          setUser(data.user);
+        }
+        return data;
+      });
+  };
+
+  // const signOut = async () => {
+  //   await api.logoutUser();
+  //   setUser(null);
+  //   deleteCookie("token");
+  // };
+
+  return {
+    user,
+    loginUser,
+    // signOut,
+  };
+}
+
+export function registerUser(form) {
+  return function (dispatch) {
+    dispatch({
+      type: REGISTER_REQUEST,
+    });
+    api
+      .registerUser(form)
+      .then((res) => {
+        console.log(res);
+        dispatch({
+          type: REGISTER_SUCCESS,
+        });
+      })
+      .catch((e) => {
+        dispatch({
+          type: REGISTER_FAILED,
+        });
+      });
+  };
+}
 
 export function forgotPassword(email) {
   return function (dispatch) {
@@ -80,19 +160,6 @@ export function resetPassword(password, token) {
         dispatch({
           type: RESET_PASSWORD_FAILED,
         });
-      });
-  };
-}
-
-export function createFakeUser() {
-  return function (dispatch) {
-    api
-      .createFakeUser()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
       });
   };
 }

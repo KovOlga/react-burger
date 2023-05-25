@@ -1,23 +1,32 @@
 import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
+import { loginUser } from "../services/actions";
+import { useAuth } from "../services/actions";
+import { useDispatch } from "react-redux";
 
 export const LoginPage = () => {
-  const [value, setValue] = useState({
+  let auth = useAuth();
+  const dispatch = useDispatch();
+  const [loginForm, setValue] = useState({
     email: "",
     password: "",
   });
 
   const onChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    setValue({ ...loginForm, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      auth.loginUser(loginForm);
+    },
+    [auth, loginForm]
+  );
 
   return (
     <div className={styles.container}>
@@ -25,17 +34,22 @@ export const LoginPage = () => {
         <h1 className="text text_type_main-medium">Вход</h1>
         <EmailInput
           onChange={onChange}
-          value={value.email}
+          value={loginForm.email}
           name={"email"}
           placeholder="E-mail"
         />
         <PasswordInput
           onChange={onChange}
-          value={value.password}
+          value={loginForm.password}
           name={"password"}
           placeholder="Пароль"
         />
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          onClick={onSubmit}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
           Войти
         </Button>
       </form>
