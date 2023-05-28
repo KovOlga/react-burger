@@ -1,7 +1,7 @@
 import Api from "../api/api";
 import { v4 as uuidv4 } from "uuid";
 import { useContext, useState, createContext } from "react";
-import { setCookie, deleteCookie } from "../../utils/cookies";
+import { deleteCookie, handleTokens } from "../../utils/utils";
 
 export const GET_INGREDIENT_REQUEST = "GET_INGREDIENT_REQUEST";
 export const GET_INGREDIENT_SUCCESS = "GET_INGREDIENT_SUCCESS";
@@ -50,73 +50,46 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 
+export const UPDATE_USER = "UPDATE_USER";
+
 const api = new Api();
 
-export const UserContext = createContext(undefined);
-
-export function ProvideAuth({ children }) {
-  const auth = useProvideAuth();
-
-  return <UserContext.Provider value={auth}>{children}</UserContext.Provider>;
+export function getUserInfo() {
+  return function (dispatch) {
+    api
+      .getUserInfoWithUpdateToken()
+      .then((res) => {
+        dispatch({
+          type: UPDATE_USER,
+          payload: res.user,
+        });
+      })
+      .catch((e) => {
+        console.log("e2", e);
+      });
+  };
 }
 
-export function useAuth() {
-  return useContext(UserContext);
-}
-
-export function useProvideAuth() {
-  const [user, setUser] = useState(null);
-
-  const loginUser = async (form) => {
-    const data = await api
+export function loginUser(form) {
+  return function (dispatch) {
+    api
       .loginUser(form)
       .then((res) => {
-        let authToken;
-        if (res.accessToken.indexOf("Bearer") === 0) {
-          authToken = res.accessToken.split("Bearer ")[1];
-        }
-        if (authToken) {
-          setCookie("token", authToken);
-        }
+        handleTokens(res);
         return res;
       })
       .then((data) => {
         if (data.success) {
-          setUser(data.user);
+          dispatch({
+            type: UPDATE_USER,
+            payload: data.user,
+          });
         }
         return data;
-      });
-  };
-
-  // const signOut = async () => {
-  //   await api.logoutUser();
-  //   setUser(null);
-  //   deleteCookie("token");
-  // };
-
-  return {
-    user,
-    loginUser,
-    // signOut,
-  };
-}
-
-export function registerUser(form) {
-  return function (dispatch) {
-    dispatch({
-      type: REGISTER_REQUEST,
-    });
-    api
-      .registerUser(form)
-      .then((res) => {
-        console.log(res);
-        dispatch({
-          type: REGISTER_SUCCESS,
-        });
       })
       .catch((e) => {
-        dispatch({
-          type: REGISTER_FAILED,
+        e.then((err) => {
+          console.log(err.message);
         });
       });
   };
@@ -159,6 +132,27 @@ export function resetPassword(password, token) {
       .catch((e) => {
         dispatch({
           type: RESET_PASSWORD_FAILED,
+        });
+      });
+  };
+}
+
+export function registerUser(form) {
+  return function (dispatch) {
+    dispatch({
+      type: REGISTER_REQUEST,
+    });
+    api
+      .registerUser(form)
+      .then((res) => {
+        console.log(res);
+        dispatch({
+          type: REGISTER_SUCCESS,
+        });
+      })
+      .catch((e) => {
+        dispatch({
+          type: REGISTER_FAILED,
         });
       });
   };

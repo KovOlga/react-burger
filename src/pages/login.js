@@ -4,12 +4,10 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { useState, useCallback } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { loginUser } from "../services/actions";
-import { useAuth } from "../services/actions";
 import { useDispatch } from "react-redux";
+import { loginUser } from "../services/actions";
 
 export const LoginPage = () => {
-  let auth = useAuth();
   const dispatch = useDispatch();
   const [loginForm, setValue] = useState({
     email: "",
@@ -23,9 +21,9 @@ export const LoginPage = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      auth.loginUser(loginForm);
+      dispatch(loginUser());
     },
-    [auth, loginForm]
+    [loginForm]
   );
 
   return (

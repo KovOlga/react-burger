@@ -1,5 +1,5 @@
 import React from "react";
-import { getCookie } from "../../utils/cookies";
+import { getCookie, handleTokens } from "../../utils/utils";
 
 class Api extends React.Component {
   constructor(props) {
@@ -16,7 +16,9 @@ class Api extends React.Component {
     this.logoutEndPoint = "auth/logout";
     this.updateTokenEndPoint = "auth/token";
 
-    this.userInfoEndPoint = "auth/user";
+    this.userEndPoint = "auth/user";
+
+    this.updateTokenEndPoint = "auth/token";
 
     this.headers = {
       "Content-Type": "application/json",
@@ -27,7 +29,7 @@ class Api extends React.Component {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res.json());
   }
 
   _request(url, options) {
@@ -81,12 +83,58 @@ class Api extends React.Component {
     });
   };
 
-  getUser = () => {
-    return this._request(`${this.baseUrl}/${this.userInfoEndPoint}`, {
+  updateToken = () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    console.log("update1");
+    return this._request(`${this.baseUrl}/${this.updateTokenEndPoint}`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        token: refreshToken,
+      }),
+    });
+  };
+
+  getUserInfo = () => {
+    console.log("getUserInfo1");
+    return this._request(`${this.baseUrl}/${this.userEndPoint}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + getCookie("token"),
       },
+    });
+  };
+
+  getUserInfoWithUpdateToken = async () => {
+    try {
+      return await this.getUserInfo();
+    } catch (err) {
+      console.log("err1", err);
+      err.then((err) => {
+        if (err.message === "jwt expired") {
+          console.log("update2");
+          return this.updateToken().then((res) => {
+            console.log("tokens res", res);
+            handleTokens(res);
+          });
+        }
+      });
+    }
+  };
+
+  updateUserInfo = ({ name, email, password }) => {
+    return this._request(`${this.baseUrl}/${this.userEndPoint}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+      }),
     });
   };
 
@@ -103,18 +151,6 @@ class Api extends React.Component {
   };
 
   logoutUser = () => {
-    return this._request(`${this.baseUrl}/${this.logoutEndPoint}`, {
-      method: "POST",
-      headers: this.headers,
-      body: JSON.stringify({
-        email: "test-data@yandex.ru",
-        password: "password",
-        name: "Username",
-      }),
-    });
-  };
-
-  updateToken = () => {
     return this._request(`${this.baseUrl}/${this.logoutEndPoint}`, {
       method: "POST",
       headers: this.headers,

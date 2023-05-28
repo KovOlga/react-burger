@@ -4,9 +4,14 @@ import {
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserInfo } from "../services/actions";
 
 export const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.login.user);
+
   const [value, setValue] = useState({
     name: "",
     email: "",
@@ -19,8 +24,19 @@ export const ProfilePage = () => {
   };
 
   const onChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    // setValue({ ...value, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    console.log("render");
+    dispatch(getUserInfo());
+  }, []);
+
+  useEffect(() => {
+    // if (user.user) {
+    //   setValue({ ...value, name: user.user.name, email: user.user.email });
+    // }
+  }, [user]);
 
   return (
     <div className={styles.inputs}>

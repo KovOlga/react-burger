@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  UPDATE_USER,
 } from "../actions";
 
 const initialState = {
@@ -15,10 +16,22 @@ const initialState = {
   loginRequest: false,
   loginSuccess: false,
   loginFailed: false,
+
+  user: {
+    email: "",
+    name: "",
+    password: "",
+  },
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_USER: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
     case LOGIN_REQUEST: {
       return {
         ...state,

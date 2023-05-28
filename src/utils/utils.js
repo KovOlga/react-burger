@@ -1,3 +1,14 @@
+export function handleTokens(data) {
+  localStorage.setItem("refreshToken", data.refreshToken);
+  let authToken;
+  if (data.accessToken.indexOf("Bearer") === 0) {
+    authToken = data.accessToken.split("Bearer ")[1];
+  }
+  if (authToken) {
+    setCookie("token", authToken);
+  }
+}
+
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(
