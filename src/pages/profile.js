@@ -8,27 +8,47 @@ import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { updateUserInfo } from "../services/actions";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
   const user = useSelector((store) => store.user.user);
-  const [value, setValue] = useState({
+  const [userData, setValue] = useState({
     name: "",
     email: "",
     password: "",
   });
 
   const [isFormChanging, setFormChanging] = useState(false);
-
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    setFormChanging(true);
-  };
+  const [isNameFocus, setNameFocus] = useState(true);
 
   const onChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    setValue({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmitUserData = () => {
+    dispatch(updateUserInfo(userData));
+  };
+
+  const resetForm = () => {
+    setFormChanging(false);
+    setValue(user);
+  };
+
+  const onNameEditIconClick = () => {
+    setTimeout(() => inputRef.current.focus(), 0);
+    setFormChanging(true);
+    setNameFocus(false);
+  };
+
+  const onNameBlur = () => {
+    setNameFocus(true);
+  };
+
+  const onFocus = () => {
+    setFormChanging(true);
   };
 
   useEffect(() => {
@@ -37,17 +57,9 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (user) {
-      setValue({ ...value, name: user.name, email: user.email });
+      setValue({ ...userData, name: user.name, email: user.email });
     }
   }, [user]);
-
-  const onSubmitUserData = (value) => {
-    console.log(value);
-  };
-
-  const onFocus = () => {
-    setFormChanging(true);
-  };
 
   return (
     <div className={styles.inputsContainer}>
@@ -57,37 +69,38 @@ export const ProfilePage = () => {
           placeholder={"Имя"}
           onChange={onChange}
           icon={"EditIcon"}
-          value={value.name}
+          value={userData.name}
           name={"name"}
           error={false}
           ref={inputRef}
-          onIconClick={onIconClick}
+          onIconClick={onNameEditIconClick}
+          onBlur={onNameBlur}
           errorText={"Ошибка"}
           size={"default"}
-          disabled={!isFormChanging}
-          // onFocus={onFocus}
+          disabled={isNameFocus}
         />
         <EmailInput
           onChange={onChange}
-          value={value.email}
+          value={userData.email}
           name={"email"}
           placeholder="Логин"
           isIcon={true}
-          extraClass="mb-2"
+          onFocus={onFocus}
         />
         <PasswordInput
           onChange={onChange}
-          value={value.password}
+          value={userData.password}
           name={"password"}
-          extraClass="mb-2"
           placeholder="Пароль"
           icon="EditIcon"
+          onFocus={onFocus}
         />
       </div>
       {isFormChanging && (
         <div className={styles.handlers}>
           <p
             className={`text text_type_main-default text_color_inactive ${styles.text}`}
+            onClick={resetForm}
           >
             Отмена
           </p>

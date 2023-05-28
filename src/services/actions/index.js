@@ -71,6 +71,22 @@ export function getUserInfo() {
   };
 }
 
+export function updateUserInfo(userNewInfo) {
+  return function (dispatch) {
+    api
+      .updateUserInfo(userNewInfo)
+      .then((res) => {
+        dispatch({
+          type: UPDATE_USER,
+          payload: res.user,
+        });
+      })
+      .catch((e) => {
+        console.log("e2", e);
+      });
+  };
+}
+
 export function loginUser(form) {
   return function (dispatch) {
     api
