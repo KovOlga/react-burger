@@ -18,13 +18,10 @@ export const LoginPage = () => {
     setValue({ ...loginForm, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      dispatch(loginUser());
-    },
-    [loginForm]
-  );
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    dispatch(loginUser(loginForm));
+  }, []);
 
   return (
     <div className={styles.container}>

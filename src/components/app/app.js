@@ -12,8 +12,6 @@ import {
   OrdersPage,
 } from "../../pages";
 
-//iiiiiiiiiiiiiiii
-
 const App = () => {
   return (
     <Router>
