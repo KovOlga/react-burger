@@ -53,12 +53,10 @@ export const UPDATE_USER = "UPDATE_USER";
 
 const api = new Api();
 
-//iiiiiiiiiiiiiiii
-
 export function getUserInfo() {
   return function (dispatch) {
     api
-      .getUserInfoWithUpdateToken()
+      .getUserInfo()
       .then((res) => {
         dispatch({
           type: UPDATE_USER,
@@ -66,7 +64,7 @@ export function getUserInfo() {
         });
       })
       .catch((e) => {
-        console.log("e2", e);
+        console.log("error in getUserInfo:", e);
       });
   };
 }
@@ -105,9 +103,7 @@ export function loginUser(form) {
         return data;
       })
       .catch((e) => {
-        e.then((err) => {
-          console.log(err.message);
-        });
+        console.log(e.message);
       });
   };
 }

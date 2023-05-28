@@ -14,7 +14,6 @@ class Api extends React.Component {
     this.loginEndPoint = "auth/login";
     this.registerEndPoint = "auth/register";
     this.logoutEndPoint = "auth/logout";
-    this.updateTokenEndPoint = "auth/token";
 
     this.userEndPoint = "auth/user";
 
@@ -25,11 +24,11 @@ class Api extends React.Component {
     };
   }
 
-  getResponse(res) {
+  async getResponse(res) {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(res.json());
+    return Promise.reject(await res.json());
   }
 
   _request(url, options) {
@@ -71,56 +70,59 @@ class Api extends React.Component {
     });
   };
 
-  loginUser = ({ email, password, name }) => {
+  loginUser = ({ email, password }) => {
     return this._request(`${this.baseUrl}/${this.loginEndPoint}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         email,
         password,
-        name,
       }),
     });
   };
 
-  updateToken = () => {
+  updateToken = (fetchUrlEndPoint, options) => {
     const refreshToken = localStorage.getItem("refreshToken");
-    console.log("update1");
     return this._request(`${this.baseUrl}/${this.updateTokenEndPoint}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         token: refreshToken,
       }),
-    });
+    })
+      .then((res) => {
+        handleTokens(res);
+      })
+      .then(() => {
+        return this._request(`${this.baseUrl}/${fetchUrlEndPoint}`, options);
+      })
+      .catch((err) => {
+        console.log("err in updateToken", err);
+      });
   };
 
+  // access token for expire test:
+  // "Bearer " +
+  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmZhYjg1OGE0YjYyMDAxYzgzZWM3YiIsImlhdCI6MTY4NTI5NzE5NSwiZXhwIjoxNjg1Mjk4Mzk1fQ.7-0A5-ffzhWHCdT1eJzu4avbEi-Ua8hbgp-TnKkiza4",
+
   getUserInfo = () => {
-    console.log("getUserInfo1");
     return this._request(`${this.baseUrl}/${this.userEndPoint}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + getCookie("token"),
       },
+    }).catch((err) => {
+      if (err.message === "jwt expired") {
+        return this.updateToken(this.userEndPoint, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getCookie("token"),
+          },
+        });
+      }
     });
-  };
-
-  getUserInfoWithUpdateToken = async () => {
-    try {
-      return await this.getUserInfo();
-    } catch (err) {
-      console.log("err1", err);
-      err.then((err) => {
-        if (err.message === "jwt expired") {
-          console.log("update2");
-          return this.updateToken().then((res) => {
-            console.log("tokens res", res);
-            handleTokens(res);
-          });
-        }
-      });
-    }
   };
 
   updateUserInfo = ({ name, email, password }) => {
