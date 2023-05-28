@@ -108,6 +108,23 @@ export function loginUser(form) {
   };
 }
 
+export function logoutUser() {
+  return function (dispatch) {
+    api
+      .logoutUser()
+      .then((data) => {
+        console.log(data);
+        // dispatch({
+        //   type: UPDATE_USER,
+        //   payload: data.user,
+        // });
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  };
+}
+
 export function forgotPassword(email) {
   return function (dispatch) {
     dispatch({

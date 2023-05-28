@@ -34,6 +34,10 @@
   text-decoration: none;
 }
 
+.logout {
+  cursor: pointer;
+}
+
 .inputs {
   display: flex;
   flex-direction: column;

@@ -6,7 +6,6 @@ import { ForgotPassword } from "./forgot-password";
 import { ResetPassword } from "./reset-password";
 import { ProfilePage } from "./profile";
 import { PersonalAccountPage } from "./personal-account";
-import { LogoutPage } from "./logout";
 import { OrdersPage } from "./orders";
 
 export {
@@ -18,6 +17,5 @@ export {
   ResetPassword,
   ProfilePage,
   PersonalAccountPage,
-  LogoutPage,
   OrdersPage,
 };

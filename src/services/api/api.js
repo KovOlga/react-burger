@@ -153,13 +153,12 @@ class Api extends React.Component {
   };
 
   logoutUser = () => {
+    const refreshToken = localStorage.getItem("refreshToken");
     return this._request(`${this.baseUrl}/${this.logoutEndPoint}`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        email: "test-data@yandex.ru",
-        password: "password",
-        name: "Username",
+        token: refreshToken,
       }),
     });
   };

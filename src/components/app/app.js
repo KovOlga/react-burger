@@ -8,7 +8,6 @@ import {
   ResetPassword,
   ProfilePage,
   PersonalAccountPage,
-  LogoutPage,
   OrdersPage,
 } from "../../pages";
 
@@ -24,7 +23,6 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/profile" element={<PersonalAccountPage />}>
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/logout" element={<LogoutPage />} />
             <Route path="/profile/orders" element={<OrdersPage />} />
             {/* <Route path="/profile/orders/:id" element={<OrdersPage />} /> */}
           </Route>
