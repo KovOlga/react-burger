@@ -6,23 +6,19 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   UPDATE_USER,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
+  CLEAR_USER,
 } from "../actions";
 
 const initialState = {
-  forgotPasswordRequest: false,
-  forgotPasswordSuccess: false,
-  forgotPasswordFailed: false,
-
-  resetPasswordRequest: false,
-  resetPasswordSuccess: false,
-  resetPasswordFailed: false,
-
   registerRequest: false,
   registerSuccess: false,
   registerFailed: false,
@@ -36,6 +32,20 @@ const initialState = {
     name: "",
     password: "",
   },
+
+  isUserAuthed: false,
+
+  logoutRequest: false,
+  logoutSuccess: false,
+  logoutFailed: false,
+
+  forgotPasswordRequest: false,
+  forgotPasswordSuccess: false,
+  forgotPasswordFailed: false,
+
+  resetPasswordRequest: false,
+  resetPasswordSuccess: false,
+  resetPasswordFailed: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -46,6 +56,7 @@ export const userReducer = (state = initialState, action) => {
         user: { ...state.user, ...action.payload },
       };
     }
+
     case LOGIN_REQUEST: {
       return {
         ...state,
@@ -55,6 +66,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS: {
       return {
         ...state,
+        isUserAuthed: true,
         loginRequest: false,
         loginFailed: false,
         loginSuccess: true,
@@ -65,6 +77,35 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loginRequest: false,
+      };
+    }
+
+    case LOGOUT_REQUEST: {
+      return {
+        ...state,
+        logoutRequest: true,
+      };
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        isUserAuthed: false,
+        logoutRequest: false,
+        logoutFailed: false,
+        logoutSuccess: true,
+      };
+    }
+    case LOGOUT_FAILED: {
+      return {
+        ...state,
+        logoutFailed: true,
+        logoutRequest: false,
+      };
+    }
+    case CLEAR_USER: {
+      return {
+        ...state,
+        user: { ...state.user, email: "", name: "", password: "" },
       };
     }
 
@@ -89,6 +130,7 @@ export const userReducer = (state = initialState, action) => {
         registerRequest: false,
       };
     }
+
     case RESET_PASSWORD_REQUEST: {
       return {
         ...state,

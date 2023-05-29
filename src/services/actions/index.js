@@ -49,6 +49,11 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const CLEAR_USER = "CLEAR_USER";
+
 export const UPDATE_USER = "UPDATE_USER";
 
 const api = new Api();
@@ -87,6 +92,9 @@ export function updateUserInfo(userNewInfo) {
 
 export function loginUser(form) {
   return function (dispatch) {
+    dispatch({
+      type: LOGIN_REQUEST,
+    });
     api
       .loginUser(form)
       .then((res) => {
@@ -96,6 +104,9 @@ export function loginUser(form) {
       .then((data) => {
         if (data.success) {
           dispatch({
+            type: LOGIN_SUCCESS,
+          });
+          dispatch({
             type: UPDATE_USER,
             payload: data.user,
           });
@@ -104,22 +115,37 @@ export function loginUser(form) {
       })
       .catch((e) => {
         console.log(e.message);
+        dispatch({
+          type: LOGIN_FAILED,
+        });
       });
   };
 }
 
 export function logoutUser() {
   return function (dispatch) {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
     api
       .logoutUser()
-      .then((data) => {
-        console.log(data);
-        // dispatch({
-        //   type: UPDATE_USER,
-        //   payload: data.user,
-        // });
+      .then(() => {
+        dispatch({
+          type: CLEAR_USER,
+        });
+      })
+      .then(() => {
+        deleteCookie("token");
+      })
+      .then(() => {
+        dispatch({
+          type: LOGOUT_SUCCESS,
+        });
       })
       .catch((e) => {
+        dispatch({
+          type: LOGOUT_FAILED,
+        });
         console.log(e.message);
       });
   };
