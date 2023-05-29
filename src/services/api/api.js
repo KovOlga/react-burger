@@ -139,6 +139,7 @@ class Api extends React.Component {
       }),
     });
   };
+  //дописать обновление токена
 
   registerUser = ({ email, password, name }) => {
     return this._request(`${this.baseUrl}/${this.registerEndPoint}`, {

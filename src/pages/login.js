@@ -1,14 +1,16 @@
 import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../services/actions";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [loginForm, setValue] = useState({
     email: "",
     password: "",
@@ -21,10 +23,18 @@ export const LoginPage = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginUser(loginForm));
+      dispatch(loginUser(loginForm)).then(() => {
+        if (location.state.from) {
+          navigate(location.state.from.pathname);
+        }
+      });
     },
     [loginForm]
   );
+
+  useEffect(() => {
+    console.log(location.state);
+  }, []);
 
   return (
     <div className={styles.container}>

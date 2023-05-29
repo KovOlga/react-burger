@@ -95,7 +95,7 @@ export function loginUser(form) {
     dispatch({
       type: LOGIN_REQUEST,
     });
-    api
+    return api
       .loginUser(form)
       .then((res) => {
         handleTokens(res);
