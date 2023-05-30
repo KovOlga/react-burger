@@ -153,7 +153,6 @@ export function forgotPassword(email) {
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
         });
-        console.log(res);
       })
       .catch((e) => {
         dispatch({
@@ -174,7 +173,6 @@ export function resetPassword(password, token) {
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
         });
-        console.log(res);
       })
       .catch((e) => {
         dispatch({
@@ -192,7 +190,6 @@ export function registerUser(form) {
     api
       .registerUser(form)
       .then((res) => {
-        console.log(res);
         dispatch({
           type: REGISTER_SUCCESS,
         });

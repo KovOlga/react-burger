@@ -23,15 +23,13 @@ export const LoginPage = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginUser(loginForm))
-        .then(() => {
-          if (location.state.from) {
-            navigate(location.state.from.pathname);
-          }
-        })
-        .then(() => {
-          location.state.from = {};
-        });
+      dispatch(loginUser(loginForm)).then(() => {
+        if (location.state !== null && location.state.from) {
+          navigate(location.state.from.pathname);
+        } else {
+          navigate("/");
+        }
+      });
     },
     [loginForm]
   );

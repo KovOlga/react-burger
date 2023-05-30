@@ -10,8 +10,7 @@ import {
   PersonalAccountPage,
   OrdersPage,
 } from "../../pages";
-import { ProtectedRouteElementNotAuthed } from "../protected-route-not-authed";
-import { ProtectedRouteElementAuthed } from "../protected-route-authed";
+import { ProtectedRouteElement } from "../protected-route";
 
 const App = () => {
   return (
@@ -22,31 +21,45 @@ const App = () => {
 
           <Route
             path="/login"
-            element={<ProtectedRouteElementAuthed element={<LoginPage />} />}
+            element={
+              <ProtectedRouteElement
+                element={<LoginPage />}
+                authHandler={true}
+              />
+            }
           />
           <Route
             path="/register"
-            element={<ProtectedRouteElementAuthed element={<RegisterPage />} />}
+            element={
+              <ProtectedRouteElement
+                element={<RegisterPage />}
+                authHandler={true}
+              />
+            }
           />
           <Route
             path="/forgot-password"
             element={
-              <ProtectedRouteElementAuthed element={<ForgotPassword />} />
+              <ProtectedRouteElement
+                element={<ForgotPassword />}
+                authHandler={true}
+              />
             }
           />
           <Route
             path="/reset-password"
             element={
-              <ProtectedRouteElementAuthed element={<ResetPassword />} />
+              <ProtectedRouteElement
+                element={<ResetPassword />}
+                authHandler={true}
+              />
             }
           />
 
           <Route
             path="/profile"
             element={
-              <ProtectedRouteElementNotAuthed
-                element={<PersonalAccountPage />}
-              />
+              <ProtectedRouteElement element={<PersonalAccountPage />} />
             }
           >
             <Route path="/profile" element={<ProfilePage />} />
