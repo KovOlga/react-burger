@@ -3,13 +3,16 @@ import { Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../services/actions";
+import { useNavigate } from "react-router-dom";
 
 export const PersonalAccountPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogoutUser = () => {
-    console.log("logout");
-    dispatch(logoutUser());
+    dispatch(logoutUser()).then(() => {
+      navigate("/login");
+    });
   };
 
   return (

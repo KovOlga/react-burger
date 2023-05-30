@@ -4,10 +4,6 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "./burger-constructor.module.css";
 import { memo, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  UPDATE_TOTAL_PRICE,
-  UPDATE_CONSTRUCTOR_EMPTINESS,
-} from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
@@ -16,6 +12,10 @@ import {
   addConstructorItemAction,
   swapConstructorBunAction,
 } from "../../services/actions";
+import {
+  UPDATE_TOTAL_PRICE,
+  UPDATE_CONSTRUCTOR_EMPTINESS,
+} from "../../utils/constants";
 
 const BurgerConstructor = memo(() => {
   const dispatch = useDispatch();

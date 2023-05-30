@@ -23,18 +23,18 @@ export const LoginPage = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginUser(loginForm)).then(() => {
-        if (location.state.from) {
-          navigate(location.state.from.pathname);
-        }
-      });
+      dispatch(loginUser(loginForm))
+        .then(() => {
+          if (location.state.from) {
+            navigate(location.state.from.pathname);
+          }
+        })
+        .then(() => {
+          location.state.from = {};
+        });
     },
     [loginForm]
   );
-
-  useEffect(() => {
-    console.log(location.state);
-  }, []);
 
   return (
     <div className={styles.container}>

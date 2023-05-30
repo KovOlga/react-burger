@@ -15,7 +15,7 @@ import {
   TOGGLE_ORDER_INFO_MODAL,
   CLEAR_CONSTRUCTOR,
   RESET_COUNTERS,
-} from "../actions";
+} from "../../utils/constants";
 
 const initialState = {
   data: [],

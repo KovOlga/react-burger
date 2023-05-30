@@ -16,9 +16,15 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
   CLEAR_USER,
-} from "../actions";
+} from "../../utils/constants";
 
 const initialState = {
+  user: {
+    email: "",
+    name: "",
+    password: "",
+  },
+
   registerRequest: false,
   registerSuccess: false,
   registerFailed: false,
@@ -26,14 +32,6 @@ const initialState = {
   loginRequest: false,
   loginSuccess: false,
   loginFailed: false,
-
-  user: {
-    email: "",
-    name: "",
-    password: "",
-  },
-
-  isUserAuthed: false,
 
   logoutRequest: false,
   logoutSuccess: false,
