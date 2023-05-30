@@ -5,9 +5,14 @@ import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const resetPasswordSent = localStorage.getItem("resetPasswordSent");
 
   const [value, setValue] = useState({
     password: "",
@@ -20,10 +25,12 @@ export const ResetPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(resetPassword(value.password, value.code));
+    dispatch(resetPassword(value.password, value.code)).then(() => {
+      navigate("/login");
+    });
   };
 
-  return (
+  return resetPasswordSent ? (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
@@ -53,9 +60,14 @@ export const ResetPassword = () => {
       </form>
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
-          Вспомнили пароль? <span>Войти</span>
+          Вспомнили пароль?{" "}
+          <Link to={"/login"} className={styles.link}>
+            Войти
+          </Link>
         </p>
       </div>
     </div>
+  ) : (
+    <Navigate to="/forgot-password" replace />
   );
 };

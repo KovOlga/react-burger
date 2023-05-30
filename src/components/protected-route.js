@@ -6,7 +6,6 @@ export const ProtectedRouteElement = ({ element, authHandler }) => {
   const isUserAuthed = localStorage.getItem(IS_USER_AUTHED);
 
   if (!isUserAuthed && !authHandler) {
-    console.log(location);
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 

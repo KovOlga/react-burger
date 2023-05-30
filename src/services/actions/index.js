@@ -147,12 +147,15 @@ export function forgotPassword(email) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
     });
-    api
+    return api
       .forgotPassword(email)
       .then((res) => {
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
         });
+      })
+      .then(() => {
+        localStorage.setItem("resetPasswordSent", true);
       })
       .catch((e) => {
         dispatch({
@@ -167,7 +170,7 @@ export function resetPassword(password, token) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
-    api
+    return api
       .resetPassword(password, token)
       .then((res) => {
         dispatch({

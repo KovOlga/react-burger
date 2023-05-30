@@ -11,6 +11,7 @@ import {
   OrdersPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
+import { NotFoundPage } from "../../pages/not-found";
 
 const App = () => {
   return (
@@ -67,6 +68,7 @@ const App = () => {
             {/* <Route path="/profile/orders/:id" element={<OrdersPage />} /> */}
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>
     </Router>
   );

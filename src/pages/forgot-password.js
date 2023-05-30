@@ -5,9 +5,11 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { forgotPassword } from "../services/actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [value, setValue] = useState({
     email: "",
@@ -19,7 +21,9 @@ export const ForgotPassword = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(forgotPassword(value.email));
+    dispatch(forgotPassword(value.email)).then(() => {
+      navigate("/reset-password");
+    });
   };
 
   return (
@@ -44,7 +48,7 @@ export const ForgotPassword = () => {
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?{" "}
-          <Link className={styles.link} to={"/login"}>
+          <Link to={"/login"} className={styles.link}>
             Войти
           </Link>
         </p>
