@@ -1,7 +1,11 @@
 import styles from "./ingredient-details.module.css";
 import ingredientType from "../../utils/types";
+import { useParams } from "react-router-dom";
 
 const IngredientDetails = ({ ingredient }) => {
+  let { id } = useParams();
+  console.log(id);
+
   return (
     <div className={styles.container}>
       <h1 className={`text text_type_main-large ${styles.title}`}>

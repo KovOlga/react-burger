@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import {
   HomePage,
   LoginPage,
@@ -9,16 +14,25 @@ import {
   ProfilePage,
   PersonalAccountPage,
   OrdersPage,
+  IngredientPage,
+  IngredientModalPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 const App = () => {
+  let location = useLocation();
+  let background = location.state && location.state.background;
+
   return (
-    <Router>
-      <Routes>
+    <>
+      <Routes location={background || location}>
         <Route path="/" element={<LayoutPage />}>
           <Route index path="/" element={<HomePage />} />
+
+          {/* <Route path="/ingredients/:id" element={<IngredientPage />} /> */}
 
           <Route
             path="/login"
@@ -70,7 +84,13 @@ const App = () => {
         </Route>
         <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>
-    </Router>
+
+      {background && (
+        <Routes>
+          <Route path="/ingredients/:id" element={<IngredientModalPage />} />
+        </Routes>
+      )}
+    </>
   );
 };
 

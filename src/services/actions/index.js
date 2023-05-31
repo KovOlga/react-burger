@@ -39,6 +39,7 @@ import {
   LOGOUT_FAILED,
   CLEAR_USER,
 } from "../../utils/constants";
+import { setCookie, getCookie } from "../../utils/utils";
 
 const api = new Api();
 
@@ -172,10 +173,13 @@ export function resetPassword(password, token) {
     });
     return api
       .resetPassword(password, token)
-      .then((res) => {
+      .then(() => {
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
         });
+      })
+      .then(() => {
+        localStorage.removeItem("resetPasswordSent");
       })
       .catch((e) => {
         dispatch({
@@ -273,6 +277,8 @@ export const openIngredientModalAction = (item) => {
   return (dispatch) => {
     dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
     dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
+    localStorage.setItem("isIngredientInfoModalShown", true);
+    localStorage.setItem("currentIngredientShown", JSON.stringify(item));
   };
 };
 
@@ -280,6 +286,8 @@ export const closeIngredientModalAction = () => {
   return (dispatch) => {
     dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
     dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+    localStorage.setItem("isIngredientInfoModalShown", false);
+    localStorage.removeItem("currentIngredientShown");
   };
 };
 

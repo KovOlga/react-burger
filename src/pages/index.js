@@ -7,6 +7,8 @@ import { ResetPassword } from "./reset-password";
 import { ProfilePage } from "./profile";
 import { PersonalAccountPage } from "./personal-account";
 import { OrdersPage } from "./orders";
+import { IngredientPage } from "./ingredient";
+import { IngredientModalPage } from "./ingredient-modal";
 
 export {
   HomePage,
@@ -18,4 +20,6 @@ export {
   ProfilePage,
   PersonalAccountPage,
   OrdersPage,
+  IngredientPage,
+  IngredientModalPage,
 };
