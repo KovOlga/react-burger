@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { IS_USER_AUTHED } from "../utils/constants";
+import PropTypes from "prop-types";
 
 export const ProtectedRouteElement = ({ element, authHandler }) => {
   const location = useLocation();
@@ -14,4 +15,9 @@ export const ProtectedRouteElement = ({ element, authHandler }) => {
   }
 
   return element;
+};
+
+ProtectedRouteElement.propTypes = {
+  element: PropTypes.element.isRequired,
+  authHandler: PropTypes.bool,
 };

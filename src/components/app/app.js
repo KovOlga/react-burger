@@ -7,7 +7,6 @@ import {
   ForgotPassword,
   ResetPassword,
   ProfilePage,
-  PersonalAccountPage,
   OrdersPage,
   IngredientPage,
   IngredientModalPage,
@@ -64,9 +63,7 @@ const App = () => {
           />
           <Route
             path="/profile"
-            element={
-              <ProtectedRouteElement element={<PersonalAccountPage />} />
-            }
+            element={<ProtectedRouteElement element={<ProfilePage />} />}
           >
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<OrdersPage />} />

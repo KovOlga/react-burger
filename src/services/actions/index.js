@@ -56,7 +56,7 @@ export function getUserInfo() {
         });
       })
       .catch((e) => {
-        console.log("error in getUserInfo:", e);
+        console.log("error:", e);
       });
   };
 }
@@ -80,7 +80,7 @@ export function updateUserInfo(userNewInfo) {
         });
       })
       .catch((e) => {
-        console.log("e2", e);
+        console.log("error:", e);
         dispatch({
           type: UPDATE_USER_FAILED,
         });

@@ -100,7 +100,7 @@ class Api extends React.Component {
         return this._request(`${this.baseUrl}/${fetchUrlEndPoint}`, options);
       })
       .catch((err) => {
-        console.log("err in updateToken", err);
+        console.log("err:", err);
       });
   };
 
