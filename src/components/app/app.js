@@ -14,6 +14,7 @@ import {
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
+import ProfileForm from "../profile-form.js/profile-form";
 
 const App = () => {
   let location = useLocation();
@@ -67,9 +68,8 @@ const App = () => {
               <ProtectedRouteElement element={<PersonalAccountPage />} />
             }
           >
-            <Route index element={<ProfilePage />} />
+            <Route index element={<ProfileForm />} />
             <Route path="orders" element={<OrdersPage />} />
-            {/* <Route path="/profile/orders/:id" element={<OrdersPage />} /> */}
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />}></Route>

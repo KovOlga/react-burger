@@ -4,7 +4,7 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const AppHeader = memo(() => {
   return (
@@ -13,12 +13,15 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <BurgerIcon type="primary" />
-            <Link
+            <NavLink
               to={"/"}
               className={`text text_type_main-default ${styles.link} ${styles.link_constructor}`}
+              style={({ isActive }) => ({
+                color: isActive ? "#f2f2f3" : "#8585ad",
+              })}
             >
               Конструктор
-            </Link>
+            </NavLink>
           </li>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ListIcon type="secondary" />
@@ -35,12 +38,15 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <ProfileIcon type="secondary" />
-            <Link
+            <NavLink
               to={"/profile"}
               className={`text text_type_main-default text_color_inactive ${styles.link}`}
+              style={({ isActive }) => ({
+                color: isActive ? "#f2f2f3" : "#8585ad",
+              })}
             >
               Личный кабинет
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

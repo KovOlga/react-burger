@@ -6,6 +6,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   UPDATE_USER,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
@@ -24,6 +27,10 @@ const initialState = {
     name: "",
     password: "",
   },
+
+  updateUserRequest: false,
+  updateUserSuccess: false,
+  updateUserFailed: false,
 
   registerRequest: false,
   registerSuccess: false,
@@ -52,6 +59,27 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: { ...state.user, ...action.payload },
+      };
+    }
+    case UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        updateUserRequest: true,
+      };
+    }
+    case UPDATE_USER_SUCCESS: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserFailed: false,
+        registerSuccess: true,
+      };
+    }
+    case UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        updateUserFailed: true,
+        updateUserRequest: false,
       };
     }
 

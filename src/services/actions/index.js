@@ -38,8 +38,10 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
   CLEAR_USER,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED,
 } from "../../utils/constants";
-import { setCookie, getCookie } from "../../utils/utils";
 
 const api = new Api();
 
@@ -61,7 +63,10 @@ export function getUserInfo() {
 
 export function updateUserInfo(userNewInfo) {
   return function (dispatch) {
-    api
+    dispatch({
+      type: UPDATE_USER_REQUEST,
+    });
+    return api
       .updateUserInfo(userNewInfo)
       .then((res) => {
         dispatch({
@@ -69,8 +74,16 @@ export function updateUserInfo(userNewInfo) {
           payload: res.user,
         });
       })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+        });
+      })
       .catch((e) => {
         console.log("e2", e);
+        dispatch({
+          type: UPDATE_USER_FAILED,
+        });
       });
   };
 }

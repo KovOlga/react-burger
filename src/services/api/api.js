@@ -140,9 +140,18 @@ class Api extends React.Component {
         password,
         name,
       }),
+    }).catch((err) => {
+      if (err.message === "jwt expired") {
+        return this.updateToken(this.userEndPoint, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getCookie("token"),
+          },
+        });
+      }
     });
   };
-  //дописать обновление токена
 
   registerUser = ({ email, password, name }) => {
     return this._request(`${this.baseUrl}/${this.registerEndPoint}`, {

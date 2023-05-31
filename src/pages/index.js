@@ -4,7 +4,6 @@ import { LayoutPage } from "./layout";
 import { RegisterPage } from "./register";
 import { ForgotPassword } from "./forgot-password";
 import { ResetPassword } from "./reset-password";
-import { ProfilePage } from "./profile";
 import { PersonalAccountPage } from "./personal-account";
 import { OrdersPage } from "./orders";
 import { IngredientPage } from "./ingredient";
@@ -17,7 +16,6 @@ export {
   RegisterPage,
   ForgotPassword,
   ResetPassword,
-  ProfilePage,
   PersonalAccountPage,
   OrdersPage,
   IngredientPage,

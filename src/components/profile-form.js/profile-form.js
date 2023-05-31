@@ -1,4 +1,4 @@
-import styles from "./profile.module.css";
+import styles from "./profile-form.module.css";
 import {
   Input,
   EmailInput,
@@ -6,14 +6,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserInfo } from "../services/actions";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { updateUserInfo } from "../services/actions";
+import { updateUserInfo, getUserInfo } from "../../services/actions";
 
-export const ProfilePage = () => {
+const ProfileForm = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
+  const updateUserRequest = useSelector(
+    (store) => store.user.updateUserRequest
+  );
   const user = useSelector((store) => store.user.user);
   const [userData, setValue] = useState({
     name: "",
@@ -28,8 +30,11 @@ export const ProfilePage = () => {
     setValue({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const onSubmitUserData = () => {
-    dispatch(updateUserInfo(userData));
+  const onSubmitUserData = (e) => {
+    e.preventDefault();
+    dispatch(updateUserInfo(userData)).then(() => {
+      setFormChanging(false);
+    });
   };
 
   const resetForm = () => {
@@ -62,8 +67,8 @@ export const ProfilePage = () => {
   }, [user]);
 
   return (
-    <div className={styles.inputsContainer}>
-      <div className={styles.inputs}>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={onSubmitUserData}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -95,7 +100,7 @@ export const ProfilePage = () => {
           icon="EditIcon"
           onFocus={onFocus}
         />
-      </div>
+      </form>
       {isFormChanging && (
         <div className={styles.handlers}>
           <p
@@ -111,10 +116,12 @@ export const ProfilePage = () => {
             size="medium"
             extraClass={styles.btn}
           >
-            Сохранить
+            {updateUserRequest ? "Сохраняется" : "Сохранить"}
           </Button>
         </div>
       )}
     </div>
   );
 };
+
+export default ProfileForm;

@@ -37,28 +37,3 @@
 .logout {
   cursor: pointer;
 }
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-.inputsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.handlers {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 30px;
-  align-self: flex-end;
-}
-
-.text:hover {
-  cursor: pointer;
-}

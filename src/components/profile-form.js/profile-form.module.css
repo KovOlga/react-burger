@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.handlers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  align-self: flex-end;
+}
+
+.text:hover {
+  cursor: pointer;
+}
