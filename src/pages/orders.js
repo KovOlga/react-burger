@@ -1,3 +1,3 @@
 export const OrdersPage = () => {
-  return <h1>OrdersPage in progress</h1>;
+  return <h1>Страница в разработке</h1>;
 };

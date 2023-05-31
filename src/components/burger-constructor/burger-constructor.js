@@ -16,8 +16,10 @@ import {
   UPDATE_TOTAL_PRICE,
   UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const BurgerConstructor = memo(() => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const totalPrice = useSelector((store) => store.ingredients.totalPrice);
 
@@ -38,13 +40,17 @@ const BurgerConstructor = memo(() => {
   };
 
   const openConfirm = useCallback(() => {
-    const orderArr = [
-      constructorIngredients.map((ingredient) => {
-        return ingredient._id;
-      }),
-      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
-    ].flatMap((i) => i);
-    dispatch(getOrderNumber(orderArr));
+    if (localStorage.getItem("isUserAuthed")) {
+      const orderArr = [
+        constructorIngredients.map((ingredient) => {
+          return ingredient._id;
+        }),
+        Object.keys(currentBun).length === 0 ? [] : currentBun._id,
+      ].flatMap((i) => i);
+      dispatch(getOrderNumber(orderArr));
+    } else {
+      navigate("/login");
+    }
   }, [constructorIngredients, currentBun, dispatch]);
 
   useEffect(() => {

@@ -22,6 +22,7 @@ export const PersonalAccountPage = () => {
           <li className={styles.list__item}>
             <NavLink
               to={"/profile"}
+              end
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
               })}

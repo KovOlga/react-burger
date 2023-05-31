@@ -24,9 +24,7 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<LayoutPage />}>
           <Route index path="/" element={<HomePage />} />
-
           <Route path="/ingredients/:id" element={<IngredientPage />} />
-
           <Route
             path="/login"
             element={
@@ -63,15 +61,14 @@ const App = () => {
               />
             }
           />
-
           <Route
             path="/profile"
             element={
               <ProtectedRouteElement element={<PersonalAccountPage />} />
             }
           >
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/orders" element={<OrdersPage />} />
+            <Route index element={<ProfilePage />} />
+            <Route path="orders" element={<OrdersPage />} />
             {/* <Route path="/profile/orders/:id" element={<OrdersPage />} /> */}
           </Route>
         </Route>

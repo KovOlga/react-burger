@@ -42,7 +42,10 @@ class Api extends React.Component {
   getOrderNumber = (ingredientsArr) => {
     return this._request(`${this.baseUrl}/${this.orderEndPoint}`, {
       method: "POST",
-      headers: this.headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
+      },
       body: JSON.stringify({
         ingredients: ingredientsArr,
       }),
