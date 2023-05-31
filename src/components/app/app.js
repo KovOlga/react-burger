@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import {
   HomePage,
   LoginPage,
@@ -19,8 +14,6 @@ import {
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 
 const App = () => {
   let location = useLocation();
@@ -32,7 +25,7 @@ const App = () => {
         <Route path="/" element={<LayoutPage />}>
           <Route index path="/" element={<HomePage />} />
 
-          {/* <Route path="/ingredients/:id" element={<IngredientPage />} /> */}
+          <Route path="/ingredients/:id" element={<IngredientPage />} />
 
           <Route
             path="/login"
