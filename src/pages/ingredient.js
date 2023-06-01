@@ -2,7 +2,7 @@ import IngredientDetails from "../components/ingredient-details/ingredient-detai
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../services/actions";
+import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
 

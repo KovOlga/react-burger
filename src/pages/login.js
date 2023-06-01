@@ -5,7 +5,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../services/actions";
+import { loginUser } from "../services/actions/user";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();

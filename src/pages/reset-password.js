@@ -3,7 +3,7 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { resetPassword } from "../services/actions";
+import { resetPassword } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

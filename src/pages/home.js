@@ -7,11 +7,9 @@ import Modal from "../components/modal/modal";
 import OrderDetails from "../components/order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
-import { getIngredients } from "../services/actions";
-import {
-  openIngredientModalAction,
-  closeOrderModalAction,
-} from "../services/actions";
+import { getIngredients } from "../services/actions/ingredients";
+import { openIngredientModalAction } from "../services/actions/ingredient-modal";
+import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
 
 const modalRoot = document.getElementById("react-modals");

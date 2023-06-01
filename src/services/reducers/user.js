@@ -19,7 +19,7 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
   CLEAR_USER,
-} from "../../utils/constants";
+} from "../actions/user";
 
 const initialState = {
   user: {

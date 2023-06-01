@@ -1,47 +1,27 @@
 import Api from "../api/api";
-import { v4 as uuidv4 } from "uuid";
 import { deleteCookie, handleTokens } from "../../utils/utils";
-import {
-  IS_USER_AUTHED,
-  UPDATE_USER,
-  GET_INGREDIENT_REQUEST,
-  GET_INGREDIENT_SUCCESS,
-  GET_INGREDIENT_FAILED,
-  GET_ORDER_NUMBER_REQUEST,
-  GET_ORDER_NUMBER_SUCCESS,
-  GET_ORDER_NUMBER_FAILED,
-  UPDATE_CONSTRUCTOR_EMPTINESS,
-  SET_CURRENT_INGREDIENT,
-  CLEAR_CURRENT_INGREDIENT,
-  SET_CURRENT_BUN,
-  ADD_CONSTRUCTOR_ITEM,
-  DELETE_CONSTRUCTOR_ITEM,
-  UPDATE_INGREDIENT_COUNTER,
-  UPDATE_BUN_COUNTER,
-  TOGGLE_INGREDIENT_INFO_MODAL,
-  TOGGLE_ORDER_INFO_MODAL,
-  CLEAR_CONSTRUCTOR,
-  RESET_COUNTERS,
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  FORGOT_PASSWORD_FAILED,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILED,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILED,
-  CLEAR_USER,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILED,
-} from "../../utils/constants";
+
+export const IS_USER_AUTHED = "isUserAuthed";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+export const REGISTER_REQUEST = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILED = "REGISTER_FAILED";
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const CLEAR_USER = "CLEAR_USER";
 
 const api = new Api();
 
@@ -221,100 +201,3 @@ export function registerUser(form) {
       });
   };
 }
-
-export function getIngredients() {
-  return function (dispatch) {
-    dispatch({
-      type: GET_INGREDIENT_REQUEST,
-    });
-    api
-      .getIngredientsList()
-      .then(({ data }) => {
-        dispatch({
-          type: GET_INGREDIENT_SUCCESS,
-          data,
-        });
-      })
-      .catch((e) => {
-        dispatch({
-          type: GET_INGREDIENT_FAILED,
-        });
-      });
-  };
-}
-
-export function getOrderNumber(orderArr) {
-  return function (dispatch) {
-    if (orderArr.length === 0) {
-      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
-      return;
-    }
-    dispatch({
-      type: GET_ORDER_NUMBER_REQUEST,
-    });
-    api
-      .getOrderNumber(orderArr)
-      .then((res) => {
-        dispatch({
-          type: GET_ORDER_NUMBER_SUCCESS,
-          payload: res,
-        });
-        dispatch({
-          type: TOGGLE_ORDER_INFO_MODAL,
-        });
-      })
-      .catch((e) => {
-        dispatch({
-          type: GET_ORDER_NUMBER_FAILED,
-        });
-      });
-  };
-}
-
-export const addConstructorItemAction = (itemId) => {
-  const uuid = uuidv4();
-  return (dispatch) => {
-    dispatch({ type: ADD_CONSTRUCTOR_ITEM, itemId, uuid });
-    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
-  };
-};
-
-export const deleteConstructorItemAction = (itemId, uniqueId) => {
-  return (dispatch) => {
-    dispatch({ type: DELETE_CONSTRUCTOR_ITEM, uniqueId });
-    dispatch({ type: UPDATE_INGREDIENT_COUNTER, itemId });
-  };
-};
-
-export const openIngredientModalAction = (item) => {
-  return (dispatch) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
-    localStorage.setItem("isIngredientInfoModalShown", true);
-    localStorage.setItem("currentIngredientShown", JSON.stringify(item));
-  };
-};
-
-export const closeIngredientModalAction = () => {
-  return (dispatch) => {
-    dispatch({ type: TOGGLE_INGREDIENT_INFO_MODAL });
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
-    localStorage.setItem("isIngredientInfoModalShown", false);
-    localStorage.removeItem("currentIngredientShown");
-  };
-};
-
-export const closeOrderModalAction = () => {
-  return (dispatch) => {
-    dispatch({ type: TOGGLE_ORDER_INFO_MODAL });
-    dispatch({ type: CLEAR_CONSTRUCTOR });
-    dispatch({ type: RESET_COUNTERS });
-  };
-};
-
-export const swapConstructorBunAction = (itemId) => {
-  return (dispatch) => {
-    dispatch({ type: SET_CURRENT_BUN, itemId });
-    dispatch({ type: UPDATE_BUN_COUNTER, itemId });
-  };
-};

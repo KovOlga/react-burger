@@ -8,15 +8,13 @@ import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import {
-  getOrderNumber,
   addConstructorItemAction,
   swapConstructorBunAction,
-} from "../../services/actions";
-import {
-  UPDATE_TOTAL_PRICE,
-  UPDATE_CONSTRUCTOR_EMPTINESS,
-} from "../../utils/constants";
+} from "../../services/actions/constructor";
+import { getOrderNumber } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
+import { UPDATE_TOTAL_PRICE } from "../../services/actions/constructor";
+import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
 
 const BurgerConstructor = memo(() => {
   const navigate = useNavigate();

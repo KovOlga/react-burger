@@ -2,7 +2,7 @@ import styles from "./profile.module.css";
 import { Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../services/actions";
+import { logoutUser } from "../services/actions/user";
 import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {

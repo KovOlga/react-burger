@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { IS_USER_AUTHED } from "../utils/constants";
+import { IS_USER_AUTHED } from "../services/actions/user";
 import PropTypes from "prop-types";
 
 export const ProtectedRouteElement = ({ element, authHandler }) => {

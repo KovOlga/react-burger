@@ -5,7 +5,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { registerUser } from "../services/actions";
+import { registerUser } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 
 export const RegisterPage = () => {

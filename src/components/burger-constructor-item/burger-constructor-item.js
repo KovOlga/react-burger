@@ -4,8 +4,8 @@ import { useDrag, useDrop } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
 import { useDispatch } from "react-redux";
 import { useRef } from "react";
-import { SORT_DRAGGING_ITEM } from "../../utils/constants";
-import { deleteConstructorItemAction } from "../../services/actions";
+import { SORT_DRAGGING_ITEM } from "../../services/actions/constructor";
+import { deleteConstructorItemAction } from "../../services/actions/constructor";
 
 const BurgerConstructorItem = ({ ingredient, type, index }) => {
   const dispatch = useDispatch();

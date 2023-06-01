@@ -3,7 +3,7 @@ import {
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
   UPDATE_CONSTRUCTOR_EMPTINESS,
-} from "../../utils/constants";
+} from "../actions/order";
 
 const initialState = {
   orderInfo: {},

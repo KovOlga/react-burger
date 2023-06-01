@@ -7,7 +7,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { updateUserInfo, getUserInfo } from "../../services/actions";
+import { updateUserInfo, getUserInfo } from "../../services/actions/user";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();

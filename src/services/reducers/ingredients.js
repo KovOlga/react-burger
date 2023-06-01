@@ -2,20 +2,29 @@ import {
   GET_INGREDIENT_REQUEST,
   GET_INGREDIENT_SUCCESS,
   GET_INGREDIENT_FAILED,
-  SET_CURRENT_INGREDIENT,
+} from "../actions/ingredients";
+
+import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
-  CLEAR_CURRENT_INGREDIENT,
   UPDATE_TOTAL_PRICE,
   UPDATE_INGREDIENT_COUNTER,
   UPDATE_BUN_COUNTER,
   SORT_DRAGGING_ITEM,
+} from "../actions/constructor";
+
+import {
+  SET_CURRENT_INGREDIENT,
+  CLEAR_CURRENT_INGREDIENT,
   TOGGLE_INGREDIENT_INFO_MODAL,
+} from "../actions/ingredient-modal";
+
+import {
   TOGGLE_ORDER_INFO_MODAL,
   CLEAR_CONSTRUCTOR,
   RESET_COUNTERS,
-} from "../../utils/constants";
+} from "../actions/order";
 
 const initialState = {
   data: [],

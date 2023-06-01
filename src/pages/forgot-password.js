@@ -2,7 +2,7 @@ import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { forgotPassword } from "../services/actions";
+import { forgotPassword } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
