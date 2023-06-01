@@ -50,8 +50,8 @@ export const RegisterPage = () => {
           placeholder="Пароль"
         />
         <Button
-          onClick={onSubmit}
-          htmlType="button"
+          onSubmit={onSubmit}
+          htmlType="submit"
           type="primary"
           size="medium"
         >

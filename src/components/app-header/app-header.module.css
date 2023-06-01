@@ -35,18 +35,14 @@
 .list__item {
   margin: 0;
   list-style-type: none;
+}
+
+.link {
+  text-decoration: none;
   display: flex;
   flex-direction: row;
   gap: 8px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-}
-
-.link {
-  text-decoration: none;
-}
-
-.link_constructor {
-  color: #f2f2f3;
 }

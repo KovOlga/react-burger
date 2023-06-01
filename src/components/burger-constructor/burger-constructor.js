@@ -42,10 +42,11 @@ const BurgerConstructor = memo(() => {
   const openConfirm = useCallback(() => {
     if (localStorage.getItem("isUserAuthed")) {
       const orderArr = [
+        currentBun._id,
         constructorIngredients.map((ingredient) => {
           return ingredient._id;
         }),
-        Object.keys(currentBun).length === 0 ? [] : currentBun._id,
+        currentBun._id,
       ].flatMap((i) => i);
       dispatch(getOrderNumber(orderArr));
     } else {
@@ -55,7 +56,7 @@ const BurgerConstructor = memo(() => {
 
   useEffect(() => {
     if (
-      constructorIngredients.length === 0 &&
+      constructorIngredients.length < 1 ||
       Object.keys(currentBun).length === 0
     ) {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });

@@ -37,8 +37,8 @@ export const ForgotPassword = () => {
           placeholder="Укажите e-mail"
         />
         <Button
-          onClick={onSubmit}
-          htmlType="button"
+          onSubmit={onSubmit}
+          htmlType="submit"
           type="primary"
           size="medium"
         >

@@ -100,26 +100,28 @@ const ProfileForm = () => {
           icon="EditIcon"
           onFocus={onFocus}
         />
+        {isFormChanging && (
+          <div className={styles.handlers}>
+            <Button
+              htmlType="reset"
+              type="secondary"
+              size="large"
+              onClick={resetForm}
+            >
+              Отмена
+            </Button>
+            <Button
+              onSubmit={onSubmitUserData}
+              htmlType="submit"
+              type="primary"
+              size="medium"
+              extraClass={styles.btn}
+            >
+              {updateUserRequest ? "Сохраняется" : "Сохранить"}
+            </Button>
+          </div>
+        )}
       </form>
-      {isFormChanging && (
-        <div className={styles.handlers}>
-          <p
-            className={`text text_type_main-default text_color_inactive ${styles.text}`}
-            onClick={resetForm}
-          >
-            Отмена
-          </p>
-          <Button
-            onClick={onSubmitUserData}
-            htmlType="button"
-            type="primary"
-            size="medium"
-            extraClass={styles.btn}
-          >
-            {updateUserRequest ? "Сохраняется" : "Сохранить"}
-          </Button>
-        </div>
-      )}
     </div>
   );
 };
