@@ -14,11 +14,7 @@ import {
   SORT_DRAGGING_ITEM,
 } from "../actions/constructor";
 
-import {
-  SET_CURRENT_INGREDIENT,
-  CLEAR_CURRENT_INGREDIENT,
-  TOGGLE_INGREDIENT_INFO_MODAL,
-} from "../actions/ingredient-modal";
+import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 
 import {
   TOGGLE_ORDER_INFO_MODAL,
@@ -31,10 +27,8 @@ const initialState = {
   dataRequest: false,
   dataFailed: false,
 
-  currentBun: {},
+  currentBun: null,
   constructorIngredients: [],
-
-  currentIngredient: {},
 
   totalPrice: 0,
 
@@ -63,12 +57,6 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENT_FAILED: {
       return { ...state, dataFailed: true, dataRequest: false };
     }
-    case SET_CURRENT_INGREDIENT: {
-      return { ...state, currentIngredient: action.payload };
-    }
-    case CLEAR_CURRENT_INGREDIENT: {
-      return { ...state, currentIngredient: {} };
-    }
     case SET_CURRENT_BUN: {
       return {
         ...state,
@@ -81,9 +69,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsPrice = ingredientsPrice + item.price;
       });
       const totalPrice =
-        (state.currentBun.price === undefined
-          ? 0
-          : state.currentBun.price * 2) + ingredientsPrice;
+        (!state.currentBun ? 0 : state.currentBun.price * 2) + ingredientsPrice;
       return {
         ...state,
         totalPrice: totalPrice,
@@ -165,7 +151,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case CLEAR_CONSTRUCTOR: {
       return {
         ...state,
-        currentBun: {},
+        currentBun: null,
         constructorIngredients: [],
       };
     }

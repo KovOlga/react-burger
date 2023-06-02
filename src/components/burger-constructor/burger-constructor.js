@@ -53,10 +53,7 @@ const BurgerConstructor = memo(() => {
   }, [constructorIngredients, currentBun, dispatch]);
 
   useEffect(() => {
-    if (
-      constructorIngredients.length < 1 ||
-      Object.keys(currentBun).length === 0
-    ) {
+    if (constructorIngredients.length < 1 || !currentBun) {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
     } else {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
@@ -93,11 +90,10 @@ const BurgerConstructor = memo(() => {
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div ref={dropTarget} className={containerClassName}>
-        {constructorIngredients.length ||
-        Object.keys(currentBun).length !== 0 ? (
+        {constructorIngredients.length || currentBun ? (
           <>
             <div>
-              {Object.keys(currentBun).length !== 0 && (
+              {currentBun && (
                 <ConstructorElement
                   extraClass={styles.item__bun}
                   key={"top"}
@@ -124,7 +120,7 @@ const BurgerConstructor = memo(() => {
             </ul>
 
             <div>
-              {Object.keys(currentBun).length !== 0 && (
+              {currentBun && (
                 <ConstructorElement
                   extraClass={styles.item__bun}
                   key={"bottom"}

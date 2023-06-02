@@ -6,7 +6,7 @@ import {
 } from "../actions/order";
 
 const initialState = {
-  orderInfo: {},
+  orderInfo: null,
   orderNumberRequest: false,
   orderNumberFailed: false,
   isConstructorEmpty: true,
