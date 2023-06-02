@@ -50,7 +50,7 @@ const BurgerConstructor = memo(() => {
     } else {
       navigate("/login");
     }
-  }, [constructorIngredients, currentBun, dispatch]);
+  }, [constructorIngredients, currentBun, dispatch, navigate]);
 
   useEffect(() => {
     if (constructorIngredients.length < 1 || !currentBun) {
@@ -58,7 +58,7 @@ const BurgerConstructor = memo(() => {
     } else {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
     }
-  }, [constructorIngredients, currentBun]);
+  }, [constructorIngredients, currentBun, dispatch]);
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
@@ -85,7 +85,7 @@ const BurgerConstructor = memo(() => {
 
   useEffect(() => {
     dispatch({ type: UPDATE_TOTAL_PRICE });
-  }, [currentBun, constructorIngredients]);
+  }, [currentBun, constructorIngredients, dispatch]);
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>

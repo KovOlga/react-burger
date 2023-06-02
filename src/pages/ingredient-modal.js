@@ -21,7 +21,7 @@ export const IngredientModalPage = () => {
   const closeIngredientInfoModal = useCallback(() => {
     dispatch(closeIngredientModalAction());
     navigate(-1);
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     isIngredientInfoModalShown && (

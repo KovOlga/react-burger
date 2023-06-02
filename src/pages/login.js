@@ -29,7 +29,7 @@ export const LoginPage = () => {
         }
       });
     },
-    [values]
+    [values, dispatch, location.state, navigate]
   );
 
   return (

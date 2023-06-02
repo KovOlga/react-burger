@@ -55,13 +55,13 @@ const ProfileForm = () => {
 
   useEffect(() => {
     dispatch(getUserInfo());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
       setValues(user);
     }
-  }, [user]);
+  }, [user, setValues]);
 
   return (
     <div className={styles.container}>
