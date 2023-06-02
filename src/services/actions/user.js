@@ -146,18 +146,21 @@ export function forgotPassword(email) {
   };
 }
 
-export function resetPassword(password, token) {
+export function resetPassword({ password, code }) {
   return function (dispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
     return api
-      .resetPassword(password, token)
-      .then(() => {
-        dispatch({
-          type: RESET_PASSWORD_SUCCESS,
-        });
-        localStorage.removeItem("resetPasswordSent");
+      .resetPassword(password, code)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+          });
+          localStorage.removeItem("resetPasswordSent");
+        }
+        return res;
       })
       .catch((e) => {
         dispatch({

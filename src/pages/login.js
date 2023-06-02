@@ -1,29 +1,27 @@
 import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../services/actions/user";
+import { useForm } from "../hooks/useForm";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const [loginForm, setValue] = useState({
+  const { values, handleChange } = useForm({
+    name: "",
     email: "",
     password: "",
   });
 
-  const onChange = (e) => {
-    setValue({ ...loginForm, [e.target.name]: e.target.value });
-  };
-
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginUser(loginForm)).then(() => {
+      dispatch(loginUser(values)).then(() => {
         if (location.state !== null && location.state.from) {
           navigate(location.state.from.pathname);
         } else {
@@ -31,7 +29,7 @@ export const LoginPage = () => {
         }
       });
     },
-    [loginForm]
+    [values]
   );
 
   return (
@@ -39,14 +37,14 @@ export const LoginPage = () => {
       <form className={styles.form} onSubmit={onSubmit}>
         <h1 className="text text_type_main-medium">Вход</h1>
         <EmailInput
-          onChange={onChange}
-          value={loginForm.email}
+          onChange={handleChange}
+          value={values.email}
           name={"email"}
           placeholder="E-mail"
         />
         <PasswordInput
-          onChange={onChange}
-          value={loginForm.password}
+          onChange={handleChange}
+          value={values.password}
           name={"password"}
           placeholder="Пароль"
         />
