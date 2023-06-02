@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("react-modals");
 
 export const IngredientModalPage = () => {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const currentIngredient = JSON.parse(
     localStorage.getItem("currentIngredientShown")

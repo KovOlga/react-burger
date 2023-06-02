@@ -41,11 +41,11 @@ const BurgerConstructor = memo(() => {
     if (localStorage.getItem("isUserAuthed")) {
       const orderArr = [
         currentBun._id,
-        constructorIngredients.map((ingredient) => {
+        ...constructorIngredients.map((ingredient) => {
           return ingredient._id;
         }),
         currentBun._id,
-      ].flatMap((i) => i);
+      ];
       dispatch(getOrderNumber(orderArr));
     } else {
       navigate("/login");

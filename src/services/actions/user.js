@@ -53,8 +53,6 @@ export function updateUserInfo(userNewInfo) {
           type: UPDATE_USER,
           payload: res.user,
         });
-      })
-      .then((res) => {
         dispatch({
           type: UPDATE_USER_SUCCESS,
         });
@@ -77,22 +75,17 @@ export function loginUser(form) {
       .loginUser(form)
       .then((res) => {
         handleTokens(res);
-        return res;
-      })
-      .then((data) => {
-        if (data.success) {
+        localStorage.setItem(IS_USER_AUTHED, true);
+        if (res.success) {
           dispatch({
             type: LOGIN_SUCCESS,
           });
           dispatch({
             type: UPDATE_USER,
-            payload: data.user,
+            payload: res.user,
           });
         }
-        return data;
-      })
-      .then(() => {
-        localStorage.setItem(IS_USER_AUTHED, true);
+        return res;
       })
       .catch((e) => {
         console.log(e.message);
@@ -110,22 +103,18 @@ export function logoutUser() {
     });
     return api
       .logoutUser()
-      .then(() => {
-        dispatch({
-          type: CLEAR_USER,
-        });
-      })
-      .then(() => {
-        deleteCookie("token");
-      })
-      .then(() => {
-        localStorage.removeItem(IS_USER_AUTHED);
-        localStorage.removeItem("refreshToken");
-      })
-      .then(() => {
-        dispatch({
-          type: LOGOUT_SUCCESS,
-        });
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: CLEAR_USER,
+          });
+          deleteCookie("token");
+          localStorage.removeItem(IS_USER_AUTHED);
+          localStorage.removeItem("refreshToken");
+          dispatch({
+            type: LOGOUT_SUCCESS,
+          });
+        }
       })
       .catch((e) => {
         dispatch({
@@ -143,12 +132,10 @@ export function forgotPassword(email) {
     });
     return api
       .forgotPassword(email)
-      .then((res) => {
+      .then(() => {
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
         });
-      })
-      .then(() => {
         localStorage.setItem("resetPasswordSent", true);
       })
       .catch((e) => {
@@ -170,8 +157,6 @@ export function resetPassword(password, token) {
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
         });
-      })
-      .then(() => {
         localStorage.removeItem("resetPasswordSent");
       })
       .catch((e) => {
@@ -189,7 +174,7 @@ export function registerUser(form) {
     });
     api
       .registerUser(form)
-      .then((res) => {
+      .then(() => {
         dispatch({
           type: REGISTER_SUCCESS,
         });

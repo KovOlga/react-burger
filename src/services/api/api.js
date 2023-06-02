@@ -5,19 +5,19 @@ class Api extends React.Component {
   constructor(props) {
     super(props);
     this.baseUrl = "https://norma.nomoreparties.space/api";
-    this.ingredientsEndPoint = "ingredients";
-    this.orderEndPoint = "orders";
+    this.ingredientsEndPoint = `${this.baseUrl}/ingredients`;
+    this.orderEndPoint = `${this.baseUrl}/orders`;
 
-    this.forgotPasswordEndPoint = "password-reset";
-    this.resetPasswordEndPoint = "password-reset/reset";
+    this.forgotPasswordEndPoint = `${this.baseUrl}/password-reset`;
+    this.resetPasswordEndPoint = `${this.baseUrl}/password-reset/reset`;
 
-    this.loginEndPoint = "auth/login";
-    this.registerEndPoint = "auth/register";
-    this.logoutEndPoint = "auth/logout";
+    this.loginEndPoint = `${this.baseUrl}/auth/login`;
+    this.registerEndPoint = `${this.baseUrl}/auth/register`;
+    this.logoutEndPoint = `${this.baseUrl}/auth/logout`;
 
-    this.userEndPoint = "auth/user";
+    this.userEndPoint = `${this.baseUrl}/auth/user`;
 
-    this.updateTokenEndPoint = "auth/token";
+    this.updateTokenEndPoint = `${this.baseUrl}/auth/token`;
 
     this.headers = {
       "Content-Type": "application/json",
@@ -36,11 +36,11 @@ class Api extends React.Component {
   }
 
   getIngredientsList = () => {
-    return this._request(`${this.baseUrl}/${this.ingredientsEndPoint}`);
+    return this._request(this.ingredientsEndPoint);
   };
 
   getOrderNumber = (ingredientsArr) => {
-    return this._request(`${this.baseUrl}/${this.orderEndPoint}`, {
+    return this._request(this.orderEndPoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ class Api extends React.Component {
   };
 
   forgotPassword = (email) => {
-    return this._request(`${this.baseUrl}/${this.forgotPasswordEndPoint}`, {
+    return this._request(this.forgotPasswordEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -63,7 +63,7 @@ class Api extends React.Component {
   };
 
   resetPassword = (password, token) => {
-    return this._request(`${this.baseUrl}/${this.resetPasswordEndPoint}`, {
+    return this._request(this.resetPasswordEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -74,7 +74,7 @@ class Api extends React.Component {
   };
 
   loginUser = ({ email, password }) => {
-    return this._request(`${this.baseUrl}/${this.loginEndPoint}`, {
+    return this._request(this.loginEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -86,7 +86,7 @@ class Api extends React.Component {
 
   updateToken = (fetchUrlEndPoint, options) => {
     const refreshToken = localStorage.getItem("refreshToken");
-    return this._request(`${this.baseUrl}/${this.updateTokenEndPoint}`, {
+    return this._request(this.updateTokenEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -97,19 +97,15 @@ class Api extends React.Component {
         handleTokens(res);
       })
       .then(() => {
-        return this._request(`${this.baseUrl}/${fetchUrlEndPoint}`, options);
+        return this._request(fetchUrlEndPoint, options);
       })
       .catch((err) => {
         console.log("err:", err);
       });
   };
 
-  // access token for expire test:
-  // "Bearer " +
-  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmZhYjg1OGE0YjYyMDAxYzgzZWM3YiIsImlhdCI6MTY4NTI5NzE5NSwiZXhwIjoxNjg1Mjk4Mzk1fQ.7-0A5-ffzhWHCdT1eJzu4avbEi-Ua8hbgp-TnKkiza4",
-
   getUserInfo = () => {
-    return this._request(`${this.baseUrl}/${this.userEndPoint}`, {
+    return this._request(this.userEndPoint, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +125,7 @@ class Api extends React.Component {
   };
 
   updateUserInfo = ({ name, email, password }) => {
-    return this._request(`${this.baseUrl}/${this.userEndPoint}`, {
+    return this._request(this.userEndPoint, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -154,7 +150,7 @@ class Api extends React.Component {
   };
 
   registerUser = ({ email, password, name }) => {
-    return this._request(`${this.baseUrl}/${this.registerEndPoint}`, {
+    return this._request(this.registerEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -167,7 +163,7 @@ class Api extends React.Component {
 
   logoutUser = () => {
     const refreshToken = localStorage.getItem("refreshToken");
-    return this._request(`${this.baseUrl}/${this.logoutEndPoint}`, {
+    return this._request(this.logoutEndPoint, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({

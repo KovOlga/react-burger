@@ -105,7 +105,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         data: state.data.map((ingredient) => {
           if (ingredient.type === "bun") {
             return ingredient._id === action.itemId
-              ? { ...ingredient, counter: 1 }
+              ? { ...ingredient, counter: 2 }
               : { ...ingredient, counter: 0 };
           }
           return ingredient;
