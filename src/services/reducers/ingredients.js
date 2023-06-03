@@ -2,30 +2,33 @@ import {
   GET_INGREDIENT_REQUEST,
   GET_INGREDIENT_SUCCESS,
   GET_INGREDIENT_FAILED,
-  SET_CURRENT_INGREDIENT,
+} from "../actions/ingredients";
+
+import {
   SET_CURRENT_BUN,
   ADD_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
-  CLEAR_CURRENT_INGREDIENT,
   UPDATE_TOTAL_PRICE,
   UPDATE_INGREDIENT_COUNTER,
   UPDATE_BUN_COUNTER,
   SORT_DRAGGING_ITEM,
-  TOGGLE_INGREDIENT_INFO_MODAL,
+} from "../actions/constructor";
+
+import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
+
+import {
   TOGGLE_ORDER_INFO_MODAL,
   CLEAR_CONSTRUCTOR,
   RESET_COUNTERS,
-} from "../actions";
+} from "../actions/order";
 
 const initialState = {
   data: [],
   dataRequest: false,
   dataFailed: false,
 
-  currentBun: {},
+  currentBun: null,
   constructorIngredients: [],
-
-  currentIngredient: {},
 
   totalPrice: 0,
 
@@ -54,12 +57,6 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENT_FAILED: {
       return { ...state, dataFailed: true, dataRequest: false };
     }
-    case SET_CURRENT_INGREDIENT: {
-      return { ...state, currentIngredient: action.payload };
-    }
-    case CLEAR_CURRENT_INGREDIENT: {
-      return { ...state, currentIngredient: {} };
-    }
     case SET_CURRENT_BUN: {
       return {
         ...state,
@@ -72,9 +69,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsPrice = ingredientsPrice + item.price;
       });
       const totalPrice =
-        (state.currentBun.price === undefined
-          ? 0
-          : state.currentBun.price * 2) + ingredientsPrice;
+        (!state.currentBun ? 0 : state.currentBun.price * 2) + ingredientsPrice;
       return {
         ...state,
         totalPrice: totalPrice,
@@ -110,7 +105,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         data: state.data.map((ingredient) => {
           if (ingredient.type === "bun") {
             return ingredient._id === action.itemId
-              ? { ...ingredient, counter: 1 }
+              ? { ...ingredient, counter: 2 }
               : { ...ingredient, counter: 0 };
           }
           return ingredient;
@@ -156,7 +151,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case CLEAR_CONSTRUCTOR: {
       return {
         ...state,
-        currentBun: {},
+        currentBun: null,
         constructorIngredients: [],
       };
     }

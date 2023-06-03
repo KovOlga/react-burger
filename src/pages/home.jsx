@@ -1,26 +1,20 @@
-import React from "react";
-import { useEffect, useCallback } from "react";
-import styles from "./app.module.css";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import Loader from "../loader/loader";
-import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/actions";
+import Loader from "../components/loader/loader";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import {
-  openIngredientModalAction,
-  closeIngredientModalAction,
-  closeOrderModalAction,
-} from "../../services/actions";
+import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import Modal from "../components/modal/modal";
+import OrderDetails from "../components/order-details/order-details";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback } from "react";
+import { getIngredients } from "../services/actions/ingredients";
+import { openIngredientModalAction } from "../services/actions/ingredient-modal";
+import { closeOrderModalAction } from "../services/actions/order";
+import styles from "./home.module.css";
 
 const modalRoot = document.getElementById("react-modals");
 
-const App = () => {
+export const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,34 +25,26 @@ const App = () => {
   const dataRequest = useSelector((store) => store.ingredients.dataRequest);
   const dataFailed = useSelector((store) => store.ingredients.dataFailed);
 
-  const currentIngredient = useSelector(
-    (store) => store.ingredients.currentIngredient
-  );
   const orderNumberSuccess = useSelector(
     (store) => store.orderNumber.orderNumberSuccess
-  );
-  const isIngredientInfoModalShown = useSelector(
-    (store) => store.ingredients.isIngredientInfoModalShown
   );
   const isOrderDetailsInfoModalShown = useSelector(
     (store) => store.ingredients.isOrderDetailsInfoModalShown
   );
 
-  const openIngredientInfo = useCallback((item) => {
-    dispatch(openIngredientModalAction(item));
-  }, []);
-
-  const closeIngredientInfoModal = useCallback(() => {
-    dispatch(closeIngredientModalAction());
-  }, []);
+  const openIngredientInfo = useCallback(
+    (item) => {
+      dispatch(openIngredientModalAction(item));
+    },
+    [dispatch]
+  );
 
   const closeOrderInfoModal = useCallback(() => {
     dispatch(closeOrderModalAction());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      <AppHeader />
       <main className={styles.main}>
         {dataRequest && (
           <Loader loadingText={"Идет загрузка космической станции"} />
@@ -72,11 +58,7 @@ const App = () => {
           </DndProvider>
         )}
       </main>
-      {isIngredientInfoModalShown && (
-        <Modal onClose={closeIngredientInfoModal} container={modalRoot}>
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
+
       {isOrderDetailsInfoModalShown && orderNumberSuccess && (
         <Modal onClose={closeOrderInfoModal} container={modalRoot}>
           <OrderDetails />
@@ -85,5 +67,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

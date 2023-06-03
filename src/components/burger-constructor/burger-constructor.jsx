@@ -4,20 +4,20 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "./burger-constructor.module.css";
 import { memo, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  UPDATE_TOTAL_PRICE,
-  UPDATE_CONSTRUCTOR_EMPTINESS,
-} from "../../services/actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import {
-  getOrderNumber,
   addConstructorItemAction,
   swapConstructorBunAction,
-} from "../../services/actions";
+} from "../../services/actions/constructor";
+import { getOrderNumber } from "../../services/actions/order";
+import { useNavigate } from "react-router-dom";
+import { UPDATE_TOTAL_PRICE } from "../../services/actions/constructor";
+import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
 
 const BurgerConstructor = memo(() => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const totalPrice = useSelector((store) => store.ingredients.totalPrice);
 
@@ -38,25 +38,27 @@ const BurgerConstructor = memo(() => {
   };
 
   const openConfirm = useCallback(() => {
-    const orderArr = [
-      constructorIngredients.map((ingredient) => {
-        return ingredient._id;
-      }),
-      Object.keys(currentBun).length === 0 ? [] : currentBun._id,
-    ].flatMap((i) => i);
-    dispatch(getOrderNumber(orderArr));
-  }, [constructorIngredients, currentBun, dispatch]);
+    if (localStorage.getItem("isUserAuthed")) {
+      const orderArr = [
+        currentBun._id,
+        ...constructorIngredients.map((ingredient) => {
+          return ingredient._id;
+        }),
+        currentBun._id,
+      ];
+      dispatch(getOrderNumber(orderArr));
+    } else {
+      navigate("/login");
+    }
+  }, [constructorIngredients, currentBun, dispatch, navigate]);
 
   useEffect(() => {
-    if (
-      constructorIngredients.length === 0 &&
-      Object.keys(currentBun).length === 0
-    ) {
+    if (constructorIngredients.length < 1 || !currentBun) {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
     } else {
       dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
     }
-  }, [constructorIngredients, currentBun]);
+  }, [constructorIngredients, currentBun, dispatch]);
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
@@ -83,16 +85,15 @@ const BurgerConstructor = memo(() => {
 
   useEffect(() => {
     dispatch({ type: UPDATE_TOTAL_PRICE });
-  }, [currentBun, constructorIngredients]);
+  }, [currentBun, constructorIngredients, dispatch]);
 
   return (
     <section className={`${styles.section_constructor} pl-4 pr-4`}>
       <div ref={dropTarget} className={containerClassName}>
-        {constructorIngredients.length ||
-        Object.keys(currentBun).length !== 0 ? (
+        {constructorIngredients.length || currentBun ? (
           <>
             <div>
-              {Object.keys(currentBun).length !== 0 && (
+              {currentBun && (
                 <ConstructorElement
                   extraClass={styles.item__bun}
                   key={"top"}
@@ -119,7 +120,7 @@ const BurgerConstructor = memo(() => {
             </ul>
 
             <div>
-              {Object.keys(currentBun).length !== 0 && (
+              {currentBun && (
                 <ConstructorElement
                   extraClass={styles.item__bun}
                   key={"bottom"}
