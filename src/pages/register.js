@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 import { registerUser } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 import { useForm } from "../hooks/useForm";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { values, handleChange } = useForm({
     name: "",
     email: "",
@@ -18,7 +20,11 @@ export const RegisterPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser(values));
+    dispatch(registerUser(values)).then((res) => {
+      if (res.success) {
+        navigate("/login");
+      }
+    });
   };
 
   return (
@@ -45,12 +51,7 @@ export const RegisterPage = () => {
           name={"password"}
           placeholder="Пароль"
         />
-        <Button
-          onSubmit={onSubmit}
-          htmlType="submit"
-          type="primary"
-          size="medium"
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Зарегистрироваться
         </Button>
       </form>

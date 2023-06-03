@@ -27,7 +27,7 @@ const ProfileForm = () => {
   const [isFormChanging, setFormChanging] = useState(false);
   const [isNameFocus, setNameFocus] = useState(true);
 
-  const onSubmitUserData = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserInfo(values)).then(() => {
       setFormChanging(false);
@@ -65,7 +65,7 @@ const ProfileForm = () => {
 
   return (
     <div className={styles.container}>
-      <form name="profile" className={styles.form} onSubmit={onSubmitUserData}>
+      <form name="profile" className={styles.form} onSubmit={onSubmit}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -111,7 +111,6 @@ const ProfileForm = () => {
               Отмена
             </Button>
             <Button
-              onSubmit={onSubmitUserData}
               htmlType="submit"
               type="primary"
               size="medium"

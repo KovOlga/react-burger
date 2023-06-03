@@ -175,12 +175,13 @@ export function registerUser(form) {
     dispatch({
       type: REGISTER_REQUEST,
     });
-    api
+    return api
       .registerUser(form)
-      .then(() => {
+      .then((res) => {
         dispatch({
           type: REGISTER_SUCCESS,
         });
+        return res;
       })
       .catch((e) => {
         dispatch({

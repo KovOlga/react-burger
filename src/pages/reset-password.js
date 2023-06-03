@@ -46,12 +46,7 @@ export const ResetPassword = () => {
           size={"default"}
           required
         ></Input>
-        <Button
-          onSubmit={onSubmit}
-          htmlType="submit"
-          type="primary"
-          size="medium"
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Сохранить
         </Button>
       </form>

@@ -31,12 +31,7 @@ export const ForgotPassword = () => {
           name={"email"}
           placeholder="Укажите e-mail"
         />
-        <Button
-          onSubmit={onSubmit}
-          htmlType="submit"
-          type="primary"
-          size="medium"
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Восстановить
         </Button>
       </form>

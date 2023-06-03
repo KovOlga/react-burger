@@ -48,12 +48,7 @@ export const LoginPage = () => {
           name={"password"}
           placeholder="Пароль"
         />
-        <Button
-          onSubmit={onSubmit}
-          htmlType="submit"
-          type="primary"
-          size="medium"
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Войти
         </Button>
       </form>
