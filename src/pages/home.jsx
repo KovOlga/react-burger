@@ -32,13 +32,16 @@ export const HomePage = () => {
     (store) => store.ingredients.isOrderDetailsInfoModalShown
   );
 
-  const openIngredientInfo = useCallback((item) => {
-    dispatch(openIngredientModalAction(item));
-  }, []);
+  const openIngredientInfo = useCallback(
+    (item) => {
+      dispatch(openIngredientModalAction(item));
+    },
+    [dispatch]
+  );
 
   const closeOrderInfoModal = useCallback(() => {
     dispatch(closeOrderModalAction());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

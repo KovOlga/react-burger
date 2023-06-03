@@ -13,7 +13,7 @@ import {
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
-import ProfileForm from "../profile-form.js/profile-form";
+import ProfileForm from "../profile-form/profile-form";
 
 const App = () => {
   let location = useLocation();
