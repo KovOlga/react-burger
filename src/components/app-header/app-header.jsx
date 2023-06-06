@@ -29,16 +29,18 @@ const AppHeader = memo(() => {
           </li>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"*"}
+              to={"/feed"}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
               })}
             >
-              <ListIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">
-                Лента заказов
-              </p>
+              {({ isActive }) => (
+                <>
+                  <ListIcon type={isActive ? "primary" : "secondary"} />
+                  <p className="text text_type_main-default">Лента заказов</p>
+                </>
+              )}
             </NavLink>
           </li>
         </ul>
