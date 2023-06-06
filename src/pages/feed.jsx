@@ -47,7 +47,9 @@ export const FeedPage = () => {
                       {order.updatedAt}
                     </p>
                   </div>
-                  <h2 className="text text_type_main-medium">{order.name}</h2>
+                  <h2 className={`${styles.name} text text_type_main-medium`}>
+                    {order.name}
+                  </h2>
                   <div className={styles.card__bottom}>
                     <IngredientsListPreview
                       data={data}
