@@ -10,6 +10,7 @@ import { IngredientPage } from "./ingredient";
 import { IngredientModalPage } from "./ingredient-modal";
 import { FeedPage } from "./feed";
 import { FeedItemPage } from "./feed-modal";
+import { OrderPage } from "./order";
 
 export {
   HomePage,
@@ -24,4 +25,5 @@ export {
   IngredientModalPage,
   FeedPage,
   FeedItemPage,
+  OrderPage,
 };

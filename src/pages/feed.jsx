@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { WS_CONNECTION_START } from "../services/action-types/wsActionTypes";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../services/action-types/wsActionTypes";
 import styles from "./feed.module.css";
 import { getIngredients } from "../services/actions/ingredients";
 import { Link, useLocation } from "react-router-dom";

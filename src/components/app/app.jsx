@@ -12,6 +12,7 @@ import {
   IngredientModalPage,
   FeedPage,
   FeedItemPage,
+  OrderPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
@@ -37,6 +38,7 @@ const App = () => {
           </Route>
 
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<OrderPage />} />
 
           <Route
             path="/login"
