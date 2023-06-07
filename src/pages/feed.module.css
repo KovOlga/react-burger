@@ -45,46 +45,6 @@
   background-clip: content-box;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  border-radius: 40px;
-  background: #1c1c21;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
-    0px 0px 1px rgba(0, 0, 0, 0.04);
-  padding: 24px;
-  box-sizing: border-box;
-}
-
-.card__id {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.card__bottom {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-  align-items: center;
-  justify-content: right;
-}
-
-.card_price {
-  display: flex;
-  flex-direction: row;
-  gap: 9px;
-}
-
-.name {
-  height: 30px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 100%;
-}
-
 .statistics {
   position: absolute;
   top: 0;
@@ -127,4 +87,9 @@
 .digits {
   text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
     0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
 }

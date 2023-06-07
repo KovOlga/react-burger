@@ -11,6 +11,7 @@ import {
   IngredientPage,
   IngredientModalPage,
   FeedPage,
+  FeedItemPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
@@ -81,6 +82,7 @@ const App = () => {
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientModalPage />} />
+          <Route path="/feed/:id" element={<FeedItemPage />} />
         </Routes>
       )}
     </>
