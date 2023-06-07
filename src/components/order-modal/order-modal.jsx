@@ -1,8 +1,13 @@
 import styles from "./order-modal.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
+import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const OrderModal = ({ order }) => {
+  const getTimeZone = (dateFromServer) => {
+    const timeZone = new Date(dateFromServer).toString().split(" ")[5];
+    return timeZone;
+  };
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-default">{`#${order.number}`}</p>
@@ -41,7 +46,8 @@ const OrderModal = ({ order }) => {
       </div>
       <div className={styles.bottom}>
         <p className="text text_type_main-default text_color_inactive">
-          {order.createdAt}
+          <FormattedDate date={new Date(order.updatedAt)} />
+          <span> i-{getTimeZone(order.updatedAt)}</span>
         </p>
         <div className={styles.total}>
           <p className="text text_type_digits-default">{order.totalPrice}</p>
