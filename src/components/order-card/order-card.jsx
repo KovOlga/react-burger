@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const OrderCard = ({ order, onClick }) => {
+export const OrderCard = ({ order, onClick, fromComponent }) => {
   const orderIngredients = order.ingredients.slice(0, 6);
 
   const getTimeZone = (dateFromServer) => {
@@ -20,9 +20,25 @@ export const OrderCard = ({ order, onClick }) => {
           <span> i-{getTimeZone(order.updatedAt)}</span>
         </p>
       </div>
-      <h2 className={`${styles.name} text text_type_main-medium`}>
-        {order.name}
-      </h2>
+      <div className={styles.info}>
+        <h2 className={`${styles.name} text text_type_main-medium`}>
+          {order.name}
+        </h2>
+        {fromComponent === "orders" && order.status === "done" && (
+          <p className={`text text_type_main-default ${styles.done}`}>
+            Выполнен
+          </p>
+        )}
+        {fromComponent === "orders" && order.status !== "done" && (
+          <p className="text text_type_main-default">
+            {order.status === "pending"
+              ? "Готовится"
+              : order.status === "created"
+              ? "Создан"
+              : "Неизвестный статус"}
+          </p>
+        )}
+      </div>
       <div className={styles.card__bottom}>
         <ul className={styles.ingredients}>
           {orderIngredients.map((ingredient, index) => {

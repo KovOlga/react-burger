@@ -17,23 +17,29 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
     [dispatch]
   );
 
+  console.log(orders);
+
   return (
     <ul className={`${styles.list} pr-4`}>
-      {orders.map((order) => {
-        return (
-          <Link
-            key={order._id}
-            className={styles.link}
-            to={`/feed/${order.number}`}
-            state={{ background: location }}
-          >
-            <OrderCard
-              order={parseOrderIngredients(data, order)}
-              onClick={onOpenOrderInfoModal}
-            />
-          </Link>
-        );
-      })}
+      {orders
+        .slice(0)
+        .reverse()
+        .map((order) => {
+          return (
+            <Link
+              key={order._id}
+              className={styles.link}
+              to={`/feed/${order.number}`}
+              state={{ background: location }}
+            >
+              <OrderCard
+                order={parseOrderIngredients(data, order)}
+                onClick={onOpenOrderInfoModal}
+                fromComponent={fromComponent}
+              />
+            </Link>
+          );
+        })}
     </ul>
   );
 };

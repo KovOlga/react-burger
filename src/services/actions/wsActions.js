@@ -1,9 +1,7 @@
 import {
   WS_CONNECTION_START,
-  WS_GET_FEED,
   WS_CONNECTION_CLOSED,
   WS_USER_CONNECTION_START,
-  WS_GET_USER_ORDERS,
   WS_USER_CONNECTION_CLOSED,
 } from "../action-types/wsActionTypes";
 

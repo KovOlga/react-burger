@@ -16,12 +16,22 @@
   justify-content: space-between;
 }
 
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .name {
   height: 30px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
+}
+
+.done {
+  color: #00cccc;
 }
 
 .card__bottom {
