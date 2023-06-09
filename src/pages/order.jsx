@@ -20,7 +20,7 @@ export const OrderPage = () => {
     dispatch({ type: WS_CONNECTION_START });
   }, [dispatch]);
 
-  const { orders } = useSelector((store) => store.feed.orders);
+  const { orders } = useSelector((store) => store.wsfeed.orders);
 
   const data = useSelector((store) => store.ingredients.data);
   const dataRequest = useSelector((store) => store.ingredients.dataRequest);

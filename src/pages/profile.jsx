@@ -16,8 +16,8 @@ export const ProfilePage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.nav}>
+    <main className={styles.container}>
+      <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className={styles.list__item}>
             <NavLink
@@ -54,8 +54,8 @@ export const ProfilePage = () => {
         <p className="text text_type_main-default text_color_inactive">
           В этом разделе вы можете изменить свои персональные данные
         </p>
-      </div>
+      </nav>
       <Outlet />
-    </div>
+    </main>
   );
 };

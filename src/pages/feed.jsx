@@ -1,22 +1,19 @@
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../services/action-types/wsActionTypes";
 import styles from "./feed.module.css";
 import { getIngredients } from "../services/actions/ingredients";
-import { Link, useLocation } from "react-router-dom";
-import { openOrderInfoModalAction } from "../services/actions/order-info-modal";
-import { OrderCard } from "../components/order-card/order-card";
-import { parseOrderIngredients } from "../utils/utils";
+import { Link } from "react-router-dom";
+import {
+  wsFeedConnectionStart,
+  wsFeedConnectionClosed,
+} from "../services/actions/wsActions";
+import OrderCardList from "../components/order-card-list/order-card-list";
 
 export const FeedPage = () => {
   const dispatch = useDispatch();
-  let location = useLocation();
 
   const { orders, total, totalToday } = useSelector(
-    (store) => store.feed.orders
+    (store) => store.wsfeed.orders
   );
   const data = useSelector((store) => store.ingredients.data);
   const dataRequest = useSelector((store) => store.ingredients.dataRequest);
@@ -41,43 +38,24 @@ export const FeedPage = () => {
   }, [orders]);
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch(wsFeedConnectionStart());
+
+    return () => {
+      dispatch(wsFeedConnectionClosed());
+    };
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const onOpenOrderInfoModal = useCallback(
-    (item) => {
-      dispatch(openOrderInfoModalAction(item));
-    },
-    [dispatch]
-  );
-
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       {orders && !dataRequest && !dataFailed && data.length && (
         <>
           <section className={styles.feed}>
             <h1 className="text text_type_main-large">Лента заказов</h1>
-            <ul className={`${styles.list} pr-4`}>
-              {orders.map((order) => {
-                return (
-                  <Link
-                    key={order._id}
-                    className={styles.link}
-                    to={`/feed/${order.number}`}
-                    state={{ background: location }}
-                  >
-                    <OrderCard
-                      order={parseOrderIngredients(data, order)}
-                      onClick={onOpenOrderInfoModal}
-                    />
-                  </Link>
-                );
-              })}
-            </ul>
+            <OrderCardList data={data} orders={orders} fromComponent="feed" />
           </section>
           <section className={styles.statistics}>
             <div className={styles.orders}>
@@ -87,12 +65,17 @@ export const FeedPage = () => {
                   {done &&
                     done.map((number, index) => {
                       return (
-                        <li
+                        <Link
+                          to={`/feed/${number}`}
                           key={index}
-                          className={`${styles.orders__item} text text_type_digits-default`}
+                          className={styles.link}
                         >
-                          {number}
-                        </li>
+                          <li
+                            className={`${styles.orders__item} text text_type_digits-default`}
+                          >
+                            {number}
+                          </li>
+                        </Link>
                       );
                     })}
                 </ul>
@@ -103,12 +86,17 @@ export const FeedPage = () => {
                   {inProcess &&
                     inProcess.map((number, index) => {
                       return (
-                        <li
+                        <Link
+                          to={`/feed/${number}`}
                           key={index}
-                          className={`${styles.orders__item} text text_type_digits-default`}
+                          className={styles.link}
                         >
-                          {number}
-                        </li>
+                          <li
+                            className={`${styles.orders__item} text text_type_digits-default`}
+                          >
+                            {number}
+                          </li>
+                        </Link>
                       );
                     })}
                 </ul>
@@ -133,6 +121,6 @@ export const FeedPage = () => {
           </section>
         </>
       )}
-    </div>
+    </main>
   );
 };

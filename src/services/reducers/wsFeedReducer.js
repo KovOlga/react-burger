@@ -3,7 +3,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_GET_MESSAGE,
+  WS_GET_FEED,
   WS_SEND_MESSAGE,
 } from "../action-types/wsActionTypes";
 
@@ -12,7 +12,7 @@ const initialState = {
   orders: [],
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsFeedReducer = (state = initialState, action) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
@@ -32,13 +32,10 @@ export const wsReducer = (state = initialState, action) => {
         wsConnected: false,
       };
 
-    case WS_GET_MESSAGE:
+    case WS_GET_FEED:
       return {
         ...state,
         orders: action.payload,
-        // state.messages.length
-        //   ? [...state.messages, { ...action.payload }]
-        //   : [{ ...action.payload }],
       };
 
     default:

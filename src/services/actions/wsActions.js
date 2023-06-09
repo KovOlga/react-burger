@@ -1,40 +1,32 @@
 import {
   WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_CONNECTION_ERROR,
+  WS_GET_FEED,
   WS_CONNECTION_CLOSED,
-  WS_GET_MESSAGE,
-  WS_SEND_MESSAGE,
+  WS_USER_CONNECTION_START,
+  WS_GET_USER_ORDERS,
+  WS_USER_CONNECTION_CLOSED,
 } from "../action-types/wsActionTypes";
 
-export const wsConnectionSuccess = () => {
+export const wsFeedConnectionStart = () => {
   return {
-    type: WS_CONNECTION_SUCCESS,
+    type: WS_CONNECTION_START,
   };
 };
 
-export const wsConnectionError = () => {
-  return {
-    type: WS_CONNECTION_ERROR,
-  };
-};
-
-export const wsConnectionClosed = () => {
+export const wsFeedConnectionClosed = () => {
   return {
     type: WS_CONNECTION_CLOSED,
   };
 };
 
-export const wsGetMessage = (message) => {
+export const wsUserConnectionStart = () => {
   return {
-    type: WS_GET_MESSAGE,
-    payload: message,
+    type: WS_USER_CONNECTION_START,
   };
 };
 
-export const wsSendMessage = (message) => {
+export const wsUserConnectionClosed = () => {
   return {
-    type: WS_SEND_MESSAGE,
-    payload: message,
+    type: WS_USER_CONNECTION_CLOSED,
   };
 };
