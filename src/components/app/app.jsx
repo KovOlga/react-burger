@@ -37,7 +37,10 @@ const App = () => {
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<OrdersPage />} />
           </Route>
-          <Route path="/profile/orders/:id" element={<OrderPage />} />
+          <Route
+            path="/profile/orders/:id"
+            element={<ProtectedRouteElement element={<OrderPage />} />}
+          />
 
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/feed/:id" element={<OrderPage />} />

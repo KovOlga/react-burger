@@ -31,7 +31,7 @@ export const FeedPage = () => {
   const inProcess = useMemo(() => {
     return orders
       ? orders
-          .filter((order) => order.status === "!done")
+          .filter((order) => order.status === "pending")
           .map((order) => order.number)
           .slice(0, 10)
       : null;
