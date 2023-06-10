@@ -25,13 +25,6 @@ export const HomePage = () => {
   const dataRequest = useSelector((store) => store.ingredients.dataRequest);
   const dataFailed = useSelector((store) => store.ingredients.dataFailed);
 
-  const orderNumberSuccess = useSelector(
-    (store) => store.orderNumber.orderNumberSuccess
-  );
-  const isOrderDetailsInfoModalShown = useSelector(
-    (store) => store.ingredients.isOrderDetailsInfoModalShown
-  );
-
   const openIngredientInfo = useCallback(
     (item) => {
       dispatch(openIngredientModalAction(item));
@@ -59,7 +52,7 @@ export const HomePage = () => {
         )}
       </main>
 
-      {isOrderDetailsInfoModalShown && orderNumberSuccess && (
+      {JSON.parse(localStorage.getItem("isOrderDetailsInfoModalShown")) && (
         <Modal onClose={closeOrderInfoModal} container={modalRoot}>
           <OrderDetails />
         </Modal>

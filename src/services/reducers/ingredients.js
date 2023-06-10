@@ -16,11 +16,7 @@ import {
 
 import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 
-import {
-  TOGGLE_ORDER_INFO_MODAL,
-  CLEAR_CONSTRUCTOR,
-  RESET_COUNTERS,
-} from "../actions/order";
+import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
 
 const initialState = {
   data: [],
@@ -33,7 +29,6 @@ const initialState = {
   totalPrice: 0,
 
   isIngredientInfoModalShown: false,
-  isOrderDetailsInfoModalShown: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -140,12 +135,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         isIngredientInfoModalShown: !state.isIngredientInfoModalShown,
-      };
-    }
-    case TOGGLE_ORDER_INFO_MODAL: {
-      return {
-        ...state,
-        isOrderDetailsInfoModalShown: !state.isOrderDetailsInfoModalShown,
       };
     }
     case CLEAR_CONSTRUCTOR: {

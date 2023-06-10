@@ -2,7 +2,7 @@ import styles from "./order-card-list.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { parseOrderIngredients } from "../../utils/utils";
 import { OrderCard } from "../order-card/order-card";
-import { useEffect, useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 
@@ -16,8 +16,6 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
     },
     [dispatch]
   );
-
-  console.log(orders);
 
   return (
     <ul className={`${styles.list} pr-4`}>
