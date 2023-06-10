@@ -11,8 +11,9 @@ import {
   IngredientPage,
   IngredientModalPage,
   FeedPage,
-  FeedItemPage,
+  FeedModalPage,
   OrderPage,
+  OrderModalPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
@@ -36,6 +37,7 @@ const App = () => {
             <Route index element={<ProfileForm />} />
             <Route path="orders" element={<OrdersPage />} />
           </Route>
+          <Route path="/profile/orders/:id" element={<OrderPage />} />
 
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/feed/:id" element={<OrderPage />} />
@@ -84,7 +86,8 @@ const App = () => {
       {background && (
         <Routes>
           <Route path="/ingredients/:id" element={<IngredientModalPage />} />
-          <Route path="/feed/:id" element={<FeedItemPage />} />
+          <Route path="/feed/:id" element={<FeedModalPage />} />
+          <Route path="/profile/orders/:id" element={<OrderModalPage />} />
         </Routes>
       )}
     </>

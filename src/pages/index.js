@@ -9,8 +9,9 @@ import { OrdersPage } from "./orders";
 import { IngredientPage } from "./ingredient";
 import { IngredientModalPage } from "./ingredient-modal";
 import { FeedPage } from "./feed";
-import { FeedItemPage } from "./feed-modal";
+import { FeedModalPage } from "./feed-modal";
 import { OrderPage } from "./order";
+import { OrderModalPage } from "./orders-modal";
 
 export {
   HomePage,
@@ -24,6 +25,7 @@ export {
   IngredientPage,
   IngredientModalPage,
   FeedPage,
-  FeedItemPage,
+  FeedModalPage,
   OrderPage,
+  OrderModalPage,
 };

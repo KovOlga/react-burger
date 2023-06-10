@@ -7,7 +7,7 @@ import { closeOrderInfoModalAction } from "../services/actions/order-info-modal"
 
 const modalRoot = document.getElementById("react-modals");
 
-export const FeedModalPage = () => {
+export const OrderModalPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

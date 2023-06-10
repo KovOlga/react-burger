@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { parseOrderIngredients } from "../../utils/utils";
 import { OrderCard } from "../order-card/order-card";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 
 const OrderCardList = ({ orders, data, fromComponent }) => {
@@ -27,7 +27,11 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
             <Link
               key={order._id}
               className={styles.link}
-              to={`/feed/${order.number}`}
+              to={
+                fromComponent === "feed"
+                  ? `/${fromComponent}/${order.number}`
+                  : `/profile/${fromComponent}/${order.number}`
+              }
               state={{ background: location }}
             >
               <OrderCard
