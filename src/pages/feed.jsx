@@ -91,9 +91,7 @@ export const FeedPage = () => {
                           key={index}
                           className={styles.link}
                         >
-                          <li
-                            className={`${styles.orders__item} text text_type_digits-default`}
-                          >
+                          <li className="text text_type_digits-default">
                             {number}
                           </li>
                         </Link>
