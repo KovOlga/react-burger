@@ -1,4 +1,6 @@
 import styles from "./Ingredient-icon.module.css";
+import PropTypes from "prop-types";
+import { ingredientType } from "../../utils/types";
 
 const IngredientIcon = ({ ingredient, number, index, position }) => {
   const iconOverlapStyle =
@@ -25,6 +27,13 @@ const IngredientIcon = ({ ingredient, number, index, position }) => {
       </div>
     </div>
   );
+};
+
+IngredientIcon.propTypes = {
+  ingredient: ingredientType.isRequired,
+  number: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
+  position: PropTypes.string.isRequired,
 };
 
 export default IngredientIcon;

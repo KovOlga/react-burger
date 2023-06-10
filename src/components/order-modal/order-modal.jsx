@@ -2,6 +2,7 @@ import styles from "./order-modal.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { orderType } from "../../utils/types";
 
 const OrderModal = ({ order }) => {
   const getTimeZone = (dateFromServer) => {
@@ -56,6 +57,10 @@ const OrderModal = ({ order }) => {
       </div>
     </div>
   );
+};
+
+OrderModal.propTypes = {
+  order: orderType.isRequired,
 };
 
 export default OrderModal;

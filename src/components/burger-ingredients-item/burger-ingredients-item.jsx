@@ -1,7 +1,7 @@
 import styles from "./burger-ingredients-item.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingredientType from "../../utils/types";
+import { ingredientType } from "../../utils/types";
 import { memo } from "react";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";

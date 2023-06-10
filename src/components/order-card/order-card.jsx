@@ -2,8 +2,10 @@ import styles from "./order-card.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import { orderType } from "../../utils/types";
 
-export const OrderCard = ({ order, onClick, fromComponent }) => {
+const OrderCard = ({ order, onClick, fromComponent }) => {
   const orderIngredients = order.ingredients.slice(0, 6);
 
   const getTimeZone = (dateFromServer) => {
@@ -16,8 +18,8 @@ export const OrderCard = ({ order, onClick, fromComponent }) => {
       <div className={styles.card__id}>
         <h3 className="text text_type_digits-default">{`#${order.number}`}</h3>
         <p className="text text_type_main-default text_color_inactive">
-          <FormattedDate date={new Date(order.updatedAt)} />
-          <span> i-{getTimeZone(order.updatedAt)}</span>
+          <FormattedDate date={new Date(order.createdAt)} />
+          <span> i-{getTimeZone(order.createdAt)}</span>
         </p>
       </div>
       <div className={styles.info}>
@@ -62,3 +64,11 @@ export const OrderCard = ({ order, onClick, fromComponent }) => {
     </li>
   );
 };
+
+OrderCard.propTypes = {
+  order: orderType.isRequired,
+  onClick: PropTypes.func.isRequired,
+  fromComponent: PropTypes.string.isRequired,
+};
+
+export default OrderCard;
