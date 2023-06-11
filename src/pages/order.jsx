@@ -10,6 +10,11 @@ import {
 } from "../services/action-types/wsActionTypes";
 import { parseOrderIngredients } from "../utils/utils";
 import OrderModal from "../components/order-modal/order-modal";
+import {
+  getData,
+  getDataRequest,
+  getDataFailed,
+} from "../services/selectors/ingredients";
 
 export const OrderPage = ({ from }) => {
   const dispatch = useDispatch();
@@ -20,9 +25,9 @@ export const OrderPage = ({ from }) => {
     from === "feed" ? store.wsfeed.orders.orders : store.wsUser.orders
   );
 
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
+  const data = useSelector(getData);
+  const dataRequest = useSelector(getDataRequest);
+  const dataFailed = useSelector(getDataFailed);
 
   useEffect(() => {
     dispatch(getIngredients());

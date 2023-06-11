@@ -16,19 +16,24 @@ import { useNavigate } from "react-router-dom";
 import { UPDATE_TOTAL_PRICE } from "../../services/actions/constructor";
 import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
 import { LOGIN_ROUTE } from "../../utils/constants";
+import {
+  getTotalPrice,
+  getCurrentBun,
+  getConstructorIngredients,
+} from "../../services/selectors/ingredients";
+import {
+  getorderNumberRequest,
+  getConstructorEmpty,
+} from "../../services/selectors/order";
 
 const BurgerConstructor = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const totalPrice = useSelector((store) => store.ingredients.totalPrice);
+  const totalPrice = useSelector(getTotalPrice);
 
-  const currentBun = useSelector((store) => store.ingredients.currentBun);
-  const constructorIngredients = useSelector(
-    (store) => store.ingredients.constructorIngredients
-  );
-  const orderNumberRequest = useSelector(
-    (store) => store.orderNumber.orderNumberRequest
-  );
+  const currentBun = useSelector(getCurrentBun);
+  const constructorIngredients = useSelector(getConstructorIngredients);
+  const orderNumberRequest = useSelector(getorderNumberRequest);
 
   const changeConstructorBun = (item) => {
     dispatch(swapConstructorBunAction(item._id));
@@ -75,9 +80,7 @@ const BurgerConstructor = memo(() => {
     }),
   });
 
-  const isConstructorEmpty = useSelector(
-    (store) => store.orderNumber.isConstructorEmpty
-  );
+  const isConstructorEmpty = useSelector(getConstructorEmpty);
 
   const containerClassName =
     canDrop && isConstructorEmpty

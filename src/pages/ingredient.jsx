@@ -5,6 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
+import {
+  getData,
+  getDataRequest,
+  getDataFailed,
+} from "../services/selectors/ingredients";
 
 export const IngredientPage = () => {
   const dispatch = useDispatch();
@@ -14,9 +19,9 @@ export const IngredientPage = () => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
+  const data = useSelector(getData);
+  const dataRequest = useSelector(getDataRequest);
+  const dataFailed = useSelector(getDataFailed);
 
   const ingredient = data.find((item) => {
     return item._id === id;

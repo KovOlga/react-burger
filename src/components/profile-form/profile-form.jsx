@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateUserInfo, getUserInfo } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
+import { getUpdateUserRequest, getUser } from "../../services/selectors/user";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -19,10 +20,8 @@ const ProfileForm = () => {
     password: "",
   });
 
-  const updateUserRequest = useSelector(
-    (store) => store.user.updateUserRequest
-  );
-  const user = useSelector((store) => store.user.user);
+  const updateUserRequest = useSelector(getUpdateUserRequest);
+  const user = useSelector(getUser);
 
   const [isFormChanging, setFormChanging] = useState(false);
   const [isNameFocus, setNameFocus] = useState(true);

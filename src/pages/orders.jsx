@@ -7,14 +7,20 @@ import {
 import { getIngredients } from "../services/actions/ingredients";
 import OrderCardList from "../components/order-card-list/order-card-list";
 import styles from "./orders.module.css";
+import {
+  getData,
+  getDataRequest,
+  getDataFailed,
+} from "../services/selectors/ingredients";
+import { getWsUserOrders } from "../services/selectors/wsUserReducer";
 
 export const OrdersPage = () => {
   const dispatch = useDispatch();
 
-  const orders = useSelector((store) => store.wsUser.orders);
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
+  const orders = useSelector(getWsUserOrders);
+  const data = useSelector(getData);
+  const dataRequest = useSelector(getDataRequest);
+  const dataFailed = useSelector(getDataFailed);
 
   useEffect(() => {
     dispatch(wsUserConnectionStart());

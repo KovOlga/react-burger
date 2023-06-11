@@ -9,16 +9,20 @@ import {
 } from "../services/actions/wsActions";
 import OrderCardList from "../components/order-card-list/order-card-list";
 import { FEED_ROUTE } from "../utils/constants";
+import {
+  getData,
+  getDataRequest,
+  getDataFailed,
+} from "../services/selectors/ingredients";
+import { getWsFeedOrders } from "../services/selectors/wsFeedReducer";
 
 export const FeedPage = () => {
   const dispatch = useDispatch();
 
-  const { orders, total, totalToday } = useSelector(
-    (store) => store.wsfeed.orders
-  );
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
+  const { orders, total, totalToday } = useSelector(getWsFeedOrders);
+  const data = useSelector(getData);
+  const dataRequest = useSelector(getDataRequest);
+  const dataFailed = useSelector(getDataFailed);
 
   const done = useMemo(() => {
     return orders

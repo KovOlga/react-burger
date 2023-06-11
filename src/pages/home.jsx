@@ -11,6 +11,11 @@ import { getIngredients } from "../services/actions/ingredients";
 import { openIngredientModalAction } from "../services/actions/ingredient-modal";
 import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
+import {
+  getData,
+  getDataRequest,
+  getDataFailed,
+} from "../services/selectors/ingredients";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -21,9 +26,9 @@ export const HomePage = () => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
+  const data = useSelector(getData);
+  const dataRequest = useSelector(getDataRequest);
+  const dataFailed = useSelector(getDataFailed);
 
   const openIngredientInfo = useCallback(
     (item) => {
