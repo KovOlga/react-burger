@@ -1,5 +1,4 @@
 import {
-  WS_USER_CONNECTION_START,
   WS_USER_CONNECTION_CLOSED,
   WS_GET_USER_ORDERS,
   WS_USER_CONNECTION_SUCCESS,
@@ -8,7 +7,7 @@ import {
 
 const initialState = {
   wsConnected: false,
-  userOrders: [],
+  orders: [],
 };
 
 export const wsUserReducer = (state = initialState, action) => {
@@ -34,7 +33,7 @@ export const wsUserReducer = (state = initialState, action) => {
     case WS_GET_USER_ORDERS:
       return {
         ...state,
-        userOrders: action.payload.orders,
+        orders: action.payload.orders,
       };
 
     default:

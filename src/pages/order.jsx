@@ -1,37 +1,50 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
-import { WS_CONNECTION_START } from "../services/action-types/wsActionTypes";
+import {
+  WS_CONNECTION_START,
+  WS_USER_CONNECTION_START,
+} from "../services/action-types/wsActionTypes";
 import { parseOrderIngredients } from "../utils/utils";
 import OrderModal from "../components/order-modal/order-modal";
 
-export const OrderPage = () => {
+export const OrderPage = ({ from }) => {
   const dispatch = useDispatch();
   let { id } = useParams();
+  const [currentOrder, setCurrentOrder] = useState(null);
+
+  const orders = useSelector((store) =>
+    from === "feed" ? store.wsfeed.orders.orders : store.wsUser.orders
+  );
+
+  const data = useSelector((store) => store.ingredients.data);
+  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
+  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-  }, [dispatch]);
+    if (from === "feed") {
+      dispatch({ type: WS_CONNECTION_START });
+    } else {
+      dispatch({ type: WS_USER_CONNECTION_START });
+    }
+  }, [dispatch, from]);
 
-  const { orders } = useSelector((store) => store.wsfeed.orders);
-
-  const data = useSelector((store) => store.ingredients.data);
-  const dataRequest = useSelector((store) => store.ingredients.dataRequest);
-  const dataFailed = useSelector((store) => store.ingredients.dataFailed);
-
-  let currentOrder = {};
-  if (orders && data) {
-    currentOrder = orders.find((order) => {
-      return order.number === Number(id);
-    });
-  }
+  useEffect(() => {
+    if (orders) {
+      setCurrentOrder(
+        orders.find((order) => {
+          return order.number === Number(id);
+        })
+      );
+    }
+  }, [orders, id]);
 
   return (
     <div className={styles.container}>

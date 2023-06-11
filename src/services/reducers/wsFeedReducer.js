@@ -1,10 +1,8 @@
 import {
-  WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_FEED,
-  WS_SEND_MESSAGE,
 } from "../action-types/wsActionTypes";
 
 const initialState = {

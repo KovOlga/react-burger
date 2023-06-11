@@ -29,6 +29,11 @@ export function parseOrderIngredients(data, order) {
   return updatedOrder;
 }
 
+export const getTimeZone = (dateFromServer) => {
+  const timeZone = new Date(dateFromServer).toString().split(" ")[5];
+  return timeZone;
+};
+
 export function handleTokens(data) {
   localStorage.setItem("refreshToken", data.refreshToken);
   let authToken;

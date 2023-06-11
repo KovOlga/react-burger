@@ -3,12 +3,9 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { orderType } from "../../utils/types";
+import { getTimeZone } from "../../utils/utils";
 
 const OrderModal = ({ order }) => {
-  const getTimeZone = (dateFromServer) => {
-    const timeZone = new Date(dateFromServer).toString().split(" ")[5];
-    return timeZone;
-  };
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-default">{`#${order.number}`}</p>

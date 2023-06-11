@@ -4,14 +4,10 @@ import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { orderType } from "../../utils/types";
+import { getTimeZone } from "../../utils/utils";
 
 const OrderCard = ({ order, onClick, fromComponent }) => {
   const orderIngredients = order.ingredients.slice(0, 6);
-
-  const getTimeZone = (dateFromServer) => {
-    const timeZone = new Date(dateFromServer).toString().split(" ")[5];
-    return timeZone;
-  };
 
   return (
     <li onClick={() => onClick(order)} className={styles.card}>

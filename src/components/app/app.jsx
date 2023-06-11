@@ -52,11 +52,13 @@ const App = () => {
           </Route>
           <Route
             path={PROFILE_ORDERS_ID_ROUTE}
-            element={<ProtectedRouteElement element={<OrderPage />} />}
+            element={
+              <ProtectedRouteElement element={<OrderPage from="profile" />} />
+            }
           />
 
           <Route path={FEED_ROUTE} element={<FeedPage />} />
-          <Route path={FEED_ID_ROUTE} element={<OrderPage />} />
+          <Route path={FEED_ID_ROUTE} element={<OrderPage from="feed" />} />
 
           <Route
             path={LOGIN_ROUTE}
