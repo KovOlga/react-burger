@@ -5,6 +5,7 @@ import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./app-header.module.css";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
+import { PROFILE_ROUTE, HOME_ROUTE, FEED_ROUTE } from "../../utils/constants";
 
 const AppHeader = memo(() => {
   return (
@@ -15,7 +16,7 @@ const AppHeader = memo(() => {
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
               id="constructorLink"
-              to={"/"}
+              to={HOME_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
@@ -31,7 +32,7 @@ const AppHeader = memo(() => {
           </li>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"/feed"}
+              to={FEED_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
@@ -54,7 +55,7 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"/profile"}
+              to={PROFILE_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",

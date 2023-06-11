@@ -8,6 +8,7 @@ import {
   wsFeedConnectionClosed,
 } from "../services/actions/wsActions";
 import OrderCardList from "../components/order-card-list/order-card-list";
+import { FEED_ROUTE } from "../utils/constants";
 
 export const FeedPage = () => {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export const FeedPage = () => {
                     done.map((number, index) => {
                       return (
                         <Link
-                          to={`/feed/${number}`}
+                          to={`${FEED_ROUTE}/${number}`}
                           key={index}
                           className={styles.link}
                         >
@@ -87,7 +88,7 @@ export const FeedPage = () => {
                     inProcess.map((number, index) => {
                       return (
                         <Link
-                          to={`/feed/${number}`}
+                          to={`${FEED_ROUTE}/${number}`}
                           key={index}
                           className={styles.link}
                         >

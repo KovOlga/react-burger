@@ -15,6 +15,7 @@ import { getOrderNumber } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_TOTAL_PRICE } from "../../services/actions/constructor";
 import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
+import { LOGIN_ROUTE } from "../../utils/constants";
 
 const BurgerConstructor = memo(() => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const BurgerConstructor = memo(() => {
       ];
       dispatch(getOrderNumber(orderArr));
     } else {
-      navigate("/login");
+      navigate(LOGIN_ROUTE);
     }
   }, [constructorIngredients, currentBun, dispatch, navigate]);
 

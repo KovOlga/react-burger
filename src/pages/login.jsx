@@ -7,6 +7,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../services/actions/user";
 import { useForm } from "../hooks/useForm";
+import {
+  HOME_ROUTE,
+  REGISTER_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
+} from "../utils/constants";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -25,7 +30,7 @@ export const LoginPage = () => {
         if (location.state !== null && location.state.from) {
           navigate(location.state.from.pathname);
         } else {
-          navigate("/");
+          navigate(HOME_ROUTE);
         }
       });
     },
@@ -55,13 +60,13 @@ export const LoginPage = () => {
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
           Вы — новый пользователь?{" "}
-          <Link className={styles.link} to={"/register"}>
+          <Link className={styles.link} to={REGISTER_ROUTE}>
             Зарегистрироваться
           </Link>
         </p>
         <p className="text text_type_main-default text_color_inactive">
           Забыли пароль?{" "}
-          <Link className={styles.link} to={"/forgot-password"}>
+          <Link className={styles.link} to={FORGOT_PASSWORD_ROUTE}>
             Восстановить пароль
           </Link>
         </p>

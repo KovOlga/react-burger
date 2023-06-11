@@ -18,6 +18,19 @@ import {
 import { ProtectedRouteElement } from "../protected-route";
 import { NotFoundPage } from "../../pages/not-found";
 import ProfileForm from "../profile-form/profile-form";
+import {
+  PROFILE_ROUTE,
+  HOME_ROUTE,
+  FEED_ROUTE,
+  INGREDIENTS_ID_ROUTE,
+  PROFILE_ORDERS_ROUTE,
+  PROFILE_ORDERS_ID_ROUTE,
+  FEED_ID_ROUTE,
+  LOGIN_ROUTE,
+  REGISTER_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
+  RESET_PASSWORD_ROUTE,
+} from "../../utils/constants";
 
 const App = () => {
   let location = useLocation();
@@ -26,27 +39,27 @@ const App = () => {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<LayoutPage />}>
-          <Route index path="/" element={<HomePage />} />
-          <Route path="/ingredients/:id" element={<IngredientPage />} />
+        <Route path={HOME_ROUTE} element={<LayoutPage />}>
+          <Route index path={HOME_ROUTE} element={<HomePage />} />
+          <Route path={INGREDIENTS_ID_ROUTE} element={<IngredientPage />} />
 
           <Route
-            path="/profile"
+            path={PROFILE_ROUTE}
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           >
             <Route index element={<ProfileForm />} />
-            <Route path="orders" element={<OrdersPage />} />
+            <Route path={PROFILE_ORDERS_ROUTE} element={<OrdersPage />} />
           </Route>
           <Route
-            path="/profile/orders/:id"
+            path={PROFILE_ORDERS_ID_ROUTE}
             element={<ProtectedRouteElement element={<OrderPage />} />}
           />
 
-          <Route path="/feed" element={<FeedPage />} />
-          <Route path="/feed/:id" element={<OrderPage />} />
+          <Route path={FEED_ROUTE} element={<FeedPage />} />
+          <Route path={FEED_ID_ROUTE} element={<OrderPage />} />
 
           <Route
-            path="/login"
+            path={LOGIN_ROUTE}
             element={
               <ProtectedRouteElement
                 element={<LoginPage />}
@@ -55,7 +68,7 @@ const App = () => {
             }
           />
           <Route
-            path="/register"
+            path={REGISTER_ROUTE}
             element={
               <ProtectedRouteElement
                 element={<RegisterPage />}
@@ -64,7 +77,7 @@ const App = () => {
             }
           />
           <Route
-            path="/forgot-password"
+            path={FORGOT_PASSWORD_ROUTE}
             element={
               <ProtectedRouteElement
                 element={<ForgotPassword />}
@@ -73,7 +86,7 @@ const App = () => {
             }
           />
           <Route
-            path="/reset-password"
+            path={RESET_PASSWORD_ROUTE}
             element={
               <ProtectedRouteElement
                 element={<ResetPassword />}
@@ -88,9 +101,12 @@ const App = () => {
 
       {background && (
         <Routes>
-          <Route path="/ingredients/:id" element={<IngredientModalPage />} />
-          <Route path="/feed/:id" element={<FeedModalPage />} />
-          <Route path="/profile/orders/:id" element={<OrderModalPage />} />
+          <Route
+            path={INGREDIENTS_ID_ROUTE}
+            element={<IngredientModalPage />}
+          />
+          <Route path={FEED_ID_ROUTE} element={<FeedModalPage />} />
+          <Route path={PROFILE_ORDERS_ID_ROUTE} element={<OrderModalPage />} />
         </Routes>
       )}
     </>

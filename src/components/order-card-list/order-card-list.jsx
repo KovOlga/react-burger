@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
+import { PROFILE_ROUTE } from "../../utils/constants";
 
 const OrderCardList = ({ orders, data, fromComponent }) => {
   let location = useLocation();
@@ -32,7 +33,7 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
               to={
                 fromComponent === "feed"
                   ? `/${fromComponent}/${order.number}`
-                  : `/profile/${fromComponent}/${order.number}`
+                  : `${PROFILE_ROUTE}/${fromComponent}/${order.number}`
               }
               state={{ background: location }}
             >

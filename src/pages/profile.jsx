@@ -4,6 +4,11 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../services/actions/user";
 import { useNavigate } from "react-router-dom";
+import {
+  PROFILE_ROUTE,
+  PROFILE_ORDERS_ROUTE,
+  LOGIN_ROUTE,
+} from "../utils/constants";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -11,7 +16,7 @@ export const ProfilePage = () => {
 
   const onLogoutUser = () => {
     dispatch(logoutUser()).then(() => {
-      navigate("/login");
+      navigate(LOGIN_ROUTE);
     });
   };
 
@@ -21,7 +26,7 @@ export const ProfilePage = () => {
         <ul className={styles.list}>
           <li className={styles.list__item}>
             <NavLink
-              to={"/profile"}
+              to={PROFILE_ROUTE}
               end
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
@@ -33,7 +38,7 @@ export const ProfilePage = () => {
           </li>
           <li className={styles.list__item}>
             <NavLink
-              to={"/profile/orders"}
+              to={PROFILE_ORDERS_ROUTE}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
               })}

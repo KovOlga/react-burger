@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import { LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const ResetPassword = () => {
     e.preventDefault();
     dispatch(resetPassword(values)).then((res) => {
       if (res.success) {
-        navigate("/login");
+        navigate(LOGIN_ROUTE);
       }
     });
   };
@@ -53,13 +54,13 @@ export const ResetPassword = () => {
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?{" "}
-          <Link to={"/login"} className={styles.link}>
+          <Link to={LOGIN_ROUTE} className={styles.link}>
             Войти
           </Link>
         </p>
       </div>
     </div>
   ) : (
-    <Navigate to="/forgot-password" replace />
+    <Navigate to={FORGOT_PASSWORD_ROUTE} replace />
   );
 };

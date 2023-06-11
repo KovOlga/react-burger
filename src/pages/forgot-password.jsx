@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../utils/constants";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export const ForgotPassword = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(values.email)).then(() => {
-      navigate("/reset-password");
+      navigate(RESET_PASSWORD_ROUTE);
     });
   };
 
@@ -38,7 +39,7 @@ export const ForgotPassword = () => {
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?{" "}
-          <Link to={"/login"} className={styles.link}>
+          <Link to={LOGIN_ROUTE} className={styles.link}>
             Войти
           </Link>
         </p>
