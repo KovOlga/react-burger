@@ -2,11 +2,10 @@ import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import { getOrderNumber } from "../../services/selectors/order";
 
 const OrderDetails = memo(() => {
-  const orderNumber = useSelector(
-    (store) => store.orderNumber.orderInfo.order.number
-  );
+  const orderNumber = useSelector(getOrderNumber);
 
   return (
     <div className={styles.container}>

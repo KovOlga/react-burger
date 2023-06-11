@@ -8,6 +8,7 @@ import { registerUser } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE } from "../utils/constants";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const RegisterPage = () => {
     e.preventDefault();
     dispatch(registerUser(values)).then((res) => {
       if (res.success) {
-        navigate("/login");
+        navigate(LOGIN_ROUTE);
       }
     });
   };
@@ -58,7 +59,7 @@ export const RegisterPage = () => {
       <div className={styles.activities}>
         <p className="text text_type_main-default text_color_inactive">
           Уже зарегистрированы?{" "}
-          <Link className={styles.link} to={"/login"}>
+          <Link className={styles.link} to={LOGIN_ROUTE}>
             Войти
           </Link>
         </p>

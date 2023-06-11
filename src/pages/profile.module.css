@@ -1,8 +1,11 @@
 .container {
-  margin-top: 120px;
-  position: relative;
-  margin: 120px auto 0;
-  width: 480px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 60px;
+  box-sizing: border-box;
+  padding-left: 20px;
 }
 
 .nav {
@@ -11,15 +14,14 @@
   gap: 80px;
   align-items: flex-start;
   width: 320px;
-  position: absolute;
-  top: 0;
-  left: -380px;
+  margin-top: 120px;
 }
 
 .list {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  width: 100%;
 }
 
 .list__item {

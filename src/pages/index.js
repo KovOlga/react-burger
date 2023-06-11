@@ -8,6 +8,10 @@ import { ProfilePage } from "./profile";
 import { OrdersPage } from "./orders";
 import { IngredientPage } from "./ingredient";
 import { IngredientModalPage } from "./ingredient-modal";
+import { FeedPage } from "./feed";
+import { FeedModalPage } from "./feed-modal";
+import { OrderPage } from "./order";
+import { OrderModalPage } from "./orders-modal";
 
 export {
   HomePage,
@@ -20,4 +24,8 @@ export {
   OrdersPage,
   IngredientPage,
   IngredientModalPage,
+  FeedPage,
+  FeedModalPage,
+  OrderPage,
+  OrderModalPage,
 };

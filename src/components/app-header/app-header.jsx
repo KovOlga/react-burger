@@ -5,15 +5,18 @@ import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from "./app-header.module.css";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
+import { PROFILE_ROUTE, HOME_ROUTE, FEED_ROUTE } from "../../utils/constants";
 
 const AppHeader = memo(() => {
   return (
-    <header className={`p-4 ${styles.header}`}>
+    <header className={`pb-4 pt-4 ${styles.header}`}>
+      <div className={styles.underlay}></div>
       <nav className={`${styles.nav} ${styles.nav_type_links}`}>
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"/"}
+              id="constructorLink"
+              to={HOME_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
@@ -29,16 +32,18 @@ const AppHeader = memo(() => {
           </li>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"*"}
+              to={FEED_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",
               })}
             >
-              <ListIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">
-                Лента заказов
-              </p>
+              {({ isActive }) => (
+                <>
+                  <ListIcon type={isActive ? "primary" : "secondary"} />
+                  <p className="text text_type_main-default">Лента заказов</p>
+                </>
+              )}
             </NavLink>
           </li>
         </ul>
@@ -50,7 +55,7 @@ const AppHeader = memo(() => {
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
             <NavLink
-              to={"/profile"}
+              to={PROFILE_ROUTE}
               className={styles.link}
               style={({ isActive }) => ({
                 color: isActive ? "#f2f2f3" : "#8585ad",

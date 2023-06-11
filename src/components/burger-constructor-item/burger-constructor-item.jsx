@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useRef } from "react";
 import { SORT_DRAGGING_ITEM } from "../../services/actions/constructor";
 import { deleteConstructorItemAction } from "../../services/actions/constructor";
+import PropTypes from "prop-types";
+import { ingredientType } from "../../utils/types";
 
 const BurgerConstructorItem = ({ ingredient, type, index }) => {
   const dispatch = useDispatch();
@@ -70,6 +72,12 @@ const BurgerConstructorItem = ({ ingredient, type, index }) => {
       />
     </li>
   );
+};
+
+BurgerConstructorItem.propTypes = {
+  ingredient: ingredientType.isRequired,
+  type: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructorItem;

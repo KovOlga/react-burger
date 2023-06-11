@@ -4,6 +4,7 @@
   background: #1c1c21;
   border-radius: 40px;
   width: 720px;
+  z-index: 100;
 }
 
 .close_icon {
@@ -11,4 +12,5 @@
   top: 60px;
   right: 40px;
   display: flex;
+  cursor: pointer;
 }

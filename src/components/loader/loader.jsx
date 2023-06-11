@@ -1,4 +1,5 @@
 import styles from "./loader.module.css";
+import PropTypes from "prop-types";
 
 const Loader = ({ loadingText }) => {
   return (
@@ -19,6 +20,10 @@ const Loader = ({ loadingText }) => {
       </div>
     </div>
   );
+};
+
+Loader.propTypes = {
+  loadingText: PropTypes.string.isRequired,
 };
 
 export default Loader;

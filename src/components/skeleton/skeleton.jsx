@@ -1,11 +1,10 @@
 import styles from "./skeleton.module.css";
 import burger from "../../images/burger.png";
 import { useSelector } from "react-redux";
+import { getConstructorEmpty } from "../../services/selectors/order";
 
 const Skeleton = () => {
-  const isConstructorEmpty = useSelector(
-    (store) => store.orderNumber.isConstructorEmpty
-  );
+  const isConstructorEmpty = useSelector(getConstructorEmpty);
 
   return (
     <div className={styles.container}>

@@ -5,11 +5,12 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import PropTypes from "prop-types";
 import { memo, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
+import { getData } from "../../services/selectors/ingredients";
 
 const BurgerIngredients = memo(({ onOpenIngredientInfo }) => {
   const [current, setCurrent] = React.useState("Булки");
 
-  const ingredients = useSelector((store) => store.ingredients.data);
+  const ingredients = useSelector(getData);
 
   const bunRef = useRef();
   const sauceRef = useRef();
