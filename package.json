@@ -33,7 +33,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "",
+  "homepage": "https://kovolga.github.io/react-burger/",
   "eslintConfig": {
     "extends": [
       "react-app",
