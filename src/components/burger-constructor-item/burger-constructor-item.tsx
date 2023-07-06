@@ -3,18 +3,27 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { useDrag, useDrop } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useRef, FC } from "react";
 import { SORT_DRAGGING_ITEM } from "../../services/actions/constructor";
 import { deleteConstructorItemAction } from "../../services/actions/constructor";
-import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/types";
+import { TIngredient } from "../../services/types/data";
 
-const BurgerConstructorItem = ({ ingredient, type, index }) => {
+interface BurgerConstructorItemProps {
+  ingredient: TIngredient & { uniqueId: string };
+  type: string;
+  index: number;
+}
+
+const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
+  ingredient,
+  type,
+  index,
+}) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const id = ingredient._id;
 
-  const handleDelete = (uniqueId, itemId) => {
+  const handleDelete = (uniqueId: string | undefined, itemId: string) => {
     dispatch(deleteConstructorItemAction(itemId, uniqueId));
   };
 
@@ -74,10 +83,4 @@ const BurgerConstructorItem = ({ ingredient, type, index }) => {
   );
 };
 
-BurgerConstructorItem.propTypes = {
-  ingredient: ingredientType.isRequired,
-  type: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-};
-
-export default BurgerConstructorItem;
+export default BurgerConstructorItemProps;

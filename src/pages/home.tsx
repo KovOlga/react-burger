@@ -16,6 +16,7 @@ import {
   getDataRequest,
   getDataFailed,
 } from "../services/selectors/ingredients";
+import { TIngredient } from "../services/types/data";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -31,7 +32,7 @@ export const HomePage = () => {
   const dataFailed = useSelector(getDataFailed);
 
   const openIngredientInfo = useCallback(
-    (item) => {
+    (item: TIngredient) => {
       dispatch(openIngredientModalAction(item));
     },
     [dispatch]

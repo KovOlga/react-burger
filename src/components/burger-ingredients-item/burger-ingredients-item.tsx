@@ -1,13 +1,18 @@
 import styles from "./burger-ingredients-item.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ingredientType } from "../../utils/types";
-import { memo } from "react";
-import PropTypes from "prop-types";
+import { memo, FC } from "react";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { TIngredientCustom } from "../../services/types/data";
 
-const BurgerIngredientsItem = memo(
+interface BurgerIngredientsItemProps {
+  ingredient: TIngredientCustom;
+  onIngredientClick: () => void; ///// check
+  type: string;
+}
+
+const BurgerIngredientsItem: FC<BurgerIngredientsItemProps> = memo(
   ({ ingredient, onIngredientClick, type }) => {
     const { name, image, price, _id, counter } = ingredient;
 
@@ -43,10 +48,5 @@ const BurgerIngredientsItem = memo(
     );
   }
 );
-
-BurgerIngredientsItem.propTypes = {
-  ingredient: ingredientType.isRequired,
-  onIngredientClick: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredientsItem;

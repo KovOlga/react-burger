@@ -2,11 +2,11 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import { memo, useEffect, useCallback } from "react";
+import { memo, useEffect, useCallback, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
-import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import BurgerConstructorItemProps from "../burger-constructor-item/burger-constructor-item";
 import {
   addConstructorItemAction,
   swapConstructorBunAction,
@@ -26,7 +26,7 @@ import {
   getConstructorEmpty,
 } from "../../services/selectors/order";
 
-const BurgerConstructor = memo(() => {
+const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const totalPrice = useSelector(getTotalPrice);
@@ -68,7 +68,7 @@ const BurgerConstructor = memo(() => {
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
-    drop(itemId) {
+    drop(itemId: { item: object; type: string }) {
       if (itemId.type === "ingredient") {
         addConstructorIngredient(itemId);
       } else {
