@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
 import OrderModal from "../components/order-modal/order-modal";
 import Modal from "../components/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { closeOrderInfoModalThunk } from "../services/actions/order-info-modal";
+import { useAppDispatch } from "../hooks/hooks";
 
 export const FeedModalPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentOrder = JSON.parse(

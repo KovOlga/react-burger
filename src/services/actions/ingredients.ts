@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TIngredient } from "../types/data";
+import { TIngredientCustom } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getIngredientsList } from "../api/api";
 
@@ -16,7 +16,7 @@ interface IGetIngredientsRequestAction {
 
 interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENT_SUCCESS;
-  data: TIngredient[];
+  data: TIngredientCustom[];
 }
 
 interface IGetIngredientsFailedAction {
@@ -33,7 +33,7 @@ export const getIngredientsAction = (): IGetIngredientsRequestAction => ({
 });
 
 export const getIngredientsSuccessAction = (
-  data: TIngredient[]
+  data: TIngredientCustom[]
 ): IGetIngredientsSuccessAction => ({
   type: GET_INGREDIENT_SUCCESS,
   data,

@@ -6,7 +6,6 @@ import { memo, useEffect, useCallback, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
-import BurgerConstructorItemProps from "../burger-constructor-item/burger-constructor-item";
 import {
   addConstructorItemThunk,
   swapConstructorBunAction,
@@ -25,6 +24,8 @@ import {
   getorderNumberRequest,
   getConstructorEmpty,
 } from "../../services/selectors/order";
+import { TIngredientCustom } from "../../services/types/data";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
@@ -35,16 +36,16 @@ const BurgerConstructor: FC = memo(() => {
   const constructorIngredients = useAppSelector(getConstructorIngredients);
   const orderNumberRequest = useAppSelector(getorderNumberRequest);
 
-  const changeConstructorBun = (item) => {
+  const changeConstructorBun = (item: TIngredientCustom) => {
     dispatch(swapConstructorBunAction(item._id));
   };
 
-  const addConstructorIngredient = (item) => {
+  const addConstructorIngredient = (item: TIngredientCustom) => {
     dispatch(addConstructorItemThunk(item._id));
   };
 
   const openConfirm = useCallback(() => {
-    if (localStorage.getItem("isUserAuthed")) {
+    if (localStorage.getItem("isUserAuthed") && currentBun) {
       const orderArr = [
         currentBun._id,
         ...constructorIngredients.map((ingredient) => {
@@ -68,7 +69,7 @@ const BurgerConstructor: FC = memo(() => {
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
-    drop(itemId: { item: object; type: string }) {
+    drop(itemId: TIngredientCustom) {
       if (itemId.type === "ingredient") {
         addConstructorIngredient(itemId);
       } else {

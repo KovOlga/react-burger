@@ -1,4 +1,4 @@
-export interface TIngredient {
+export type TIngredient = {
   _id: string;
   name: string;
   type: string;
@@ -9,20 +9,21 @@ export interface TIngredient {
   proteins: number;
   fat: number;
   carbohydrates: number;
-}
+};
 
-export interface TIngredientCustom extends TIngredient {
-  counter: number;
-}
+export type TIngredientCustom = TIngredient & {
+  counter?: number;
+  uniqueId?: string;
+};
 
-export interface TOrder {
+export type TOrder = {
   _id: string;
   name: string;
   number: number;
   status: string;
   ingredients: TIngredientCustom[];
   createdAt: string;
-}
+};
 
 export type TUser = {
   name: string;

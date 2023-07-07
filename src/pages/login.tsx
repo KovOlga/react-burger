@@ -4,7 +4,7 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { useCallback, FormEvent } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 import { loginUserThunk } from "../services/actions/user";
 import { useForm } from "../hooks/useForm";
 import {
@@ -14,7 +14,7 @@ import {
 } from "../utils/constants";
 
 export const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { values, handleChange } = useForm({

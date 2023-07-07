@@ -1,4 +1,3 @@
-import { read } from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { AppThunk, AppDispatch } from "../types";
 
@@ -108,7 +107,7 @@ export const sortDraggingItemAction = (
 });
 
 export const addConstructorItemThunk: AppThunk =
-  (itemId: number) => (dispatch: AppDispatch) => {
+  (itemId) => (dispatch: AppDispatch) => {
     const uuid = uuidv4();
     return () => {
       dispatch(addConstructorItemAction(itemId, uuid));

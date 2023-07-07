@@ -16,21 +16,21 @@ import {
   getDataRequest,
   getDataFailed,
 } from "../services/selectors/ingredients";
-import { TIngredient } from "../services/types/data";
+import { TIngredientCustom } from "../services/types/data";
 
 export const HomePage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const data = useSelector(getData);
-  const dataRequest = useSelector(getDataRequest);
-  const dataFailed = useSelector(getDataFailed);
+  const data = useAppSelector(getData);
+  const dataRequest = useAppSelector(getDataRequest);
+  const dataFailed = useAppSelector(getDataFailed);
 
   const openIngredientInfo = useCallback(
-    (item: TIngredient) => {
+    (item: TIngredientCustom) => {
       dispatch(openIngredientModalThunk(item));
     },
     [dispatch]

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { parseOrderIngredients } from "../../utils/utils";
 import OrderCard from "../order-card/order-card";
 import { useCallback, FC } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/hooks";
 import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
 import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 import { PROFILE_ROUTE } from "../../utils/constants";
@@ -25,7 +25,7 @@ const OrderCardList: FC<OrderCardListProps> = ({
   fromComponent,
 }) => {
   let location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onOpenOrderInfoModal = useCallback(
     (item: TOrderCounted) => {

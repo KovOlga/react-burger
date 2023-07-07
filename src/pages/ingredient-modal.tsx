@@ -1,12 +1,12 @@
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 import { useCallback } from "react";
 import { closeIngredientModalThunk } from "../services/actions/ingredient-modal";
 import { useNavigate } from "react-router-dom";
 
 export const IngredientModalPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentIngredient = JSON.parse(

@@ -2,20 +2,21 @@ import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { forgotPasswordThunk } from "../services/actions/user";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../utils/constants";
+import { FormEvent } from "react";
 
 export const ForgotPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { values, handleChange } = useForm({
     email: "",
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(forgotPasswordThunk(values.email)).then(() => {
       navigate(RESET_PASSWORD_ROUTE);

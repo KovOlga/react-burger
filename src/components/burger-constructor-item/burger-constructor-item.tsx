@@ -2,14 +2,14 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/hooks";
 import { useRef, FC } from "react";
 import { sortDraggingItemAction } from "../../services/actions/constructor";
 import { deleteConstructorItemThunk } from "../../services/actions/constructor";
-import { TIngredient } from "../../services/types/data";
+import { TIngredientCustom } from "../../services/types/data";
 
 interface BurgerConstructorItemProps {
-  ingredient: TIngredient & { uniqueId: string };
+  ingredient: TIngredientCustom;
   type: string;
   index: number;
 }
@@ -19,11 +19,11 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
   type,
   index,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLLIElement>(null);
   const id = ingredient._id;
 
-  const handleDelete = (uniqueId: string | undefined, itemId: string) => {
+  const handleDelete = (uniqueId: string, itemId: string) => {
     dispatch(deleteConstructorItemThunk(itemId, uniqueId));
   };
 
@@ -79,4 +79,4 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
   );
 };
 
-export default BurgerConstructorItemProps;
+export default BurgerConstructorItem;

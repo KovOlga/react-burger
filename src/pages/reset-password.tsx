@@ -3,7 +3,7 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPasswordThunk } from "../services/actions/user";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import { LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
 import { FormEvent } from "react";
 
 export const ResetPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { values, handleChange } = useForm({
     password: "",

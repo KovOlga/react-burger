@@ -5,14 +5,14 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { registerUserThunk } from "../services/actions/user";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../hooks/hooks";
 import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/constants";
 import { FormEvent } from "react";
 
 export const RegisterPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { values, handleChange } = useForm({
     name: "",
