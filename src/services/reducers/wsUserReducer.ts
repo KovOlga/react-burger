@@ -4,13 +4,23 @@ import {
   WS_USER_CONNECTION_SUCCESS,
   WS_USER_CONNECTION_ERROR,
 } from "../action-types/wsActionTypes";
+import { TOrder } from "../types/data";
+import { TWsActions } from "../actions/wsActions";
 
-const initialState = {
+export type TInitialState = {
+  wsConnected: boolean;
+  orders: TOrder[];
+};
+
+const initialState: TInitialState = {
   wsConnected: false,
   orders: [],
 };
 
-export const wsUserReducer = (state = initialState, action) => {
+export const wsUserReducer = (
+  state = initialState,
+  action: TWsActions
+): TInitialState => {
   switch (action.type) {
     case WS_USER_CONNECTION_SUCCESS:
       return {

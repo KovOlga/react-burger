@@ -4,8 +4,18 @@ import {
   GET_ORDER_NUMBER_FAILED,
   UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../actions/order";
+import { TOrdersActions } from "../actions/order";
+import { TOrder } from "../types/data";
 
-const initialState = {
+export type TInitialState = {
+  orderInfo: TOrder;
+  orderNumberRequest: boolean;
+  orderNumberFailed: boolean;
+  isConstructorEmpty: boolean;
+  orderNumberSuccess: boolean;
+};
+
+const initialState: TInitialState = {
   orderInfo: null,
   orderNumberRequest: false,
   orderNumberFailed: false,
@@ -13,7 +23,10 @@ const initialState = {
   orderNumberSuccess: false,
 };
 
-export const orderNumberReducer = (state = initialState, action) => {
+export const orderNumberReducer = (
+  state = initialState,
+  action: TOrdersActions
+): TInitialState => {
   switch (action.type) {
     case GET_ORDER_NUMBER_REQUEST: {
       return {

@@ -20,13 +20,42 @@ import {
   RESET_PASSWORD_FAILED,
   CLEAR_USER,
 } from "../actions/user";
+import { TUserForm } from "../types/data";
+import { TUserActions } from "../actions/user";
 
-const initialState = {
+export type TInitialState = {
+  user: TUserForm;
+
+  isUserAuthed: boolean;
+
+  updateUserRequest: boolean;
+  updateUserSuccess: boolean;
+  updateUserFailed: boolean;
+  registerRequest: boolean;
+  registerSuccess: boolean;
+  registerFailed: boolean;
+  loginRequest: boolean;
+  loginSuccess: boolean;
+  loginFailed: boolean;
+  logoutRequest: boolean;
+  logoutSuccess: boolean;
+  logoutFailed: boolean;
+  forgotPasswordRequest: boolean;
+  forgotPasswordSuccess: boolean;
+  forgotPasswordFailed: boolean;
+  resetPasswordRequest: boolean;
+  resetPasswordSuccess: boolean;
+  resetPasswordFailed: boolean;
+};
+
+const initialState: TInitialState = {
   user: {
     email: "",
     name: "",
     password: "",
   },
+
+  isUserAuthed: false,
 
   updateUserRequest: false,
   updateUserSuccess: false,
@@ -53,7 +82,10 @@ const initialState = {
   resetPasswordFailed: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+  state = initialState,
+  action: TUserActions
+): TInitialState => {
   switch (action.type) {
     case UPDATE_USER: {
       return {

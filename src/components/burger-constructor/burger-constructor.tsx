@@ -10,10 +10,10 @@ import BurgerConstructorItemProps from "../burger-constructor-item/burger-constr
 import {
   addConstructorItemThunk,
   swapConstructorBunAction,
+  updateTotalPriceAction,
 } from "../../services/actions/constructor";
 import { getOrderNumber } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
-import { UPDATE_TOTAL_PRICE } from "../../services/actions/constructor";
 import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
 import { LOGIN_ROUTE } from "../../utils/constants";
 import {
@@ -88,7 +88,7 @@ const BurgerConstructor: FC = memo(() => {
       : styles.incridients;
 
   useEffect(() => {
-    dispatch({ type: UPDATE_TOTAL_PRICE });
+    dispatch(updateTotalPriceAction());
   }, [currentBun, constructorIngredients, dispatch]);
 
   return (

@@ -4,7 +4,7 @@ import { useDrag, useDrop } from "react-dnd";
 import styles from "./burger-constructor-item.module.css";
 import { useDispatch } from "react-redux";
 import { useRef, FC } from "react";
-import { SORT_DRAGGING_ITEM } from "../../services/actions/constructor";
+import { sortDraggingItemAction } from "../../services/actions/constructor";
 import { deleteConstructorItemThunk } from "../../services/actions/constructor";
 import { TIngredient } from "../../services/types/data";
 
@@ -49,11 +49,7 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch({
-        type: SORT_DRAGGING_ITEM,
-        dragIndex,
-        hoverIndex,
-      });
+      dispatch(sortDraggingItemAction(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },
   });

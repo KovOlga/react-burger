@@ -1,8 +1,8 @@
 import { TIngredient } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 
-export const TOGGLE_INGREDIENT_INFO_MODAL: "TOGGLE_INGREDIENT_INFO_MODAL" =
-  "TOGGLE_INGREDIENT_INFO_MODAL";
+// export const TOGGLE_INGREDIENT_INFO_MODAL: "TOGGLE_INGREDIENT_INFO_MODAL" =
+//   "TOGGLE_INGREDIENT_INFO_MODAL";
 
 export const openIngredientModalThunk: AppThunk =
   (item: TIngredient) => (dispatch: AppDispatch) => {

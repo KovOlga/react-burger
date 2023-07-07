@@ -3,6 +3,9 @@ import {
   WS_CONNECTION_CLOSED,
   WS_USER_CONNECTION_START,
   WS_USER_CONNECTION_CLOSED,
+  WS_USER_CONNECTION_SUCCESS,
+  WS_USER_CONNECTION_ERROR,
+  WS_GET_USER_ORDERS,
 } from "../action-types/wsActionTypes";
 
 interface IwsFeedConnectionStart {
@@ -17,12 +20,24 @@ interface IwsUserConnectionStart {
 interface IwsUserConnectionClosed {
   readonly type: typeof WS_USER_CONNECTION_CLOSED;
 }
+interface IwsUserConnectionSuccess {
+  readonly type: typeof WS_USER_CONNECTION_SUCCESS;
+}
+interface IwsUserConnectionError {
+  readonly type: typeof WS_USER_CONNECTION_ERROR;
+}
+interface IwsGetUserOrders {
+  readonly type: typeof WS_GET_USER_ORDERS;
+}
 
-export type TUserActions =
+export type TWsActions =
   | IwsFeedConnectionStart
   | IwsFeedConnectionClosed
   | IwsUserConnectionStart
-  | IwsUserConnectionClosed;
+  | IwsUserConnectionClosed
+  | IwsUserConnectionSuccess
+  | IwsUserConnectionError
+  | IwsGetUserOrders;
 
 export const wsFeedConnectionStart = (): IwsFeedConnectionStart => {
   return {

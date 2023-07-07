@@ -1,3 +1,4 @@
+import { read } from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { AppThunk, AppDispatch } from "../types";
 
@@ -39,12 +40,24 @@ interface IUpdateBunCounterAction {
   readonly itemId: string;
 }
 
+interface IUpdateTotalPriceAction {
+  readonly type: typeof UPDATE_TOTAL_PRICE;
+}
+
+interface ISortDraggingItemAction {
+  readonly type: typeof SORT_DRAGGING_ITEM;
+  readonly dragIndex: number;
+  readonly hoverIndex: number;
+}
+
 export type TConstructorActions =
   | IAddConstructorItemAction
   | IUpdateIngredientCounterAction
   | IDeleteConstructorItemAction
   | ISetCurrentBunAction
-  | IUpdateBunCounterAction;
+  | IUpdateBunCounterAction
+  | IUpdateTotalPriceAction
+  | ISortDraggingItemAction;
 
 export const addConstructorItemAction = (
   itemId: string,
@@ -79,6 +92,19 @@ export const updateBunCounterAction = (
 ): IUpdateBunCounterAction => ({
   type: UPDATE_BUN_COUNTER,
   itemId,
+});
+
+export const updateTotalPriceAction = (): IUpdateTotalPriceAction => ({
+  type: UPDATE_TOTAL_PRICE,
+});
+
+export const sortDraggingItemAction = (
+  dragIndex: number,
+  hoverIndex: number
+): ISortDraggingItemAction => ({
+  type: SORT_DRAGGING_ITEM,
+  dragIndex,
+  hoverIndex,
 });
 
 export const addConstructorItemThunk: AppThunk =

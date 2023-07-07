@@ -14,10 +14,12 @@ import {
   SORT_DRAGGING_ITEM,
 } from "../actions/constructor";
 
-import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
+// import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
-import { IIngredientsActions } from "../actions/ingredients";
 import { TIngredient } from "../types/data";
+import { TIngredientsActions } from "../actions/ingredients";
+import { TConstructorActions } from "../actions/constructor";
+import { TOrdersActions } from "../actions/order";
 
 export type TInitialState = {
   data: ReadonlyArray<TIngredient>;
@@ -44,8 +46,8 @@ const initialState: TInitialState = {
 
 export const ingredientsReducer = (
   state = initialState,
-  action: IIngredientsActions
-) => {
+  action: TIngredientsActions | TConstructorActions | TOrdersActions
+): TInitialState => {
   switch (action.type) {
     case GET_INGREDIENT_REQUEST: {
       return {
@@ -145,12 +147,12 @@ export const ingredientsReducer = (
         constructorIngredients: newConstructorArr,
       };
     }
-    case TOGGLE_INGREDIENT_INFO_MODAL: {
-      return {
-        ...state,
-        isIngredientInfoModalShown: !state.isIngredientInfoModalShown,
-      };
-    }
+    // case TOGGLE_INGREDIENT_INFO_MODAL: {
+    //   return {
+    //     ...state,
+    //     isIngredientInfoModalShown: !state.isIngredientInfoModalShown,
+    //   };
+    // }
     case CLEAR_CONSTRUCTOR: {
       return {
         ...state,
