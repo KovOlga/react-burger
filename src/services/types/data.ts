@@ -25,3 +25,14 @@ export type TOrder = {
   ingredients: TIngredient[];
   createdAt: string;
 };
+
+export type TUser = {
+  name: string;
+  email: string;
+};
+
+export type TUserForm = {
+  name: string;
+  email: string;
+  password: string;
+};

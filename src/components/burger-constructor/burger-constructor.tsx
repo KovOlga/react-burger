@@ -8,7 +8,7 @@ import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import BurgerConstructorItemProps from "../burger-constructor-item/burger-constructor-item";
 import {
-  addConstructorItemAction,
+  addConstructorItemThunk,
   swapConstructorBunAction,
 } from "../../services/actions/constructor";
 import { getOrderNumber } from "../../services/actions/order";
@@ -40,7 +40,7 @@ const BurgerConstructor: FC = memo(() => {
   };
 
   const addConstructorIngredient = (item) => {
-    dispatch(addConstructorItemAction(item._id));
+    dispatch(addConstructorItemThunk(item._id));
   };
 
   const openConfirm = useCallback(() => {

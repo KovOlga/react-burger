@@ -4,7 +4,7 @@ import { parseOrderIngredients } from "../../utils/utils";
 import OrderCard from "../order-card/order-card";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
+import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
 import { PROFILE_ROUTE } from "../../utils/constants";
@@ -15,7 +15,7 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
 
   const onOpenOrderInfoModal = useCallback(
     (item) => {
-      dispatch(openOrderInfoModalAction(item));
+      dispatch(openOrderInfoModalThunk(item));
     },
     [dispatch]
   );

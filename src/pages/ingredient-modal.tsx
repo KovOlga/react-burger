@@ -2,7 +2,7 @@ import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
-import { closeIngredientModalAction } from "../services/actions/ingredient-modal";
+import { closeIngredientModalThunk } from "../services/actions/ingredient-modal";
 import { useNavigate } from "react-router-dom";
 
 const modalRoot = document.getElementById("react-modals");
@@ -19,7 +19,7 @@ export const IngredientModalPage = () => {
   );
 
   const closeIngredientInfoModal = useCallback(() => {
-    dispatch(closeIngredientModalAction());
+    dispatch(closeIngredientModalThunk());
     navigate(-1);
   }, [dispatch, navigate]);
 

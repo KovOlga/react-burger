@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import OrderModal from "../components/order-modal/order-modal";
 import Modal from "../components/modal/modal";
 import { useNavigate } from "react-router-dom";
-import { closeOrderInfoModalAction } from "../services/actions/order-info-modal";
+import { closeOrderInfoModalThunk } from "../services/actions/order-info-modal";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -19,7 +19,7 @@ export const FeedModalPage = () => {
   );
 
   const closeOrderInfoModal = useCallback(() => {
-    dispatch(closeOrderInfoModalAction());
+    dispatch(closeOrderInfoModalThunk());
     navigate(-1);
   }, [dispatch, navigate]);
 

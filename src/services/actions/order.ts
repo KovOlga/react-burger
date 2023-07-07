@@ -1,46 +1,102 @@
 import Api from "../api/api";
+import { TOrder } from "../types/data";
+import { AppThunk, AppDispatch } from "../types";
 
-export const GET_ORDER_NUMBER_REQUEST = "GET_ORDER_NUMBER_REQUEST";
-export const GET_ORDER_NUMBER_SUCCESS = "GET_ORDER_NUMBER_SUCCESS";
-export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
-export const UPDATE_CONSTRUCTOR_EMPTINESS = "UPDATE_CONSTRUCTOR_EMPTINESS";
-export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
-export const RESET_COUNTERS = "RESET_COUNTERS";
+export const GET_ORDER_NUMBER_REQUEST: "GET_ORDER_NUMBER_REQUEST" =
+  "GET_ORDER_NUMBER_REQUEST";
+export const GET_ORDER_NUMBER_SUCCESS: "GET_ORDER_NUMBER_SUCCESS" =
+  "GET_ORDER_NUMBER_SUCCESS";
+export const GET_ORDER_NUMBER_FAILED: "GET_ORDER_NUMBER_FAILED" =
+  "GET_ORDER_NUMBER_FAILED";
+export const UPDATE_CONSTRUCTOR_EMPTINESS: "UPDATE_CONSTRUCTOR_EMPTINESS" =
+  "UPDATE_CONSTRUCTOR_EMPTINESS";
+export const CLEAR_CONSTRUCTOR: "CLEAR_CONSTRUCTOR" = "CLEAR_CONSTRUCTOR";
+export const RESET_COUNTERS: "RESET_COUNTERS" = "RESET_COUNTERS";
 
 const api = new Api();
 
-export function getOrderNumber(orderArr) {
-  return function (dispatch) {
-    if (orderArr.length === 0) {
-      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
-      return;
-    }
-    dispatch({
-      type: GET_ORDER_NUMBER_REQUEST,
-    });
-    api
-      .getOrderNumber(orderArr)
-      .then((res) => {
-        if (res.success) {
-          dispatch({
-            type: GET_ORDER_NUMBER_SUCCESS,
-            payload: res,
-          });
-          localStorage.setItem("isOrderDetailsInfoModalShown", true);
-        }
-      })
-      .catch((e) => {
-        dispatch({
-          type: GET_ORDER_NUMBER_FAILED,
-        });
-      });
-  };
+interface IGetOrderNumberRequestAction {
+  readonly type: typeof GET_ORDER_NUMBER_REQUEST;
+}
+interface IGetOrderNumberSuccessAction {
+  readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
+  readonly res: TOrder;
+}
+interface IGetOrderNumberFailedAction {
+  readonly type: typeof GET_ORDER_NUMBER_FAILED;
+}
+interface IUpdateConstructorEmptinessAction {
+  readonly type: typeof UPDATE_CONSTRUCTOR_EMPTINESS;
+  state: boolean;
+}
+interface IClearConstructorAction {
+  readonly type: typeof CLEAR_CONSTRUCTOR;
+}
+interface IResetCountersAction {
+  readonly type: typeof RESET_COUNTERS;
 }
 
-export const closeOrderModalAction = () => {
-  return (dispatch) => {
-    dispatch({ type: CLEAR_CONSTRUCTOR });
-    dispatch({ type: RESET_COUNTERS });
-    localStorage.setItem("isOrderDetailsInfoModalShown", false);
+export type TOrdersActions =
+  | IGetOrderNumberRequestAction
+  | IGetOrderNumberSuccessAction
+  | IGetOrderNumberFailedAction
+  | IUpdateConstructorEmptinessAction
+  | IClearConstructorAction
+  | IResetCountersAction;
+
+export const GetOrderNumberRequestAction =
+  (): IGetOrderNumberRequestAction => ({
+    type: GET_ORDER_NUMBER_REQUEST,
+  });
+export const GetOrderNumberSuccessAction = (
+  res: TOrder
+): IGetOrderNumberSuccessAction => ({
+  type: GET_ORDER_NUMBER_SUCCESS,
+  res,
+});
+export const GetOrderNumberFailedAction = (): IGetOrderNumberFailedAction => ({
+  type: GET_ORDER_NUMBER_FAILED,
+});
+export const UpdateConstructorEmptinessAction = (
+  state: boolean
+): IUpdateConstructorEmptinessAction => ({
+  type: UPDATE_CONSTRUCTOR_EMPTINESS,
+  state,
+});
+export const ClearConstructorAction = (): IClearConstructorAction => ({
+  type: CLEAR_CONSTRUCTOR,
+});
+export const ResetCountersAction = (): IResetCountersAction => ({
+  type: RESET_COUNTERS,
+});
+
+export const getOrderNumber: AppThunk =
+  (orderArr) => (dispatch: AppDispatch) => {
+    return function () {
+      if (orderArr.length === 0) {
+        dispatch(UpdateConstructorEmptinessAction(true));
+        return;
+      }
+      dispatch(GetOrderNumberRequestAction);
+      api
+        .getOrderNumber(orderArr)
+        .then((res) => {
+          if (res.success) {
+            dispatch(GetOrderNumberSuccessAction(res));
+            localStorage.setItem("isOrderDetailsInfoModalShown", "true");
+          }
+        })
+        .catch((e) => {
+          dispatch(GetOrderNumberFailedAction);
+        });
+    };
   };
-};
+
+export const closeOrderModalAction: AppThunk =
+  () => (dispatch: AppDispatch) => {
+    return () => {
+      dispatch(ClearConstructorAction);
+      dispatch(ResetCountersAction);
+      localStorage.setItem("isOrderDetailsInfoModalShown", "false");
+    };
+  };

@@ -15,10 +15,21 @@ import {
 } from "../actions/constructor";
 
 import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
-
 import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
+import { IIngredientsActions } from "../actions/ingredients";
+import { TIngredient } from "../types/data";
 
-const initialState = {
+export type TInitialState = {
+  data: ReadonlyArray<TIngredient>;
+  dataRequest: boolean;
+  dataFailed: boolean;
+  currentBun: null | TIngredient;
+  constructorIngredients: [];
+  totalPrice: number;
+  isIngredientInfoModalShown: boolean;
+};
+
+const initialState: TInitialState = {
   data: [],
   dataRequest: false,
   dataFailed: false,
@@ -31,7 +42,10 @@ const initialState = {
   isIngredientInfoModalShown: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: IIngredientsActions
+) => {
   switch (action.type) {
     case GET_INGREDIENT_REQUEST: {
       return {

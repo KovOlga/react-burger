@@ -1,16 +1,21 @@
 import { TIngredient } from "../types/data";
-export const TOGGLE_INGREDIENT_INFO_MODAL = "TOGGLE_INGREDIENT_INFO_MODAL";
+import { AppThunk, AppDispatch } from "../types";
 
-export const openIngredientModalAction = (item: TIngredient) => {
-  return () => {
-    localStorage.setItem("isIngredientInfoModalShown", "true");
-    localStorage.setItem("currentIngredientShown", JSON.stringify(item));
-  };
-};
+export const TOGGLE_INGREDIENT_INFO_MODAL: "TOGGLE_INGREDIENT_INFO_MODAL" =
+  "TOGGLE_INGREDIENT_INFO_MODAL";
 
-export const closeIngredientModalAction = () => {
-  return () => {
-    localStorage.setItem("isIngredientInfoModalShown", "false");
-    localStorage.removeItem("currentIngredientShown");
+export const openIngredientModalThunk: AppThunk =
+  (item: TIngredient) => (dispatch: AppDispatch) => {
+    return () => {
+      localStorage.setItem("isIngredientInfoModalShown", "true");
+      localStorage.setItem("currentIngredientShown", JSON.stringify(item));
+    };
   };
-};
+
+export const closeIngredientModalThunk: AppThunk =
+  () => (dispatch: AppDispatch) => {
+    return () => {
+      localStorage.setItem("isIngredientInfoModalShown", "false");
+      localStorage.removeItem("currentIngredientShown");
+    };
+  };

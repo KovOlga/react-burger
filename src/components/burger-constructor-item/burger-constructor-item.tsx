@@ -5,7 +5,7 @@ import styles from "./burger-constructor-item.module.css";
 import { useDispatch } from "react-redux";
 import { useRef, FC } from "react";
 import { SORT_DRAGGING_ITEM } from "../../services/actions/constructor";
-import { deleteConstructorItemAction } from "../../services/actions/constructor";
+import { deleteConstructorItemThunk } from "../../services/actions/constructor";
 import { TIngredient } from "../../services/types/data";
 
 interface BurgerConstructorItemProps {
@@ -24,7 +24,7 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
   const id = ingredient._id;
 
   const handleDelete = (uniqueId: string | undefined, itemId: string) => {
-    dispatch(deleteConstructorItemAction(itemId, uniqueId));
+    dispatch(deleteConstructorItemThunk(itemId, uniqueId));
   };
 
   const [, drop] = useDrop({

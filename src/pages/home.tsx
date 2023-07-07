@@ -8,7 +8,7 @@ import OrderDetails from "../components/order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
 import { getIngredients } from "../services/actions/ingredients";
-import { openIngredientModalAction } from "../services/actions/ingredient-modal";
+import { openIngredientModalThunk } from "../services/actions/ingredient-modal";
 import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
 import {
@@ -33,7 +33,7 @@ export const HomePage = () => {
 
   const openIngredientInfo = useCallback(
     (item: TIngredient) => {
-      dispatch(openIngredientModalAction(item));
+      dispatch(openIngredientModalThunk(item));
     },
     [dispatch]
   );

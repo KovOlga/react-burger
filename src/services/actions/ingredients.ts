@@ -1,28 +1,60 @@
+import { Dispatch } from "redux";
 import Api from "../api/api";
+import { TIngredient } from "../types/data";
+import { AppThunk, AppDispatch } from "../types";
 
-export const GET_INGREDIENT_REQUEST = "GET_INGREDIENT_REQUEST";
-export const GET_INGREDIENT_SUCCESS = "GET_INGREDIENT_SUCCESS";
-export const GET_INGREDIENT_FAILED = "GET_INGREDIENT_FAILED";
+export const GET_INGREDIENT_REQUEST: "GET_INGREDIENT_REQUEST" =
+  "GET_INGREDIENT_REQUEST";
+export const GET_INGREDIENT_SUCCESS: "GET_INGREDIENT_SUCCESS" =
+  "GET_INGREDIENT_SUCCESS";
+export const GET_INGREDIENT_FAILED: "GET_INGREDIENT_FAILED" =
+  "GET_INGREDIENT_FAILED";
 
 const api = new Api();
 
-export function getIngredients() {
-  return function (dispatch) {
-    dispatch({
-      type: GET_INGREDIENT_REQUEST,
-    });
+interface IGetIngredientsRequestAction {
+  readonly type: typeof GET_INGREDIENT_REQUEST;
+}
+
+interface IGetIngredientsSuccessAction {
+  readonly type: typeof GET_INGREDIENT_SUCCESS;
+  data: TIngredient[];
+}
+
+interface IGetIngredientsFailedAction {
+  readonly type: typeof GET_INGREDIENT_FAILED;
+}
+
+export type TIngredientsActions =
+  | IGetIngredientsRequestAction
+  | IGetIngredientsSuccessAction
+  | IGetIngredientsFailedAction;
+
+export const getIngredientsAction = (): IGetIngredientsRequestAction => ({
+  type: GET_INGREDIENT_REQUEST,
+});
+
+export const getIngredientsSuccessAction = (
+  data: TIngredient[]
+): IGetIngredientsSuccessAction => ({
+  type: GET_INGREDIENT_SUCCESS,
+  data,
+});
+
+export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
+  type: GET_INGREDIENT_FAILED,
+});
+
+export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
+  return () => {
+    dispatch(getIngredientsAction);
     api
       .getIngredientsList()
       .then(({ data }) => {
-        dispatch({
-          type: GET_INGREDIENT_SUCCESS,
-          data,
-        });
+        dispatch(getIngredientsSuccessAction(data));
       })
       .catch((e) => {
-        dispatch({
-          type: GET_INGREDIENT_FAILED,
-        });
+        dispatch(getIngredientsFailedAction);
       });
   };
-}
+};
