@@ -5,7 +5,7 @@ import { useCallback, FormEvent } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../services/actions/user";
+import { loginUserThunk } from "../services/actions/user";
 import { useForm } from "../hooks/useForm";
 import {
   HOME_ROUTE,
@@ -26,7 +26,7 @@ export const LoginPage = () => {
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
-      dispatch(loginUser(values)).then(() => {
+      dispatch(loginUserThunk(values)).then(() => {
         if (location.state !== null && location.state.from) {
           navigate(location.state.from.pathname);
         } else {

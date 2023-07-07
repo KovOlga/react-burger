@@ -7,7 +7,10 @@ import {
 import { useState, useRef, useEffect, FC, FormEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { updateUserInfo, getUserInfo } from "../../services/actions/user";
+import {
+  updateUserInfoThunk,
+  getUserInfoThunk,
+} from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
 import { getUpdateUserRequest, getUser } from "../../services/selectors/user";
 
@@ -28,7 +31,7 @@ const ProfileForm: FC = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(updateUserInfo(values)).then(() => {
+    dispatch(updateUserInfoThunk(values)).then(() => {
       setFormChanging(false);
     });
   };
@@ -53,7 +56,7 @@ const ProfileForm: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserInfoThunk());
   }, [dispatch]);
 
   useEffect(() => {

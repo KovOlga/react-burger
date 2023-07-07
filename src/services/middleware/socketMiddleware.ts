@@ -1,7 +1,5 @@
 import { getCookie, handleTokens } from "../../utils/utils";
-import Api from "../api/api";
-
-const api = new Api();
+import { updateToken } from "../api/api";
 
 export const socketMiddleware = (wsUrl, wsActions, user) => {
   return (store) => {
@@ -34,7 +32,7 @@ export const socketMiddleware = (wsUrl, wsActions, user) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           if (parsedData.message === "Invalid or missing token") {
-            const refreshData = await api.updateToken();
+            const refreshData = await updateToken();
             handleTokens(refreshData);
             const accessToken = getCookie("token");
             socket = new WebSocket(`${wsUrl}?token=${accessToken}`);

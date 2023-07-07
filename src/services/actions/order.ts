@@ -1,6 +1,6 @@
-import Api from "../api/api";
 import { TOrder } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
+import { getOrderNumber } from "../api/api";
 
 export const GET_ORDER_NUMBER_REQUEST: "GET_ORDER_NUMBER_REQUEST" =
   "GET_ORDER_NUMBER_REQUEST";
@@ -12,8 +12,6 @@ export const UPDATE_CONSTRUCTOR_EMPTINESS: "UPDATE_CONSTRUCTOR_EMPTINESS" =
   "UPDATE_CONSTRUCTOR_EMPTINESS";
 export const CLEAR_CONSTRUCTOR: "CLEAR_CONSTRUCTOR" = "CLEAR_CONSTRUCTOR";
 export const RESET_COUNTERS: "RESET_COUNTERS" = "RESET_COUNTERS";
-
-const api = new Api();
 
 interface IGetOrderNumberRequestAction {
   readonly type: typeof GET_ORDER_NUMBER_REQUEST;
@@ -78,8 +76,7 @@ export const getOrderNumber: AppThunk =
         return;
       }
       dispatch(GetOrderNumberRequestAction);
-      api
-        .getOrderNumber(orderArr)
+      getOrderNumber(orderArr)
         .then((res) => {
           if (res.success) {
             dispatch(GetOrderNumberSuccessAction(res));

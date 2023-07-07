@@ -1,7 +1,15 @@
-import Api from "../api/api";
 import { deleteCookie, handleTokens } from "../../utils/utils";
 import { TUser, TUserForm } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
+import {
+  getUserInfo,
+  updateUserInfo,
+  loginUser,
+  logoutUser,
+  forgotPassword,
+  resetPassword,
+  registerUser,
+} from "../api/api";
 
 export const IS_USER_AUTHED: "isUserAuthed" = "isUserAuthed";
 export const UPDATE_USER: "UPDATE_USER" = "UPDATE_USER";
@@ -30,8 +38,6 @@ export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
 export const CLEAR_USER: "CLEAR_USER" = "CLEAR_USER";
-
-const api = new Api();
 
 interface IIsUserAuthedAction {
   readonly type: typeof IS_USER_AUTHED;
@@ -188,10 +194,9 @@ export const ClearUserAction = (): IClearUserAction => ({
   type: CLEAR_USER,
 });
 
-export const getUserInfo: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUserInfoThunk: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
-    api
-      .getUserInfo()
+    getUserInfo()
       .then((res) => {
         // dispatch({
         //   type: UPDATE_USER,
@@ -205,12 +210,11 @@ export const getUserInfo: AppThunk = () => (dispatch: AppDispatch) => {
   };
 };
 
-export const updateUserInfo: AppThunk =
+export const updateUserInfoThunk: AppThunk =
   (userNewInfo: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
       dispatch(UpdateUserRequestAction);
-      return api
-        .updateUserInfo(userNewInfo)
+      return updateUserInfo(userNewInfo)
         .then((res) => {
           dispatch(UpdateUserAction(res.user));
           dispatch(UpdateUserSuccessAction);
@@ -222,12 +226,11 @@ export const updateUserInfo: AppThunk =
     };
   };
 
-export const loginUser: AppThunk =
+export const loginUserThunk: AppThunk =
   (form: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
       dispatch(LoginRequestAction);
-      return api
-        .loginUser(form)
+      return loginUser(form)
         .then((res) => {
           handleTokens(res);
           localStorage.setItem(IS_USER_AUTHED, "true");
@@ -244,11 +247,10 @@ export const loginUser: AppThunk =
     };
   };
 
-export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const logoutUserThunk: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
     dispatch(LogoutRequestAction);
-    return api
-      .logoutUser()
+    return logoutUser()
       .then((res) => {
         if (res.success) {
           dispatch(ClearUserAction);
@@ -265,12 +267,11 @@ export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
   };
 };
 
-export const forgotPassword: AppThunk =
+export const forgotPasswordThunk: AppThunk =
   (email: string) => (dispatch: AppDispatch) => {
     return () => {
       dispatch(ForgotPasswordRequestAction);
-      return api
-        .forgotPassword(email)
+      return forgotPassword(email)
         .then(() => {
           dispatch(ForgotPasswordSuccessAction);
           localStorage.setItem("resetPasswordSent", "true");
@@ -281,13 +282,12 @@ export const forgotPassword: AppThunk =
     };
   };
 
-export const resetPassword: AppThunk =
+export const resetPasswordThunk: AppThunk =
   ({ password, code }: { password: string; code: string }) =>
   (dispatch: AppDispatch) => {
     return () => {
       dispatch(ResetPasswordRequestAction);
-      return api
-        .resetPassword(password, code)
+      return resetPassword(password, code)
         .then((res) => {
           if (res.success) {
             dispatch(ResetPasswordSuccessAction);
@@ -301,12 +301,11 @@ export const resetPassword: AppThunk =
     };
   };
 
-export const registerUser: AppThunk =
+export const registerUserThunk: AppThunk =
   (form: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
       dispatch(RegisterRequestAction);
-      return api
-        .registerUser(form)
+      return registerUser(form)
         .then((res) => {
           dispatch(RegisterSuccessAction);
           return res;

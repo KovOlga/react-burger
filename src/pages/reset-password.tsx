@@ -2,7 +2,7 @@ import styles from "./login-form.module.css";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { resetPassword } from "../services/actions/user";
+import { resetPasswordThunk } from "../services/actions/user";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ export const ResetPassword = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(resetPassword(values)).then((res) => {
+    dispatch(resetPasswordThunk(values)).then((res) => {
       if (res.success) {
         navigate(LOGIN_ROUTE);
       }

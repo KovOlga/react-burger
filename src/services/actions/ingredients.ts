@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import Api from "../api/api";
 import { TIngredient } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
+import { getIngredientsList } from "../api/api";
 
 export const GET_INGREDIENT_REQUEST: "GET_INGREDIENT_REQUEST" =
   "GET_INGREDIENT_REQUEST";
@@ -9,8 +9,6 @@ export const GET_INGREDIENT_SUCCESS: "GET_INGREDIENT_SUCCESS" =
   "GET_INGREDIENT_SUCCESS";
 export const GET_INGREDIENT_FAILED: "GET_INGREDIENT_FAILED" =
   "GET_INGREDIENT_FAILED";
-
-const api = new Api();
 
 interface IGetIngredientsRequestAction {
   readonly type: typeof GET_INGREDIENT_REQUEST;
@@ -48,8 +46,7 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
 export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
     dispatch(getIngredientsAction);
-    api
-      .getIngredientsList()
+    getIngredientsList()
       .then(({ data }) => {
         dispatch(getIngredientsSuccessAction(data));
       })
