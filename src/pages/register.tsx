@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/constants";
+import { FormEvent } from "react";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const RegisterPage = () => {
     password: "",
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(registerUser(values)).then((res) => {
       if (res.success) {

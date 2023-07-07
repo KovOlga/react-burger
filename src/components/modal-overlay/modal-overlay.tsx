@@ -1,12 +1,8 @@
 import styles from "./modal-overlay.module.css";
-import PropTypes from "prop-types";
+import { FC, ReactNode } from "react";
 
-const ModalOverlay = ({ children }) => {
+const ModalOverlay: FC<{ children: ReactNode }> = ({ children }) => {
   return <div className={styles.overlay}>{children}</div>;
-};
-
-ModalOverlay.propTypes = {
-  children: PropTypes.element.isRequired,
 };
 
 export default ModalOverlay;

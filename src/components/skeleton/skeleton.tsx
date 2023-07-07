@@ -1,9 +1,10 @@
 import styles from "./skeleton.module.css";
+import { FC } from "react";
 import burger from "../../images/burger.png";
 import { useSelector } from "react-redux";
 import { getConstructorEmpty } from "../../services/selectors/order";
 
-const Skeleton = () => {
+const Skeleton: FC = () => {
   const isConstructorEmpty = useSelector(getConstructorEmpty);
 
   return (

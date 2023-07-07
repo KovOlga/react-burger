@@ -1,9 +1,17 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { IS_USER_AUTHED } from "../services/actions/user";
-import PropTypes from "prop-types";
 import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/constants";
+import { FC } from "react";
 
-export const ProtectedRouteElement = ({ element, authHandler }) => {
+interface ProtectedRouteElementProps {
+  element: JSX.Element;
+  authHandler?: boolean;
+}
+
+export const ProtectedRouteElement: FC<ProtectedRouteElementProps> = ({
+  element,
+  authHandler,
+}) => {
   const location = useLocation();
   const isUserAuthed = localStorage.getItem(IS_USER_AUTHED);
 
@@ -16,9 +24,4 @@ export const ProtectedRouteElement = ({ element, authHandler }) => {
   }
 
   return element;
-};
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
-  authHandler: PropTypes.bool,
 };

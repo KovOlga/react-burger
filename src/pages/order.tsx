@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
@@ -16,7 +16,7 @@ import {
   getDataFailed,
 } from "../services/selectors/ingredients";
 
-export const OrderPage = ({ from }) => {
+export const OrderPage: FC<{ from: string }> = ({ from }) => {
   const dispatch = useDispatch();
   let { id } = useParams();
   const [currentOrder, setCurrentOrder] = useState(null);

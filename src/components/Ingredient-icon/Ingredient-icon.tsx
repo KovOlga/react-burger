@@ -1,18 +1,42 @@
 import styles from "./Ingredient-icon.module.css";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/types";
+import { FC } from "react";
+import { TIngredient } from "../../services/types/data";
 
-const IngredientIcon = ({ ingredient, number, index, position }) => {
-  const iconOverlapStyle =
-    position === "absolute"
-      ? {
-          position: "absolute",
-          left: `${index * 48}px`,
-          zIndex: `${10 - index}`,
-        }
-      : null;
+interface IngredientIconProps {
+  ingredient: TIngredient;
+  number: number;
+  index: number;
+  position: string;
+}
+
+const IngredientIcon: FC<IngredientIconProps> = ({
+  ingredient,
+  number,
+  index,
+  position,
+}) => {
+  // const iconOverlapStyle =
+  //   position === "absolute"
+  //     ? {
+  //         position: "absolute",
+  //         left: `${index * 48}px`,
+  //         zIndex: `${10 - index}`,
+  //       }
+  //     : null;
   return (
-    <div style={iconOverlapStyle} className={styles.item}>
+    <div
+      style={
+        position === "absolute"
+          ? {
+              position: "absolute",
+              left: `${index * 48}px`,
+              zIndex: `${10 - index}`,
+            }
+          : {}
+      }
+      className={styles.item}
+    >
       <div
         className={styles.image}
         style={{
@@ -27,13 +51,6 @@ const IngredientIcon = ({ ingredient, number, index, position }) => {
       </div>
     </div>
   );
-};
-
-IngredientIcon.propTypes = {
-  ingredient: ingredientType.isRequired,
-  number: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  position: PropTypes.string.isRequired,
 };
 
 export default IngredientIcon;

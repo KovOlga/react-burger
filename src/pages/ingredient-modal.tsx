@@ -5,8 +5,6 @@ import { useCallback } from "react";
 import { closeIngredientModalThunk } from "../services/actions/ingredient-modal";
 import { useNavigate } from "react-router-dom";
 
-const modalRoot = document.getElementById("react-modals");
-
 export const IngredientModalPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +23,7 @@ export const IngredientModalPage = () => {
 
   return (
     isIngredientInfoModalShown && (
-      <Modal onClose={closeIngredientInfoModal} container={modalRoot}>
+      <Modal onClose={closeIngredientInfoModal}>
         <IngredientDetails ingredient={currentIngredient} />
       </Modal>
     )

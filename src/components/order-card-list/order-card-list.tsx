@@ -2,20 +2,36 @@ import styles from "./order-card-list.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { parseOrderIngredients } from "../../utils/utils";
 import OrderCard from "../order-card/order-card";
-import { useCallback } from "react";
+import { useCallback, FC } from "react";
 import { useDispatch } from "react-redux";
 import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
 import PropTypes from "prop-types";
 import { ingredientType } from "../../utils/types";
+import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 import { PROFILE_ROUTE } from "../../utils/constants";
+import {
+  TOrderCounted,
+  TOrder,
+  TIngredientCustom,
+} from "../../services/types/data";
 
-const OrderCardList = ({ orders, data, fromComponent }) => {
+interface OrderCardListProps {
+  orders: TOrder[];
+  data: TIngredientCustom[];
+  fromComponent: string;
+}
+
+const OrderCardList: FC<OrderCardListProps> = ({
+  orders,
+  data,
+  fromComponent,
+}) => {
   let location = useLocation();
   const dispatch = useDispatch();
 
   const onOpenOrderInfoModal = useCallback(
-    (item) => {
-      dispatch(openOrderInfoModalThunk(item));
+    (item: TOrderCounted) => {
+      dispatch(openOrderInfoModalAction(item));
     },
     [dispatch]
   );
@@ -25,7 +41,7 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
       {orders
         .slice(0)
         .reverse()
-        .map((order) => {
+        .map((order: TOrder) => {
           return (
             <Link
               key={order._id}
@@ -47,11 +63,6 @@ const OrderCardList = ({ orders, data, fromComponent }) => {
         })}
     </ul>
   );
-};
-
-OrderCardList.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-  fromComponent: PropTypes.string.isRequired,
 };
 
 export default OrderCardList;

@@ -2,10 +2,15 @@ import styles from "./order-modal.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { orderType } from "../../utils/types";
 import { getTimeZone } from "../../utils/utils";
+import { TOrderCounted } from "../../services/types/data";
+import { FC } from "react";
 
-const OrderModal = ({ order }) => {
+interface OrderModalProps {
+  order: TOrderCounted;
+}
+
+const OrderModal: FC<OrderModalProps> = ({ order }) => {
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-default">{`#${order.number}`}</p>
@@ -54,10 +59,6 @@ const OrderModal = ({ order }) => {
       </div>
     </div>
   );
-};
-
-OrderModal.propTypes = {
-  order: orderType.isRequired,
 };
 
 export default OrderModal;

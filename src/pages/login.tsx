@@ -1,7 +1,7 @@
 import styles from "./login-form.module.css";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
+import { useCallback, FormEvent } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ export const LoginPage = () => {
   });
 
   const onSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(loginUser(values)).then(() => {
         if (location.state !== null && location.state.from) {

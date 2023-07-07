@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
+import { FormEvent } from "react";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const ResetPassword = () => {
   });
   const resetPasswordSent = localStorage.getItem("resetPasswordSent");
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(resetPassword(values)).then((res) => {
       if (res.success) {

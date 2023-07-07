@@ -4,16 +4,16 @@ import {
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, FC, FormEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateUserInfo, getUserInfo } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
 import { getUpdateUserRequest, getUser } from "../../services/selectors/user";
 
-const ProfileForm = () => {
+const ProfileForm: FC = () => {
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { values, handleChange, setValues } = useForm({
     name: "",
     email: "",
@@ -26,7 +26,7 @@ const ProfileForm = () => {
   const [isFormChanging, setFormChanging] = useState(false);
   const [isNameFocus, setNameFocus] = useState(true);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(updateUserInfo(values)).then(() => {
       setFormChanging(false);
@@ -39,7 +39,7 @@ const ProfileForm = () => {
   };
 
   const onNameEditIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current!.focus(), 0);
     setFormChanging(true);
     setNameFocus(false);
   };
@@ -109,12 +109,7 @@ const ProfileForm = () => {
             >
               Отмена
             </Button>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="medium"
-              extraClass={styles.btn}
-            >
+            <Button htmlType="submit" type="primary" size="medium">
               {updateUserRequest ? "Сохраняется" : "Сохранить"}
             </Button>
           </div>

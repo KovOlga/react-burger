@@ -18,8 +18,6 @@ import {
 } from "../services/selectors/ingredients";
 import { TIngredient } from "../services/types/data";
 
-const modalRoot = document.getElementById("react-modals");
-
 export const HomePage = () => {
   const dispatch = useDispatch();
 
@@ -59,7 +57,7 @@ export const HomePage = () => {
       </main>
 
       {JSON.parse(localStorage.getItem("isOrderDetailsInfoModalShown")) && (
-        <Modal onClose={closeOrderInfoModal} container={modalRoot}>
+        <Modal onClose={closeOrderInfoModal}>
           <OrderDetails />
         </Modal>
       )}

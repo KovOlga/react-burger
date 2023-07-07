@@ -1,30 +1,28 @@
-export type TIngredient = {
+export interface TIngredient {
   _id: string;
   name: string;
   type: string;
   isLocked: boolean;
   price: number;
   image: string;
-};
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+}
 
-export type TIngredientCustom = {
-  _id: string;
-  name: string;
-  type: string;
-  isLocked: boolean;
-  price: number;
-  image: string;
+export interface TIngredientCustom extends TIngredient {
   counter: number;
-};
+}
 
-export type TOrder = {
+export interface TOrder {
   _id: string;
   name: string;
   number: number;
   status: string;
-  ingredients: TIngredient[];
+  ingredients: TIngredientCustom[];
   createdAt: string;
-};
+}
 
 export type TUser = {
   name: string;

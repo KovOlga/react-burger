@@ -1,7 +1,10 @@
 import styles from "./ingredient-details.module.css";
-import { ingredientType } from "../../utils/types";
+import { TIngredientCustom } from "../../services/types/data";
+import { FC } from "react";
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails: FC<{ ingredient: TIngredientCustom }> = ({
+  ingredient,
+}) => {
   return (
     <div className={styles.container}>
       <h1 className={`text text_type_main-large ${styles.title}`}>
@@ -51,10 +54,6 @@ const IngredientDetails = ({ ingredient }) => {
       </div>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientType.isRequired,
 };
 
 export default IngredientDetails;

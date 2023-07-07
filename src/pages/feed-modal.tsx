@@ -5,8 +5,6 @@ import Modal from "../components/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { closeOrderInfoModalThunk } from "../services/actions/order-info-modal";
 
-const modalRoot = document.getElementById("react-modals");
-
 export const FeedModalPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +23,7 @@ export const FeedModalPage = () => {
 
   return (
     isOrderInfoModalShown && (
-      <Modal onClose={closeOrderInfoModal} container={modalRoot}>
+      <Modal onClose={closeOrderInfoModal}>
         <OrderModal order={currentOrder} />
       </Modal>
     )

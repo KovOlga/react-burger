@@ -2,11 +2,17 @@ import styles from "./order-card.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { orderType } from "../../utils/types";
 import { getTimeZone } from "../../utils/utils";
+import { FC } from "react";
+import { TOrderCounted } from "../../services/types/data";
 
-const OrderCard = ({ order, onClick, fromComponent }) => {
+interface OrderCardProps {
+  order: TOrderCounted;
+  onClick: (order: TOrderCounted) => void; //check
+  fromComponent: string;
+}
+
+const OrderCard: FC<OrderCardProps> = ({ order, onClick, fromComponent }) => {
   const orderIngredients = order.ingredients.slice(0, 6);
 
   return (
@@ -59,12 +65,6 @@ const OrderCard = ({ order, onClick, fromComponent }) => {
       </div>
     </li>
   );
-};
-
-OrderCard.propTypes = {
-  order: orderType.isRequired,
-  onClick: PropTypes.func.isRequired,
-  fromComponent: PropTypes.string.isRequired,
 };
 
 export default OrderCard;

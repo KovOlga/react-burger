@@ -3,11 +3,11 @@ import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
-import { memo } from "react";
+import { memo, FC } from "react";
 import { NavLink } from "react-router-dom";
 import { PROFILE_ROUTE, HOME_ROUTE, FEED_ROUTE } from "../../utils/constants";
 
-const AppHeader = memo(() => {
+const AppHeader: FC = memo(() => {
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.underlay}></div>

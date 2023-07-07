@@ -1,7 +1,7 @@
 import styles from "./loader.module.css";
-import PropTypes from "prop-types";
+import { FC } from "react";
 
-const Loader = ({ loadingText }) => {
+const Loader: FC<{ loadingText: string }> = ({ loadingText }) => {
   return (
     <div className={styles.loader}>
       <h1 className="text text_type_main-medium">{loadingText}</h1>
@@ -20,10 +20,6 @@ const Loader = ({ loadingText }) => {
       </div>
     </div>
   );
-};
-
-Loader.propTypes = {
-  loadingText: PropTypes.string.isRequired,
 };
 
 export default Loader;
