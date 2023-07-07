@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, FC } from "react";
-import { useCustomDispatch, useCustomSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
@@ -17,17 +17,17 @@ import {
 } from "../services/selectors/ingredients";
 
 export const OrderPage: FC<{ from: string }> = ({ from }) => {
-  const dispatch = useCustomDispatch();
+  const dispatch = useAppDispatch();
   let { id } = useParams();
   const [currentOrder, setCurrentOrder] = useState(null);
 
-  const orders = useCustomSelector((store) =>
+  const orders = useAppSelector((store) =>
     from === "feed" ? store.wsfeed.orders.orders : store.wsUser.orders
   );
 
-  const data = useCustomSelector(getData);
-  const dataRequest = useCustomSelector(getDataRequest);
-  const dataFailed = useCustomSelector(getDataFailed);
+  const data = useAppSelector(getData);
+  const dataRequest = useAppSelector(getDataRequest);
+  const dataFailed = useAppSelector(getDataFailed);
 
   useEffect(() => {
     dispatch(getIngredients());

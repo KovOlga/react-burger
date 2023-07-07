@@ -5,7 +5,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect, FC, FormEvent } from "react";
-import { useCustomDispatch, useCustomSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
   updateUserInfoThunk,
@@ -15,7 +15,7 @@ import { useForm } from "../../hooks/useForm";
 import { getUpdateUserRequest, getUser } from "../../services/selectors/user";
 
 const ProfileForm: FC = () => {
-  const dispatch = useCustomDispatch();
+  const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
   const { values, handleChange, setValues } = useForm({
     name: "",
@@ -23,17 +23,16 @@ const ProfileForm: FC = () => {
     password: "",
   });
 
-  const updateUserRequest = useCustomSelector(getUpdateUserRequest);
-  const user = useCustomSelector(getUser);
+  const updateUserRequest = useAppSelector(getUpdateUserRequest);
+  const user = useAppSelector(getUser);
 
   const [isFormChanging, setFormChanging] = useState(false);
   const [isNameFocus, setNameFocus] = useState(true);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(updateUserInfoThunk(values)).then(() => {
-      setFormChanging(false);
-    });
+    dispatch(updateUserInfoThunk(values));
+    setFormChanging(false);
   };
 
   const resetForm = () => {

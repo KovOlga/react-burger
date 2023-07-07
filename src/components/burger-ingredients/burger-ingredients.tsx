@@ -3,7 +3,7 @@ import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import { memo, useMemo, useRef, FC, useState } from "react";
-import { useCustomSelector } from "../../hooks/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 import { getData } from "../../services/selectors/ingredients";
 import { TIngredientCustom } from "../../services/types/data";
 
@@ -15,7 +15,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
   ({ onOpenIngredientInfo }) => {
     const [current, setCurrent] = useState("Булки");
 
-    const ingredients = useCustomSelector(getData);
+    const ingredients = useAppSelector(getData);
 
     const bunRef = useRef<HTMLHeadingElement>(null);
     const sauceRef = useRef<HTMLHeadingElement>(null);

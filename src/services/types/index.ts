@@ -6,6 +6,7 @@ import { TIngredientsActions } from "../actions/ingredients";
 import { TOrdersActions } from "../actions/order";
 import { TWsActions } from "../actions/wsActions";
 import { TUserActions } from "../actions/user";
+import { Dispatch } from "redux";
 
 type TApplicationActions =
   | TIngredientsActions

@@ -5,8 +5,6 @@ import OrderCard from "../order-card/order-card";
 import { useCallback, FC } from "react";
 import { useDispatch } from "react-redux";
 import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
-import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/types";
 import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 import { PROFILE_ROUTE } from "../../utils/constants";
 import {

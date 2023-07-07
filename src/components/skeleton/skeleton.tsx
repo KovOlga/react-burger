@@ -1,11 +1,11 @@
 import styles from "./skeleton.module.css";
 import { FC } from "react";
 import burger from "../../images/burger.png";
-import { useCustomSelector } from "../../hooks/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 import { getConstructorEmpty } from "../../services/selectors/order";
 
 const Skeleton: FC = () => {
-  const isConstructorEmpty = useCustomSelector(getConstructorEmpty);
+  const isConstructorEmpty = useAppSelector(getConstructorEmpty);
 
   return (
     <div className={styles.container}>

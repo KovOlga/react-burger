@@ -1,11 +1,11 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
 import { memo } from "react";
-import { useCustomSelector } from "../../hooks/hooks";
+import { useAppSelector } from "../../hooks/hooks";
 import { getOrderNumber } from "../../services/selectors/order";
 
 const OrderDetails = memo(() => {
-  const orderNumber = useCustomSelector(getOrderNumber);
+  const orderNumber = useAppSelector(getOrderNumber);
 
   return (
     <div className={styles.container}>
