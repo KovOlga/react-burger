@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCustomDispatch, useCustomSelector } from "../hooks/hooks";
 import styles from "./feed.module.css";
 import { getIngredients } from "../services/actions/ingredients";
 import { Link } from "react-router-dom";
@@ -17,12 +17,12 @@ import {
 import { getWsFeedOrders } from "../services/selectors/wsFeedReducer";
 
 export const FeedPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useCustomDispatch();
 
-  const { orders, total, totalToday } = useSelector(getWsFeedOrders);
-  const data = useSelector(getData);
-  const dataRequest = useSelector(getDataRequest);
-  const dataFailed = useSelector(getDataFailed);
+  const { orders, total, totalToday } = useCustomSelector(getWsFeedOrders);
+  const data = useCustomSelector(getData);
+  const dataRequest = useCustomSelector(getDataRequest);
+  const dataFailed = useCustomSelector(getDataFailed);
 
   const done = useMemo(() => {
     return orders

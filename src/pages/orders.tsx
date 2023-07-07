@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCustomDispatch, useCustomSelector } from "../hooks/hooks";
 import {
   wsUserConnectionStart,
   wsUserConnectionClosed,
@@ -15,12 +15,12 @@ import {
 import { getWsUserOrders } from "../services/selectors/wsUserReducer";
 
 export const OrdersPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useCustomDispatch();
 
-  const orders = useSelector(getWsUserOrders);
-  const data = useSelector(getData);
-  const dataRequest = useSelector(getDataRequest);
-  const dataFailed = useSelector(getDataFailed);
+  const orders = useCustomSelector(getWsUserOrders);
+  const data = useCustomSelector(getData);
+  const dataRequest = useCustomSelector(getDataRequest);
+  const dataFailed = useCustomSelector(getDataFailed);
 
   useEffect(() => {
     dispatch(wsUserConnectionStart());

@@ -1,2 +1,5 @@
-export const getUpdateUserRequest = (store) => store.user.updateUserRequest;
-export const getUser = (store) => store.user.user;
+import { RootState } from "../types";
+
+export const getUpdateUserRequest = (store: RootState) =>
+  store.user.updateUserRequest;
+export const getUser = (store: RootState) => store.user.user;

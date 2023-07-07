@@ -1,1 +1,3 @@
-export const getWsFeedOrders = (store) => store.wsfeed.orders;
+import { RootState } from "../types";
+
+export const getWsFeedOrders = (store: RootState) => store.wsfeed.orders;

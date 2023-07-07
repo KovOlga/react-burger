@@ -29,8 +29,24 @@ export type TUser = {
   email: string;
 };
 
+export type TUserResponse = {
+  success: boolean;
+  user: {
+    name: string;
+    email: string;
+  };
+};
+
+export type IUserRegisterLoginResponse = TTokenResponse & TUserResponse;
+
 export type TUserForm = {
   name: string;
   email: string;
   password: string;
+};
+
+export type TTokenResponse = {
+  success?: boolean;
+  readonly accessToken: string;
+  readonly refreshToken: string;
 };

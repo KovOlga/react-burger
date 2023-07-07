@@ -1,8 +1,10 @@
-export const getorderNumberRequest = (store) =>
+import { RootState } from "../types";
+
+export const getorderNumberRequest = (store: RootState) =>
   store.orderNumber.orderNumberRequest;
 
-export const getConstructorEmpty = (store) =>
+export const getConstructorEmpty = (store: RootState) =>
   store.orderNumber.isConstructorEmpty;
 
-export const getOrderNumber = (store) =>
+export const getOrderNumber = (store: RootState) =>
   store.orderNumber.orderInfo.order.number;

@@ -1,8 +1,11 @@
-export const getData = (store) => store.ingredients.data;
-export const getDataRequest = (store) => store.ingredients.dataRequest;
-export const getDataFailed = (store) => store.ingredients.dataFailed;
+import { RootState } from "../types";
 
-export const getConstructorIngredients = (store) =>
+export const getData = (store: RootState) => store.ingredients.data;
+export const getDataRequest = (store: RootState) =>
+  store.ingredients.dataRequest;
+export const getDataFailed = (store: RootState) => store.ingredients.dataFailed;
+
+export const getConstructorIngredients = (store: RootState) =>
   store.ingredients.constructorIngredients;
-export const getCurrentBun = (store) => store.ingredients.currentBun;
-export const getTotalPrice = (store) => store.ingredients.totalPrice;
+export const getCurrentBun = (store: RootState) => store.ingredients.currentBun;
+export const getTotalPrice = (store: RootState) => store.ingredients.totalPrice;

@@ -11,7 +11,12 @@ import {
   userEndPoint,
   updateTokenEndPoint,
 } from "../../utils/constants";
-import { TIngredient } from "../types/data";
+import {
+  TIngredient,
+  TTokenResponse,
+  TUserResponse,
+  IUserRegisterLoginResponse,
+} from "../types/data";
 
 interface IOptions {
   method: string;
@@ -37,7 +42,7 @@ export const fetchWithRefresh = async (url: string, options: IOptions) => {
   try {
     const res = await fetch(url, options);
     return await getResponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await updateToken();
       if (!refreshData.success) {
@@ -53,7 +58,7 @@ export const fetchWithRefresh = async (url: string, options: IOptions) => {
   }
 };
 
-export const updateToken = () => {
+export const updateToken = (): Promise<TTokenResponse> => {
   const refreshToken = localStorage.getItem("refreshToken");
   return request(updateTokenEndPoint, {
     method: "POST",
@@ -66,7 +71,7 @@ export const updateToken = () => {
   });
 };
 
-export const getUserInfo = () => {
+export const getUserInfo = (): Promise<TUserResponse> => {
   return fetchWithRefresh(userEndPoint, {
     method: "GET",
     headers: {
@@ -78,7 +83,11 @@ export const getUserInfo = () => {
   });
 };
 
-export const updateUserInfo = ({ name, email, password }: TUserForm) => {
+export const updateUserInfo = ({
+  name,
+  email,
+  password,
+}: TUserForm): Promise<TUserResponse> => {
   return fetchWithRefresh(userEndPoint, {
     method: "PATCH",
     headers: {
@@ -117,7 +126,11 @@ export const getIngredientsList = () => {
   });
 };
 
-export const registerUser = ({ email, password, name }: TUserForm) => {
+export const registerUser = ({
+  email,
+  password,
+  name,
+}: TUserForm): Promise<IUserRegisterLoginResponse> => {
   return request(registerEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -135,7 +148,7 @@ export const loginUser = ({
 }: {
   email: string;
   password: string;
-}) => {
+}): Promise<IUserRegisterLoginResponse> => {
   return request(loginEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

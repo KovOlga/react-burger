@@ -3,7 +3,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { memo, useEffect, useCallback, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useCustomDispatch, useCustomSelector } from "../../hooks/hooks";
 import { useDrop } from "react-dnd/dist/hooks";
 import Skeleton from "../skeleton/skeleton";
 import BurgerConstructorItemProps from "../burger-constructor-item/burger-constructor-item";
@@ -28,12 +28,12 @@ import {
 
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const totalPrice = useSelector(getTotalPrice);
+  const dispatch = useCustomDispatch();
+  const totalPrice = useCustomSelector(getTotalPrice);
 
-  const currentBun = useSelector(getCurrentBun);
-  const constructorIngredients = useSelector(getConstructorIngredients);
-  const orderNumberRequest = useSelector(getorderNumberRequest);
+  const currentBun = useCustomSelector(getCurrentBun);
+  const constructorIngredients = useCustomSelector(getConstructorIngredients);
+  const orderNumberRequest = useCustomSelector(getorderNumberRequest);
 
   const changeConstructorBun = (item) => {
     dispatch(swapConstructorBunAction(item._id));
@@ -80,7 +80,7 @@ const BurgerConstructor: FC = memo(() => {
     }),
   });
 
-  const isConstructorEmpty = useSelector(getConstructorEmpty);
+  const isConstructorEmpty = useCustomSelector(getConstructorEmpty);
 
   const containerClassName =
     canDrop && isConstructorEmpty
