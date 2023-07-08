@@ -6,13 +6,27 @@ import {
   WS_USER_CONNECTION_SUCCESS,
   WS_USER_CONNECTION_ERROR,
   WS_GET_USER_ORDERS,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_ERROR,
+  WS_GET_FEED,
 } from "../action-types/wsActionTypes";
+import { TOrder } from "../types/data";
 
 interface IwsFeedConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
 }
+interface IwsFeedConnectionSuccess {
+  readonly type: typeof WS_CONNECTION_SUCCESS;
+}
+interface IwsGetFeed {
+  readonly type: typeof WS_GET_FEED;
+  payload: TOrder[];
+}
 interface IwsFeedConnectionClosed {
   readonly type: typeof WS_CONNECTION_CLOSED;
+}
+interface IwsFeedConnectionError {
+  readonly type: typeof WS_CONNECTION_ERROR;
 }
 interface IwsUserConnectionStart {
   readonly type: typeof WS_USER_CONNECTION_START;
@@ -28,10 +42,14 @@ interface IwsUserConnectionError {
 }
 interface IwsGetUserOrders {
   readonly type: typeof WS_GET_USER_ORDERS;
+  payload: TOrder[];
 }
 
 export type TWsActions =
   | IwsFeedConnectionStart
+  | IwsFeedConnectionSuccess
+  | IwsGetFeed
+  | IwsFeedConnectionError
   | IwsFeedConnectionClosed
   | IwsUserConnectionStart
   | IwsUserConnectionClosed

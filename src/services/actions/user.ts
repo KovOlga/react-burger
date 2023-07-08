@@ -198,10 +198,6 @@ export const getUserInfoThunk: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
     getUserInfo()
       .then((res) => {
-        // dispatch({
-        //   type: UPDATE_USER,
-        //   payload: res.user,
-        // });
         dispatch(UpdateUserAction(res.user));
       })
       .catch((e) => {

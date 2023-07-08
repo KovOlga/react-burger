@@ -43,7 +43,7 @@ export const wsUserReducer = (
     case WS_GET_USER_ORDERS:
       return {
         ...state,
-        orders: action.payload.orders,
+        // orders: action.payload.orders,
       };
 
     default:

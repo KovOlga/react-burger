@@ -10,10 +10,10 @@ export const IngredientModalPage = () => {
   const navigate = useNavigate();
 
   const currentIngredient = JSON.parse(
-    localStorage.getItem("currentIngredientShown")
+    localStorage.getItem("currentIngredientShown") || ""
   );
   const isIngredientInfoModalShown = JSON.parse(
-    localStorage.getItem("isIngredientInfoModalShown")
+    localStorage.getItem("isIngredientInfoModalShown") || ""
   );
 
   const closeIngredientInfoModal = useCallback(() => {

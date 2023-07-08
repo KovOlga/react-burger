@@ -10,10 +10,10 @@ export const OrderModalPage = () => {
   const navigate = useNavigate();
 
   const currentOrder = JSON.parse(
-    localStorage.getItem("currentOrderInfoShown")
+    localStorage.getItem("currentOrderInfoShown") || ""
   );
   const isOrderInfoModalShown = JSON.parse(
-    localStorage.getItem("isOrderInfoModalShown")
+    localStorage.getItem("isOrderInfoModalShown") || ""
   );
 
   const closeOrderInfoModal = useCallback(() => {

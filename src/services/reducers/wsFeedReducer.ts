@@ -4,13 +4,23 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
+import { TOrder } from "../types/data";
+import { TWsActions } from "../actions/wsActions";
 
-const initialState = {
+export type TInitialState = {
+  wsConnected: boolean;
+  orders: TOrder[];
+};
+
+const initialState: TInitialState = {
   wsConnected: false,
   orders: [],
 };
 
-export const wsFeedReducer = (state = initialState, action) => {
+export const wsFeedReducer = (
+  state = initialState,
+  action: TWsActions
+): TInitialState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

@@ -59,3 +59,10 @@ export type TTokenResponse = {
   readonly accessToken: string;
   readonly refreshToken: string;
 };
+
+export type TwsOrdersResponse = {
+  orders: TOrder[];
+  success: boolean;
+  total: number;
+  totalToday: number;
+};

@@ -90,7 +90,7 @@ export const userReducer = (
     case UPDATE_USER: {
       return {
         ...state,
-        user: { ...state.user, ...action.payload },
+        user: { ...state.user, ...action.user },
       };
     }
     case UPDATE_USER_REQUEST: {

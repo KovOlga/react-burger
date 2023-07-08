@@ -56,7 +56,9 @@ export const HomePage = () => {
         )}
       </main>
 
-      {JSON.parse(localStorage.getItem("isOrderDetailsInfoModalShown")) && (
+      {JSON.parse(
+        localStorage.getItem("isOrderDetailsInfoModalShown") || ""
+      ) && (
         <Modal onClose={closeOrderInfoModal}>
           <OrderDetails />
         </Modal>

@@ -26,6 +26,7 @@ import {
 } from "../../services/selectors/order";
 import { TIngredientConstructor } from "../../services/types/data";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import { UpdateConstructorEmptinessAction } from "../../services/actions/order";
 
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
@@ -61,9 +62,9 @@ const BurgerConstructor: FC = memo(() => {
 
   useEffect(() => {
     if (constructorIngredients.length < 1 || !currentBun) {
-      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: true });
+      dispatch(UpdateConstructorEmptinessAction(true));
     } else {
-      dispatch({ type: UPDATE_CONSTRUCTOR_EMPTINESS, payload: false });
+      dispatch(UpdateConstructorEmptinessAction(false));
     }
   }, [constructorIngredients, currentBun, dispatch]);
 

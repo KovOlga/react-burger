@@ -8,7 +8,7 @@ import { TOrdersActions } from "../actions/order";
 import { TOrder } from "../types/data";
 
 export type TInitialState = {
-  orderInfo: TOrder;
+  orderInfo: TOrder | null;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
   isConstructorEmpty: boolean;
@@ -39,7 +39,7 @@ export const orderNumberReducer = (
         ...state,
         orderNumberRequest: false,
         orderNumberFailed: false,
-        orderInfo: action.payload,
+        orderInfo: action.res,
         orderNumberSuccess: true,
       };
     }
@@ -49,7 +49,7 @@ export const orderNumberReducer = (
     case UPDATE_CONSTRUCTOR_EMPTINESS: {
       return {
         ...state,
-        isConstructorEmpty: action.payload,
+        isConstructorEmpty: action.state,
         orderNumberSuccess: false,
       };
     }
