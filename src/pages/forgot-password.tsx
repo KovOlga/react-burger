@@ -18,9 +18,8 @@ export const ForgotPassword = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(forgotPasswordThunk(values.email)).then(() => {
-      navigate(RESET_PASSWORD_ROUTE);
-    });
+    dispatch(forgotPasswordThunk(values.email));
+    navigate(RESET_PASSWORD_ROUTE);
   };
 
   return (

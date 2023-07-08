@@ -75,7 +75,7 @@ export const getOrderNumber: AppThunk =
         dispatch(UpdateConstructorEmptinessAction(true));
         return;
       }
-      dispatch(GetOrderNumberRequestAction);
+      dispatch(GetOrderNumberRequestAction());
       getOrderNumberFetch(orderArr)
         .then((res) => {
           if (res.success) {
@@ -84,7 +84,7 @@ export const getOrderNumber: AppThunk =
           }
         })
         .catch((e) => {
-          dispatch(GetOrderNumberFailedAction);
+          dispatch(GetOrderNumberFailedAction());
         });
     };
   };
@@ -92,8 +92,8 @@ export const getOrderNumber: AppThunk =
 export const closeOrderModalAction: AppThunk =
   () => (dispatch: AppDispatch) => {
     return () => {
-      dispatch(ClearConstructorAction);
-      dispatch(ResetCountersAction);
+      dispatch(ClearConstructorAction());
+      dispatch(ResetCountersAction());
       localStorage.setItem("isOrderDetailsInfoModalShown", "false");
     };
   };

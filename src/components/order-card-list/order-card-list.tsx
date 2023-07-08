@@ -26,12 +26,11 @@ const OrderCardList: FC<OrderCardListProps> = ({
   let location = useLocation();
   const dispatch = useAppDispatch();
 
-  const onOpenOrderInfoModal = useCallback(
-    (item: TOrderCounted) => {
-      dispatch(openOrderInfoModalThunk(item));
-    },
-    [dispatch]
-  );
+  const onOpenOrderInfoModal = useCallback((item: TOrderCounted) => {
+    // dispatch(openOrderInfoModalThunk(item));
+    localStorage.setItem("isOrderInfoModalShown", "true");
+    localStorage.setItem("currentOrderInfoShown", JSON.stringify(item));
+  }, []);
 
   return (
     <ul className={`${styles.list} pr-4`}>

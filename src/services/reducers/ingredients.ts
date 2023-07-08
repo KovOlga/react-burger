@@ -16,7 +16,7 @@ import {
 
 // import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
-import { TIngredientConstructor } from "../types/data";
+import { TIngredientConstructor, TIngredientCounted } from "../types/data";
 import { TIngredientsActions } from "../actions/ingredients";
 import { TConstructorActions } from "../actions/constructor";
 import { TOrdersActions } from "../actions/order";
@@ -88,13 +88,20 @@ export const ingredientsReducer = (
     }
     case ADD_CONSTRUCTOR_ITEM: {
       const addedItem = state.data.find((item) => item._id === action.itemId);
-      const uniqueId = action.uuid;
-      const updatedItem: TIngredientConstructor = { ...addedItem, uniqueId };
+      if (addedItem) {
+        const uniqueId = action.uuid;
+        const updatedItem = { ...addedItem, uniqueId };
 
-      return {
-        ...state,
-        constructorIngredients: [...state.constructorIngredients, updatedItem],
-      };
+        return {
+          ...state,
+          constructorIngredients: [
+            ...state.constructorIngredients,
+            updatedItem,
+          ],
+        };
+      } else {
+        return { ...state };
+      }
     }
     case UPDATE_INGREDIENT_COUNTER: {
       return {

@@ -42,13 +42,13 @@ export const OrderPage: FC<{ from: string }> = ({ from }) => {
   }, [dispatch, from]);
 
   useEffect(() => {
-    if (orders) {
-      setCurrentOrder(
-        orders.find((order) => {
-          return order.number === Number(id);
-        })
-      );
-    }
+    // if (orders) {
+    //   setCurrentOrder(
+    //     orders.find((order) => {
+    //       return order.number === Number(id);
+    //     })
+    //   );
+    // }
   }, [orders, id]);
 
   return (

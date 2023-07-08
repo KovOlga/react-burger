@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TIngredientConstructor } from "../types/data";
+import { TIngredient, TIngredientConstructor } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getIngredientsList } from "../api/api";
 
@@ -45,13 +45,13 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
 
 export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
-    dispatch(getIngredientsAction);
+    dispatch(getIngredientsAction());
     getIngredientsList()
       .then(({ data }) => {
         dispatch(getIngredientsSuccessAction(data));
       })
       .catch((e) => {
-        dispatch(getIngredientsFailedAction);
+        dispatch(getIngredientsFailedAction());
       });
   };
 };

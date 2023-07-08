@@ -10,7 +10,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
-import { TOrder } from "../types/data";
+import { TOrder, TwsOrdersResponse } from "../types/data";
 
 interface IwsFeedConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
@@ -20,7 +20,7 @@ interface IwsFeedConnectionSuccess {
 }
 interface IwsGetFeed {
   readonly type: typeof WS_GET_FEED;
-  payload: TOrder[];
+  payload: TwsOrdersResponse;
 }
 interface IwsFeedConnectionClosed {
   readonly type: typeof WS_CONNECTION_CLOSED;

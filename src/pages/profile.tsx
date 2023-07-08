@@ -15,9 +15,10 @@ export const ProfilePage = () => {
   const navigate = useNavigate();
 
   const onLogoutUser = () => {
-    dispatch(logoutUserThunk()).then(() => {
-      navigate(LOGIN_ROUTE);
-    });
+    dispatch(logoutUserThunk());
+    // .then(() => {
+    //   navigate(LOGIN_ROUTE);
+    // });
   };
 
   return (

@@ -209,15 +209,15 @@ export const getUserInfoThunk: AppThunk = () => (dispatch: AppDispatch) => {
 export const updateUserInfoThunk: AppThunk =
   (userNewInfo: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
-      dispatch(UpdateUserRequestAction);
+      dispatch(UpdateUserRequestAction());
       return updateUserInfo(userNewInfo)
         .then((res) => {
           dispatch(UpdateUserAction(res.user));
-          dispatch(UpdateUserSuccessAction);
+          dispatch(UpdateUserSuccessAction());
         })
         .catch((e) => {
           console.log("error:", e);
-          dispatch(UpdateUserFailedAction);
+          dispatch(UpdateUserFailedAction());
         });
     };
   };
@@ -225,39 +225,39 @@ export const updateUserInfoThunk: AppThunk =
 export const loginUserThunk: AppThunk =
   (form: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
-      dispatch(LoginRequestAction);
+      dispatch(LoginRequestAction());
       return loginUser(form)
         .then((res) => {
           handleTokens(res);
           localStorage.setItem(IS_USER_AUTHED, "true");
           if (res.success) {
-            dispatch(LoginSuccessAction);
+            dispatch(LoginSuccessAction());
             dispatch(UpdateUserAction(res.user));
           }
           return res;
         })
         .catch((e) => {
           console.log(e.message);
-          dispatch(LoginFailedAction);
+          dispatch(LoginFailedAction());
         });
     };
   };
 
 export const logoutUserThunk: AppThunk = () => (dispatch: AppDispatch) => {
   return () => {
-    dispatch(LogoutRequestAction);
+    dispatch(LogoutRequestAction());
     return logoutUser()
       .then((res) => {
         if (res.success) {
-          dispatch(ClearUserAction);
+          dispatch(ClearUserAction());
           deleteCookie("token");
           localStorage.removeItem(IS_USER_AUTHED);
           localStorage.removeItem("refreshToken");
-          dispatch(LogoutSuccessAction);
+          dispatch(LogoutSuccessAction());
         }
       })
       .catch((e) => {
-        dispatch(LogoutFailedAction);
+        dispatch(LogoutFailedAction());
         console.log(e.message);
       });
   };
@@ -266,14 +266,14 @@ export const logoutUserThunk: AppThunk = () => (dispatch: AppDispatch) => {
 export const forgotPasswordThunk: AppThunk =
   (email: string) => (dispatch: AppDispatch) => {
     return () => {
-      dispatch(ForgotPasswordRequestAction);
+      dispatch(ForgotPasswordRequestAction());
       return forgotPassword(email)
         .then(() => {
-          dispatch(ForgotPasswordSuccessAction);
+          dispatch(ForgotPasswordSuccessAction());
           localStorage.setItem("resetPasswordSent", "true");
         })
         .catch((e) => {
-          dispatch(ForgotPasswordFailedAction);
+          dispatch(ForgotPasswordFailedAction());
         });
     };
   };
@@ -282,17 +282,17 @@ export const resetPasswordThunk: AppThunk =
   ({ password, code }: { password: string; code: string }) =>
   (dispatch: AppDispatch) => {
     return () => {
-      dispatch(ResetPasswordRequestAction);
+      dispatch(ResetPasswordRequestAction());
       return resetPassword(password, code)
         .then((res) => {
           if (res.success) {
-            dispatch(ResetPasswordSuccessAction);
+            dispatch(ResetPasswordSuccessAction());
             localStorage.removeItem("resetPasswordSent");
           }
           return res;
         })
         .catch((e) => {
-          dispatch(ResetPasswordFailedAction);
+          dispatch(ResetPasswordFailedAction());
         });
     };
   };
@@ -300,14 +300,14 @@ export const resetPasswordThunk: AppThunk =
 export const registerUserThunk: AppThunk =
   (form: TUserForm) => (dispatch: AppDispatch) => {
     return () => {
-      dispatch(RegisterRequestAction);
+      dispatch(RegisterRequestAction());
       return registerUser(form)
         .then((res) => {
-          dispatch(RegisterSuccessAction);
+          dispatch(RegisterSuccessAction());
           return res;
         })
         .catch((e) => {
-          dispatch(RegisterFailedAction);
+          dispatch(RegisterFailedAction());
         });
     };
   };

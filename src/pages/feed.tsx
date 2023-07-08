@@ -105,7 +105,7 @@ export const FeedPage = () => {
                 </ul>
               </div>
             </div>
-            <div className={styles.total}>
+            <div>
               <h2 className="text text_type_main-medium">
                 Выполнено за все время:
               </h2>
@@ -113,7 +113,7 @@ export const FeedPage = () => {
                 {total}
               </p>
             </div>
-            <div className={styles.totalToday}>
+            <div>
               <h2 className="text text_type_main-medium">
                 Выполнено за сегодня:
               </h2>

@@ -4,17 +4,22 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
-import { TOrder } from "../types/data";
+import { TOrder, TwsOrdersResponse } from "../types/data";
 import { TWsActions } from "../actions/wsActions";
 
 export type TInitialState = {
   wsConnected: boolean;
-  orders: TOrder[];
+  orders: TwsOrdersResponse; //check
 };
 
 const initialState: TInitialState = {
   wsConnected: false,
-  orders: [],
+  orders: {
+    success: true,
+    orders: [],
+    total: 0,
+    totalToday: 0,
+  },
 };
 
 export const wsFeedReducer = (

@@ -17,9 +17,11 @@ export const FeedModalPage = () => {
   );
 
   const closeOrderInfoModal = useCallback(() => {
-    dispatch(closeOrderInfoModalThunk());
+    // dispatch(closeOrderInfoModalThunk());
+    localStorage.setItem("isOrderInfoModalShown", "false");
+    localStorage.removeItem("currentOrderInfoShown");
     navigate(-1);
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return (
     isOrderInfoModalShown && (

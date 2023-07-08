@@ -108,7 +108,7 @@ export const sortDraggingItemAction = (
 
 export const addConstructorItemThunk: AppThunk =
   (itemId) => (dispatch: AppDispatch) => {
-    const uuid = uuidv4();
+    const uuid: string = uuidv4();
     return () => {
       dispatch(addConstructorItemAction(itemId, uuid));
       dispatch(updateIngredientCounterAction(itemId));
