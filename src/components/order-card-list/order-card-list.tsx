@@ -5,17 +5,16 @@ import OrderCard from "../order-card/order-card";
 import { useCallback, FC } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
-import { openOrderInfoModalAction } from "../../services/actions/order-info-modal";
 import { PROFILE_ROUTE } from "../../utils/constants";
 import {
   TOrderCounted,
   TOrder,
-  TIngredientCustom,
+  TIngredientConstructor,
 } from "../../services/types/data";
 
 interface OrderCardListProps {
   orders: TOrder[];
-  data: TIngredientCustom[];
+  data: TIngredientConstructor[];
   fromComponent: string;
 }
 
@@ -29,7 +28,7 @@ const OrderCardList: FC<OrderCardListProps> = ({
 
   const onOpenOrderInfoModal = useCallback(
     (item: TOrderCounted) => {
-      dispatch(openOrderInfoModalAction(item));
+      dispatch(openOrderInfoModalThunk(item));
     },
     [dispatch]
   );

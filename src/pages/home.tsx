@@ -16,7 +16,7 @@ import {
   getDataRequest,
   getDataFailed,
 } from "../services/selectors/ingredients";
-import { TIngredientCustom } from "../services/types/data";
+import { TIngredientConstructor } from "../services/types/data";
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ export const HomePage = () => {
   const dataFailed = useAppSelector(getDataFailed);
 
   const openIngredientInfo = useCallback(
-    (item: TIngredientCustom) => {
+    (item: TIngredientConstructor) => {
       dispatch(openIngredientModalThunk(item));
     },
     [dispatch]

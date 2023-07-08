@@ -11,9 +11,12 @@ export type TIngredient = {
   carbohydrates: number;
 };
 
-export type TIngredientCustom = TIngredient & {
-  counter?: number;
-  uniqueId?: string;
+export type TIngredientCounted = TIngredient & {
+  counter: number;
+};
+
+export type TIngredientConstructor = TIngredientCounted & {
+  uniqueId: string;
 };
 
 export type TOrder = {
@@ -21,8 +24,13 @@ export type TOrder = {
   name: string;
   number: number;
   status: string;
-  ingredients: TIngredientCustom[];
+  ingredients: TIngredient[];
   createdAt: string;
+  updatedAt: string;
+};
+
+export type TOrderCounted = TOrder & {
+  totalPrice: number;
 };
 
 export type TUser = {

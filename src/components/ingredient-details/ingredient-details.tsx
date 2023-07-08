@@ -1,8 +1,8 @@
 import styles from "./ingredient-details.module.css";
-import { TIngredientCustom } from "../../services/types/data";
+import { TIngredientConstructor } from "../../services/types/data";
 import { FC } from "react";
 
-const IngredientDetails: FC<{ ingredient: TIngredientCustom }> = ({
+const IngredientDetails: FC<{ ingredient: TIngredientConstructor }> = ({
   ingredient,
 }) => {
   return (

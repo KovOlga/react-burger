@@ -1,24 +1,43 @@
-export function parseOrderIngredients(data, order) {
-  let updatedOrder = {};
+import {
+  TOrder,
+  TOrderCounted,
+  TIngredientConstructor,
+  TIngredient,
+  TTokenResponse,
+} from "../services/types/data";
 
-  const orderedIngredients = order.ingredients.reduce((prevVal, item) => {
-    let ingredient = data.find((ingredient) => ingredient._id === item);
-    const isIngredientRepeated = prevVal.findIndex(
-      (element) => element._id === ingredient._id
-    );
-    if (isIngredientRepeated >= 0) {
-      prevVal[isIngredientRepeated].counter++;
-    } else {
-      ingredient.counter = 1;
-      prevVal = [...prevVal, ingredient];
-    }
+export const parseOrderIngredients = (
+  data: TIngredientConstructor[],
+  order: TOrder
+): TOrderCounted => {
+  let updatedOrder: TOrderCounted;
 
-    return prevVal;
-  }, []);
+  const orderedIngredients = order.ingredients.reduce(
+    (prevVal: TIngredientConstructor[], item) => {
+      let ingredient = data.find((elem) => elem._id === item._id); //// check
+
+      if (ingredient) {
+        const isIngredientRepeated = prevVal.findIndex(
+          (element: TIngredient) => element._id === ingredient?._id
+        );
+
+        if (isIngredientRepeated >= 0) {
+          prevVal[isIngredientRepeated].counter++;
+        } else {
+          ingredient.counter = 1;
+          prevVal = [...prevVal, ingredient];
+        }
+      }
+
+      return prevVal;
+    },
+    []
+  );
 
   updatedOrder = {
     ...order,
     ingredients: orderedIngredients,
+    totalPrice: 0,
   };
 
   const totalPrice = orderedIngredients.reduce((prevVal, item) => {
@@ -27,14 +46,14 @@ export function parseOrderIngredients(data, order) {
   updatedOrder.totalPrice = totalPrice;
 
   return updatedOrder;
-}
+};
 
-export const getTimeZone = (dateFromServer) => {
+export const getTimeZone = (dateFromServer: string) => {
   const timeZone = new Date(dateFromServer).toString().split(" ")[5];
   return timeZone;
 };
 
-export function handleTokens(data) {
+export function handleTokens(data: TTokenResponse) {
   localStorage.setItem("refreshToken", data.refreshToken);
   let authToken;
   if (data.accessToken.indexOf("Bearer") === 0) {
@@ -45,7 +64,7 @@ export function handleTokens(data) {
   }
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -56,19 +75,29 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
-  props = props || {};
-  let exp = props.expires;
-  if (typeof exp == "number" && exp) {
-    const d = new Date();
-    d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
+export function setCookie(
+  name: string,
+  value: string | null,
+  props?: Record<string, string | Date | boolean | number> | undefined
+) {
+  if (props) {
+    let exp = props.expires;
+    if (typeof exp == "number" && exp) {
+      const d = new Date();
+      d.setTime(d.getTime() + exp * 1000);
+      exp = props.expires = d;
+    }
+
+    if (exp instanceof Date) {
+      props.expires = exp.toUTCString();
+    }
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+
+  if (value) {
+    value = encodeURIComponent(value);
   }
-  value = encodeURIComponent(value);
   let updatedCookie = name + "=" + value;
+
   for (const propName in props) {
     updatedCookie += "; " + propName;
     const propValue = props[propName];
@@ -79,6 +108,6 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 }

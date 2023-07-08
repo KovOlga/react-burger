@@ -24,7 +24,7 @@ import {
   getorderNumberRequest,
   getConstructorEmpty,
 } from "../../services/selectors/order";
-import { TIngredientCustom } from "../../services/types/data";
+import { TIngredientConstructor } from "../../services/types/data";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
 const BurgerConstructor: FC = memo(() => {
@@ -36,11 +36,11 @@ const BurgerConstructor: FC = memo(() => {
   const constructorIngredients = useAppSelector(getConstructorIngredients);
   const orderNumberRequest = useAppSelector(getorderNumberRequest);
 
-  const changeConstructorBun = (item: TIngredientCustom) => {
+  const changeConstructorBun = (item: TIngredientConstructor) => {
     dispatch(swapConstructorBunAction(item._id));
   };
 
-  const addConstructorIngredient = (item: TIngredientCustom) => {
+  const addConstructorIngredient = (item: TIngredientConstructor) => {
     dispatch(addConstructorItemThunk(item._id));
   };
 
@@ -69,7 +69,7 @@ const BurgerConstructor: FC = memo(() => {
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
-    drop(itemId: TIngredientCustom) {
+    drop(itemId: TIngredientConstructor) {
       if (itemId.type === "ingredient") {
         addConstructorIngredient(itemId);
       } else {

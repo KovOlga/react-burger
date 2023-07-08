@@ -5,10 +5,10 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import { memo, useMemo, useRef, FC, useState } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { getData } from "../../services/selectors/ingredients";
-import { TIngredientCustom } from "../../services/types/data";
+import { TIngredientConstructor } from "../../services/types/data";
 
 interface BurgerIngredientsProps {
-  onOpenIngredientInfo: (ingredient: TIngredientCustom) => void; //// check
+  onOpenIngredientInfo: (ingredient: TIngredientConstructor) => void; //// check
 }
 
 const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
@@ -32,7 +32,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
 
     const bunList = useMemo(
       () =>
-        ingredients.filter((item: TIngredientCustom) => {
+        ingredients.filter((item: TIngredientConstructor) => {
           return item.type === "bun";
         }),
       [ingredients]
@@ -40,7 +40,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
 
     const sauceList = useMemo(
       () =>
-        ingredients.filter((item: TIngredientCustom) => {
+        ingredients.filter((item: TIngredientConstructor) => {
           return item.type === "sauce";
         }),
       [ingredients]
@@ -48,7 +48,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
 
     const mainList = useMemo(
       () =>
-        ingredients.filter((item: TIngredientCustom) => {
+        ingredients.filter((item: TIngredientConstructor) => {
           return item.type === "main";
         }),
       [ingredients]
@@ -125,7 +125,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
             Булки
           </h2>
           <ul className={`${styles.sublist__type} pl-4 pr-4`}>
-            {bunList.map((item: TIngredientCustom) => {
+            {bunList.map((item: TIngredientConstructor) => {
               return (
                 <BurgerIngredientsItem
                   key={item._id}
@@ -142,7 +142,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
             Соусы
           </h2>
           <ul className={`${styles.sublist__type} pl-4 pr-4`}>
-            {sauceList.map((item: TIngredientCustom) => {
+            {sauceList.map((item: TIngredientConstructor) => {
               return (
                 <BurgerIngredientsItem
                   key={item._id}
@@ -159,7 +159,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
             Начинки
           </h2>
           <ul className={`${styles.sublist__type} pl-4 pr-4`}>
-            {mainList.map((item: TIngredientCustom) => {
+            {mainList.map((item: TIngredientConstructor) => {
               return (
                 <BurgerIngredientsItem
                   key={item._id}

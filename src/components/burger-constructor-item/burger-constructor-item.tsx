@@ -6,10 +6,10 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { useRef, FC } from "react";
 import { sortDraggingItemAction } from "../../services/actions/constructor";
 import { deleteConstructorItemThunk } from "../../services/actions/constructor";
-import { TIngredientCustom } from "../../services/types/data";
+import { TIngredientConstructor } from "../../services/types/data";
 
 interface BurgerConstructorItemProps {
-  ingredient: TIngredientCustom;
+  ingredient: TIngredientConstructor;
   type: string;
   index: number;
 }
@@ -29,7 +29,7 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
 
   const [, drop] = useDrop({
     accept: "constructorItem",
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -42,7 +42,7 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }

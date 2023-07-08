@@ -4,10 +4,10 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { memo, FC } from "react";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
-import { TIngredientCustom } from "../../services/types/data";
+import { TIngredientConstructor } from "../../services/types/data";
 
 interface BurgerIngredientsItemProps {
-  ingredient: TIngredientCustom;
+  ingredient: TIngredientConstructor;
   onIngredientClick: () => void; ///// check
   type: string;
 }

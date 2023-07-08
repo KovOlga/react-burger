@@ -16,17 +16,17 @@ import {
 
 // import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
-import { TIngredientCustom } from "../types/data";
+import { TIngredientConstructor } from "../types/data";
 import { TIngredientsActions } from "../actions/ingredients";
 import { TConstructorActions } from "../actions/constructor";
 import { TOrdersActions } from "../actions/order";
 
 export type TInitialState = {
-  data: TIngredientCustom[];
+  data: TIngredientConstructor[];
   dataRequest: boolean;
   dataFailed: boolean;
-  currentBun: TIngredientCustom | null | undefined; // check
-  constructorIngredients: TIngredientCustom[];
+  currentBun: TIngredientConstructor | null | undefined; // check
+  constructorIngredients: TIngredientConstructor[];
   totalPrice: number;
   isIngredientInfoModalShown: boolean;
 };
@@ -89,7 +89,7 @@ export const ingredientsReducer = (
     case ADD_CONSTRUCTOR_ITEM: {
       const addedItem = state.data.find((item) => item._id === action.itemId);
       const uniqueId = action.uuid;
-      const updatedItem: TIngredientCustom = { ...addedItem, uniqueId };
+      const updatedItem: TIngredientConstructor = { ...addedItem, uniqueId };
 
       return {
         ...state,
