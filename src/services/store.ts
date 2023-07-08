@@ -16,11 +16,12 @@ import {
   WS_USER_CONNECTION_CLOSED,
   WS_GET_USER_ORDERS,
 } from "./action-types/wsActionTypes";
+import { TwsActions, TwsUserActions } from "./types/wsActions";
 
 const wsUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsUserUrl = "wss://norma.nomoreparties.space/orders";
 
-const wsActions = {
+const wsActions: TwsActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -29,7 +30,7 @@ const wsActions = {
   onMessage: WS_GET_FEED,
 };
 
-const wsUserActions = {
+const wsUserActions: TwsUserActions = {
   wsInit: WS_USER_CONNECTION_START,
   wsSendMessage: WS_USER_SEND_MESSAGE,
   onOpen: WS_USER_CONNECTION_SUCCESS,
@@ -37,19 +38,22 @@ const wsUserActions = {
   onError: WS_USER_CONNECTION_ERROR,
   onMessage: WS_GET_USER_ORDERS,
 };
-
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const user = true;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers =
+// typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//   : compose;
 
 const enhancer = composeEnhancers(
   applyMiddleware(
     thunk,
     socketMiddleware(wsUrl, wsActions),
-    socketMiddleware(wsUserUrl, wsUserActions, user)
+    socketMiddleware(wsUserUrl, wsUserActions, true)
   )
 );
 

@@ -104,7 +104,7 @@ export const updateUserInfo = ({
   });
 };
 
-export const getOrderNumber = (ingredientsArr: TIngredient[]) => {
+export const getOrderNumberFetch = (ingredientsArr: TIngredient[]) => {
   return fetchWithRefresh(orderEndPoint, {
     method: "POST",
     headers: {

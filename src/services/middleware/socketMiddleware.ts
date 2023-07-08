@@ -1,9 +1,16 @@
+import { Middleware } from "redux";
 import { getCookie, handleTokens } from "../../utils/utils";
 import { updateToken } from "../api/api";
+import { RootState } from "../types";
+import { TwsActions, TwsUserActions } from "../types/wsActions";
 
-export const socketMiddleware = (wsUrl, wsActions, user) => {
+export const socketMiddleware = (
+  wsUrl: string,
+  wsActions: TwsActions | TwsUserActions,
+  user?: boolean
+): Middleware => {
   return (store) => {
-    let socket = null;
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
@@ -43,9 +50,11 @@ export const socketMiddleware = (wsUrl, wsActions, user) => {
         };
 
         socket.onclose = (event) => {
-          socket.close();
-          socket = null;
-          dispatch({ type: onClose, payload: event });
+          if (socket) {
+            socket.close();
+            socket = null;
+            dispatch({ type: onClose, payload: event });
+          }
         };
       }
 

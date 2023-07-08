@@ -1,6 +1,6 @@
 import { TOrder } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
-import { getOrderNumber } from "../api/api";
+import { getOrderNumberFetch } from "../api/api";
 
 export const GET_ORDER_NUMBER_REQUEST: "GET_ORDER_NUMBER_REQUEST" =
   "GET_ORDER_NUMBER_REQUEST";
@@ -76,7 +76,7 @@ export const getOrderNumber: AppThunk =
         return;
       }
       dispatch(GetOrderNumberRequestAction);
-      getOrderNumber(orderArr)
+      getOrderNumberFetch(orderArr)
         .then((res) => {
           if (res.success) {
             dispatch(GetOrderNumberSuccessAction(res));
