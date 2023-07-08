@@ -24,7 +24,7 @@ export type TOrder = {
   name: string;
   number: number;
   status: string;
-  ingredients: TIngredient[];
+  ingredients: TIngredientCounted[];
   createdAt: string;
   updatedAt: string;
 };
