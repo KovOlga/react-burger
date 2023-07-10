@@ -1,5 +1,5 @@
 import { deleteCookie, handleTokens } from "../../utils/utils";
-import { TUser, TUserForm } from "../types/data";
+import { IUserRegisterLoginResponse, TUser, TUserForm } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import {
   getUserInfo,
@@ -194,7 +194,7 @@ export const ClearUserAction = (): IClearUserAction => ({
   type: CLEAR_USER,
 });
 
-export const getUserInfoThunk: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUserInfoThunk: any = () => (dispatch: any) => {
   return () => {
     getUserInfo()
       .then((res) => {
@@ -206,8 +206,8 @@ export const getUserInfoThunk: AppThunk = () => (dispatch: AppDispatch) => {
   };
 };
 
-export const updateUserInfoThunk: AppThunk =
-  (userNewInfo: TUserForm) => (dispatch: AppDispatch) => {
+export const updateUserInfoThunk: any =
+  (userNewInfo: TUserForm) => (dispatch: any) => {
     return () => {
       dispatch(UpdateUserRequestAction());
       return updateUserInfo(userNewInfo)
@@ -222,65 +222,61 @@ export const updateUserInfoThunk: AppThunk =
     };
   };
 
-export const loginUserThunk: AppThunk =
-  (form: TUserForm) => (dispatch: AppDispatch) => {
-    return () => {
-      dispatch(LoginRequestAction());
-      return loginUser(form)
-        .then((res) => {
-          handleTokens(res);
-          localStorage.setItem(IS_USER_AUTHED, "true");
-          if (res.success) {
-            dispatch(LoginSuccessAction());
-            dispatch(UpdateUserAction(res.user));
-          }
-          return res;
-        })
-        .catch((e) => {
-          console.log(e.message);
-          dispatch(LoginFailedAction());
-        });
-    };
-  };
-
-export const logoutUserThunk: AppThunk = () => (dispatch: AppDispatch) => {
-  return () => {
-    dispatch(LogoutRequestAction());
-    return logoutUser()
+export const loginUserThunk =
+  (form: TUserForm): AppThunk =>
+  async (dispatch: AppDispatch) => {
+    dispatch(LoginRequestAction());
+    return loginUser(form)
       .then((res) => {
+        handleTokens(res);
+        localStorage.setItem(IS_USER_AUTHED, "true");
         if (res.success) {
-          dispatch(ClearUserAction());
-          deleteCookie("token");
-          localStorage.removeItem(IS_USER_AUTHED);
-          localStorage.removeItem("refreshToken");
-          dispatch(LogoutSuccessAction());
+          dispatch(LoginSuccessAction());
+          dispatch(UpdateUserAction(res.user));
         }
+        return res;
       })
       .catch((e) => {
-        dispatch(LogoutFailedAction());
         console.log(e.message);
+        dispatch(LoginFailedAction());
+      });
+  };
+
+export const logoutUserThunk: any = () => (dispatch: any) => {
+  dispatch(LogoutRequestAction());
+  return logoutUser()
+    .then((res) => {
+      if (res.success) {
+        dispatch(ClearUserAction());
+        deleteCookie("token");
+        localStorage.removeItem(IS_USER_AUTHED);
+        localStorage.removeItem("refreshToken");
+        dispatch(LogoutSuccessAction());
+      }
+    })
+    .catch((e) => {
+      dispatch(LogoutFailedAction());
+      console.log(e.message);
+    });
+};
+
+export const forgotPasswordThunk: any = (email: string) => (dispatch: any) => {
+  return () => {
+    dispatch(ForgotPasswordRequestAction());
+    return forgotPassword(email)
+      .then(() => {
+        dispatch(ForgotPasswordSuccessAction());
+        localStorage.setItem("resetPasswordSent", "true");
+      })
+      .catch((e) => {
+        dispatch(ForgotPasswordFailedAction());
       });
   };
 };
 
-export const forgotPasswordThunk: AppThunk =
-  (email: string) => (dispatch: AppDispatch) => {
-    return () => {
-      dispatch(ForgotPasswordRequestAction());
-      return forgotPassword(email)
-        .then(() => {
-          dispatch(ForgotPasswordSuccessAction());
-          localStorage.setItem("resetPasswordSent", "true");
-        })
-        .catch((e) => {
-          dispatch(ForgotPasswordFailedAction());
-        });
-    };
-  };
-
-export const resetPasswordThunk: AppThunk =
+export const resetPasswordThunk: any =
   ({ password, code }: { password: string; code: string }) =>
-  (dispatch: AppDispatch) => {
+  (dispatch: any) => {
     return () => {
       dispatch(ResetPasswordRequestAction());
       return resetPassword(password, code)
@@ -297,17 +293,16 @@ export const resetPasswordThunk: AppThunk =
     };
   };
 
-export const registerUserThunk: AppThunk =
-  (form: TUserForm) => (dispatch: AppDispatch) => {
-    return () => {
-      dispatch(RegisterRequestAction());
-      return registerUser(form)
-        .then((res) => {
-          dispatch(RegisterSuccessAction());
-          return res;
-        })
-        .catch((e) => {
-          dispatch(RegisterFailedAction());
-        });
-    };
+export const registerUserThunk: any = (form: TUserForm) => (dispatch: any) => {
+  return () => {
+    dispatch(RegisterRequestAction());
+    return registerUser(form)
+      .then((res) => {
+        dispatch(RegisterSuccessAction());
+        return res;
+      })
+      .catch((e) => {
+        dispatch(RegisterFailedAction());
+      });
   };
+};

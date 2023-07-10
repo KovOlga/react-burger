@@ -7,6 +7,7 @@ import { TOrdersActions } from "../actions/order";
 import { TWsActions } from "../actions/wsActions";
 import { TUserActions } from "../actions/user";
 import { Dispatch } from "redux";
+import { IUserRegisterLoginResponse, TUserResponse } from "./data";
 
 type TApplicationActions =
   | TIngredientsActions
@@ -17,6 +18,9 @@ type TApplicationActions =
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+export type AppThunk<ReturnType = any> = ThunkAction<
+  ReturnType,
+  RootState,
+  Action,
+  TApplicationActions
 >;

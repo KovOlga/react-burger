@@ -1,4 +1,4 @@
-import { TOrder } from "../types/data";
+import { TIngredient, TOrder } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getOrderNumberFetch } from "../api/api";
 
@@ -68,8 +68,9 @@ export const ResetCountersAction = (): IResetCountersAction => ({
   type: RESET_COUNTERS,
 });
 
-export const getOrderNumber: AppThunk =
-  (orderArr) => (dispatch: AppDispatch) => {
+export const getOrderNumber =
+  (orderArr: string[]): any =>
+  (dispatch: any) => {
     return function () {
       if (orderArr.length === 0) {
         dispatch(UpdateConstructorEmptinessAction(true));
@@ -89,11 +90,10 @@ export const getOrderNumber: AppThunk =
     };
   };
 
-export const closeOrderModalAction: AppThunk =
-  () => (dispatch: AppDispatch) => {
-    return () => {
-      dispatch(ClearConstructorAction());
-      dispatch(ResetCountersAction());
-      localStorage.setItem("isOrderDetailsInfoModalShown", "false");
-    };
+export const closeOrderModalAction = (): any => (dispatch: any) => {
+  return () => {
+    dispatch(ClearConstructorAction());
+    dispatch(ResetCountersAction());
+    localStorage.setItem("isOrderDetailsInfoModalShown", "false");
   };
+};

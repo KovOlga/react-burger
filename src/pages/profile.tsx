@@ -15,12 +15,15 @@ export const ProfilePage = () => {
   const navigate = useNavigate();
 
   const onLogoutUser = () => {
-    dispatch(logoutUserThunk());
-    // .then(() => {
-    //   navigate(LOGIN_ROUTE);
-    // });
+    console.log("1");
+    dispatch(logoutUserThunk()).then(() => {
+      console.log("3");
+      navigate(LOGIN_ROUTE);
+    });
+    console.log("4");
   };
 
+  console.log("kmkm");
   return (
     <main className={styles.container}>
       <nav className={styles.nav}>
