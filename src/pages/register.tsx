@@ -23,11 +23,6 @@ export const RegisterPage = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(registerUserThunk(values));
-    // .then((res) => {
-    //   if (res.success) {
-    //     navigate(LOGIN_ROUTE);
-    //   }
-    // });
   };
 
   return (

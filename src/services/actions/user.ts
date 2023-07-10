@@ -10,6 +10,8 @@ import {
   resetPassword,
   registerUser,
 } from "../api/api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { HOME_ROUTE, LOGIN_ROUTE } from "../../utils/constants";
 
 export const IS_USER_AUTHED: "isUserAuthed" = "isUserAuthed";
 export const UPDATE_USER: "UPDATE_USER" = "UPDATE_USER";
@@ -224,66 +226,82 @@ export const updateUserInfoThunk: any =
 
 export const loginUserThunk =
   (form: TUserForm): AppThunk =>
-  async (dispatch: AppDispatch) => {
-    dispatch(LoginRequestAction());
-    return loginUser(form)
-      .then((res) => {
-        handleTokens(res);
-        localStorage.setItem(IS_USER_AUTHED, "true");
-        if (res.success) {
-          dispatch(LoginSuccessAction());
-          dispatch(UpdateUserAction(res.user));
-        }
-        return res;
-      })
-      .catch((e) => {
-        console.log(e.message);
-        dispatch(LoginFailedAction());
-      });
+  (dispatch: AppDispatch) => {
+    return () => {
+      dispatch(LoginRequestAction());
+      return loginUser(form)
+        .then((res) => {
+          const location = useLocation();
+          const navigate = useNavigate();
+          handleTokens(res);
+          localStorage.setItem(IS_USER_AUTHED, "true");
+          if (res.success) {
+            dispatch(LoginSuccessAction());
+            dispatch(UpdateUserAction(res.user));
+          }
+          if (location.state !== null && location.state.from) {
+            navigate(location.state.from.pathname);
+          } else {
+            navigate(HOME_ROUTE);
+          }
+        })
+        .catch((e) => {
+          console.log(e.message);
+          dispatch(LoginFailedAction());
+        });
+    };
   };
 
-export const logoutUserThunk: any = () => (dispatch: any) => {
-  dispatch(LogoutRequestAction());
-  return logoutUser()
-    .then((res) => {
-      if (res.success) {
-        dispatch(ClearUserAction());
-        deleteCookie("token");
-        localStorage.removeItem(IS_USER_AUTHED);
-        localStorage.removeItem("refreshToken");
-        dispatch(LogoutSuccessAction());
-      }
-    })
-    .catch((e) => {
-      dispatch(LogoutFailedAction());
-      console.log(e.message);
-    });
-};
-
-export const forgotPasswordThunk: any = (email: string) => (dispatch: any) => {
+export const logoutUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
   return () => {
-    dispatch(ForgotPasswordRequestAction());
-    return forgotPassword(email)
-      .then(() => {
-        dispatch(ForgotPasswordSuccessAction());
-        localStorage.setItem("resetPasswordSent", "true");
+    dispatch(LogoutRequestAction());
+    return logoutUser()
+      .then((res) => {
+        if (res.success) {
+          const navigate = useNavigate();
+          dispatch(ClearUserAction());
+          deleteCookie("token");
+          localStorage.removeItem(IS_USER_AUTHED);
+          localStorage.removeItem("refreshToken");
+          dispatch(LogoutSuccessAction());
+          navigate(LOGIN_ROUTE);
+        }
       })
       .catch((e) => {
-        dispatch(ForgotPasswordFailedAction());
+        dispatch(LogoutFailedAction());
+        console.log(e.message);
       });
   };
 };
 
-export const resetPasswordThunk: any =
-  ({ password, code }: { password: string; code: string }) =>
+export const forgotPasswordThunk =
+  (email: string): AppThunk =>
+  (dispatch: any) => {
+    return () => {
+      dispatch(ForgotPasswordRequestAction());
+      return forgotPassword(email)
+        .then(() => {
+          dispatch(ForgotPasswordSuccessAction());
+          localStorage.setItem("resetPasswordSent", "true");
+        })
+        .catch((e) => {
+          dispatch(ForgotPasswordFailedAction());
+        });
+    };
+  };
+
+export const resetPasswordThunk =
+  ({ password, code }: { password: string; code: string }): AppThunk =>
   (dispatch: any) => {
     return () => {
       dispatch(ResetPasswordRequestAction());
       return resetPassword(password, code)
         .then((res) => {
           if (res.success) {
+            const navigate = useNavigate();
             dispatch(ResetPasswordSuccessAction());
             localStorage.removeItem("resetPasswordSent");
+            navigate(LOGIN_ROUTE);
           }
           return res;
         })
@@ -293,16 +311,22 @@ export const resetPasswordThunk: any =
     };
   };
 
-export const registerUserThunk: any = (form: TUserForm) => (dispatch: any) => {
-  return () => {
-    dispatch(RegisterRequestAction());
-    return registerUser(form)
-      .then((res) => {
-        dispatch(RegisterSuccessAction());
-        return res;
-      })
-      .catch((e) => {
-        dispatch(RegisterFailedAction());
-      });
+export const registerUserThunk =
+  (form: TUserForm): AppThunk =>
+  (dispatch: any) => {
+    return () => {
+      dispatch(RegisterRequestAction());
+      return registerUser(form)
+        .then((res) => {
+          if (res.success) {
+            const navigate = useNavigate();
+            dispatch(RegisterSuccessAction());
+            navigate(LOGIN_ROUTE);
+          }
+          return res;
+        })
+        .catch((e) => {
+          dispatch(RegisterFailedAction());
+        });
+    };
   };
-};
