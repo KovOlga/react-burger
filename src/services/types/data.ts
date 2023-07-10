@@ -19,20 +19,6 @@ export type TIngredientConstructor = TIngredientCounted & {
   uniqueId: string;
 };
 
-export type TOrder = {
-  _id: string;
-  name: string;
-  number: number;
-  status: string;
-  ingredients: TIngredientCounted[];
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type TOrderCounted = TOrder & {
-  totalPrice: number;
-};
-
 export type TUser = {
   name: string;
   email: string;
@@ -70,8 +56,28 @@ export type TTokenResponse = {
 };
 
 export type TwsOrdersResponse = {
-  orders: TOrder[];
-  success: boolean;
+  orders: TwsOrderResponse[];
   total: number;
   totalToday: number;
+};
+
+export type TwsOrderResponse = {
+  _id: string;
+  name: string;
+  number: number;
+  status: string;
+  ingredients: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TUpdatedOrder = {
+  _id: string;
+  name: string;
+  number: number;
+  status: string;
+  ingredients: TIngredientCounted[];
+  createdAt: string;
+  updatedAt: string;
+  totalPrice: number;
 };

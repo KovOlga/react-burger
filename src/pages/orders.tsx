@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import {
   wsUserConnectionStart,
@@ -14,7 +14,7 @@ import {
 } from "../services/selectors/ingredients";
 import { getWsUserOrders } from "../services/selectors/wsUserReducer";
 
-export const OrdersPage = () => {
+export const OrdersPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const orders = useAppSelector(getWsUserOrders);

@@ -4,18 +4,17 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
-import { TOrder, TwsOrdersResponse } from "../types/data";
+import { TwsOrdersResponse } from "../types/data";
 import { TWsActions } from "../actions/wsActions";
 
 export type TInitialState = {
   wsConnected: boolean;
-  orders: TwsOrdersResponse; //check
+  orders: TwsOrdersResponse;
 };
 
 const initialState: TInitialState = {
   wsConnected: false,
   orders: {
-    success: true,
     orders: [],
     total: 0,
     totalToday: 0,

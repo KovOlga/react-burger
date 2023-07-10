@@ -1,4 +1,4 @@
-import { TIngredient, TOrder } from "../types/data";
+import { TIngredient } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getOrderNumberFetch } from "../api/api";
 
@@ -18,7 +18,7 @@ interface IGetOrderNumberRequestAction {
 }
 interface IGetOrderNumberSuccessAction {
   readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
-  readonly res: TOrder;
+  readonly res: any;
 }
 interface IGetOrderNumberFailedAction {
   readonly type: typeof GET_ORDER_NUMBER_FAILED;
@@ -47,7 +47,7 @@ export const GetOrderNumberRequestAction =
     type: GET_ORDER_NUMBER_REQUEST,
   });
 export const GetOrderNumberSuccessAction = (
-  res: TOrder
+  res: any
 ): IGetOrderNumberSuccessAction => ({
   type: GET_ORDER_NUMBER_SUCCESS,
   res,

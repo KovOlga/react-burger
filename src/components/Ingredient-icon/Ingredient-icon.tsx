@@ -1,10 +1,9 @@
 import styles from "./Ingredient-icon.module.css";
-import PropTypes from "prop-types";
 import { FC } from "react";
-import { TIngredient, TIngredientConstructor } from "../../services/types/data";
+import { TIngredientCounted } from "../../services/types/data";
 
 interface IngredientIconProps {
-  ingredient: TIngredient;
+  ingredient: TIngredientCounted;
   number: number;
   index: number;
   position: string;

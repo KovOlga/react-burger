@@ -4,12 +4,11 @@ import {
   WS_USER_CONNECTION_SUCCESS,
   WS_USER_CONNECTION_ERROR,
 } from "../action-types/wsActionTypes";
-import { TOrder } from "../types/data";
 import { TWsActions } from "../actions/wsActions";
 
 export type TInitialState = {
   wsConnected: boolean;
-  orders: TOrder[];
+  orders: any;
 };
 
 const initialState: TInitialState = {

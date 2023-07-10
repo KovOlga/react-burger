@@ -4,17 +4,16 @@ import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getTimeZone } from "../../utils/utils";
 import { FC } from "react";
-import { TOrderCounted } from "../../services/types/data";
+import { TUpdatedOrder } from "../../services/types/data";
 
 interface OrderCardProps {
-  order: TOrderCounted;
-  onClick: (order: TOrderCounted) => void; //check
+  order: TUpdatedOrder;
+  onClick: (order: TUpdatedOrder) => void;
   fromComponent: string;
 }
 
 const OrderCard: FC<OrderCardProps> = ({ order, onClick, fromComponent }) => {
   const orderIngredients = order.ingredients.slice(0, 6);
-
   return (
     <li onClick={() => onClick(order)} className={styles.card}>
       <div className={styles.card__id}>

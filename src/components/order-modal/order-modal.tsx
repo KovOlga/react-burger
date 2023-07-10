@@ -3,14 +3,15 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import IngredientIcon from "../Ingredient-icon/Ingredient-icon";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getTimeZone } from "../../utils/utils";
-import { TOrderCounted } from "../../services/types/data";
 import { FC } from "react";
+import { TUpdatedOrder } from "../../services/types/data";
 
 interface OrderModalProps {
-  order: TOrderCounted;
+  order: TUpdatedOrder;
 }
 
 const OrderModal: FC<OrderModalProps> = ({ order }) => {
+  console.log("order", order);
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-default">{`#${order.number}`}</p>
@@ -22,7 +23,7 @@ const OrderModal: FC<OrderModalProps> = ({ order }) => {
         <div className={styles.ingredients}>
           <h2 className="text text_type_main-medium">Состав:</h2>
           <ul className={styles.list}>
-            {order.ingredients.map((ingredient, i) => {
+            {order.ingredients.map((ingredient: any, i: any) => {
               return (
                 <li key={i} className={styles.list__item}>
                   <IngredientIcon

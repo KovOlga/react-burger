@@ -3,18 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 import { parseOrderIngredients } from "../../utils/utils";
 import OrderCard from "../order-card/order-card";
 import { useCallback, FC } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
-import { openOrderInfoModalThunk } from "../../services/actions/order-info-modal";
 import { PROFILE_ROUTE } from "../../utils/constants";
 import {
-  TOrderCounted,
-  TOrder,
-  TIngredientConstructor,
+  TUpdatedOrder,
+  TwsOrderResponse,
+  TIngredientCounted,
 } from "../../services/types/data";
 
 interface OrderCardListProps {
-  orders: TOrder[];
-  data: TIngredientConstructor[];
+  orders: TwsOrderResponse[];
+  data: TIngredientCounted[];
   fromComponent: string;
 }
 
@@ -24,10 +22,8 @@ const OrderCardList: FC<OrderCardListProps> = ({
   fromComponent,
 }) => {
   let location = useLocation();
-  const dispatch = useAppDispatch();
 
-  const onOpenOrderInfoModal = useCallback((item: TOrderCounted) => {
-    // dispatch(openOrderInfoModalThunk(item));
+  const onOpenOrderInfoModal = useCallback((item: TUpdatedOrder) => {
     localStorage.setItem("isOrderInfoModalShown", "true");
     localStorage.setItem("currentOrderInfoShown", JSON.stringify(item));
   }, []);
@@ -37,7 +33,7 @@ const OrderCardList: FC<OrderCardListProps> = ({
       {orders
         .slice(0)
         .reverse()
-        .map((order: TOrder) => {
+        .map((order: any) => {
           return (
             <Link
               key={order._id}

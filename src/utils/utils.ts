@@ -1,24 +1,23 @@
 import {
-  TOrder,
-  TOrderCounted,
-  TIngredientConstructor,
-  TIngredient,
+  TIngredientCounted,
   TTokenResponse,
+  TUpdatedOrder,
+  TwsOrderResponse,
 } from "../services/types/data";
 
 export const parseOrderIngredients = (
-  data: TIngredientConstructor[],
-  order: TOrder
-): TOrderCounted => {
-  let updatedOrder: TOrderCounted;
+  data: TIngredientCounted[],
+  order: TwsOrderResponse
+): TUpdatedOrder => {
+  let updatedOrder: TUpdatedOrder;
 
   const orderedIngredients = order.ingredients.reduce(
-    (prevVal: TIngredientConstructor[], item) => {
-      let ingredient = data.find((elem) => elem._id === item._id); //// check
+    (prevVal: TIngredientCounted[], item) => {
+      let ingredient = data.find((elem) => elem._id === item);
 
       if (ingredient) {
         const isIngredientRepeated = prevVal.findIndex(
-          (element: TIngredient) => element._id === ingredient?._id
+          (element) => element._id === ingredient?._id
         );
 
         if (isIngredientRepeated >= 0) {

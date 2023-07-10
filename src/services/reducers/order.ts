@@ -5,10 +5,9 @@ import {
   UPDATE_CONSTRUCTOR_EMPTINESS,
 } from "../actions/order";
 import { TOrdersActions } from "../actions/order";
-import { TOrder } from "../types/data";
 
 export type TInitialState = {
-  orderInfo: TOrder | null;
+  orderInfo: any | null;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
   isConstructorEmpty: boolean;

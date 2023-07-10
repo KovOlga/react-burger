@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import styles from "./layout.module.css";
 
 export const LayoutPage = () => {
-  console.log("layout");
   return (
     <div className={styles.body}>
       <div className={styles.container}>

@@ -1,9 +1,10 @@
 import { AppThunk, AppDispatch } from "../types";
-import { TOrder } from "../types/data";
+import { TUpdatedOrder } from "../types/data";
 
-export const openOrderInfoModalThunk: AppThunk = (item: TOrder) => {
+export const openOrderInfoModalThunk: AppThunk = (item: TUpdatedOrder) => {
   return function (dispatch: AppDispatch) {
     return () => {
+      console.log("item", item);
       localStorage.setItem("isOrderInfoModalShown", "true");
       localStorage.setItem("currentOrderInfoShown", JSON.stringify(item));
     };

@@ -10,7 +10,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
-import { TOrder, TwsOrdersResponse } from "../types/data";
+import { TwsOrdersResponse } from "../types/data";
 
 interface IwsFeedConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
@@ -42,7 +42,7 @@ interface IwsUserConnectionError {
 }
 interface IwsGetUserOrders {
   readonly type: typeof WS_GET_USER_ORDERS;
-  payload: TOrder[];
+  payload: any[];
 }
 
 export type TWsActions =
