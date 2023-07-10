@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../utils/constants";
 import { FormEvent } from "react";
+import { TForgotPassword } from "../services/types/data";
 
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<TForgotPassword>({
     email: "",
   });
 

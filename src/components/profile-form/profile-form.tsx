@@ -13,11 +13,12 @@ import {
 } from "../../services/actions/user";
 import { useForm } from "../../hooks/useForm";
 import { getUpdateUserRequest, getUser } from "../../services/selectors/user";
+import { TUserForm } from "../../services/types/data";
 
 const ProfileForm: FC = () => {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { values, handleChange, setValues } = useForm({
+  const { values, handleChange, setValues } = useForm<TUserForm>({
     name: "",
     email: "",
     password: "",

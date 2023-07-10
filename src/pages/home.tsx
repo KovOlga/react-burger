@@ -29,18 +29,14 @@ export const HomePage = () => {
   const dataFailed = useAppSelector(getDataFailed);
 
   const openIngredientInfo = useCallback((item: TIngredientConstructor) => {
-    console.log("1");
     localStorage.setItem("isIngredientInfoModalShown", "true");
     localStorage.setItem("currentIngredientShown", JSON.stringify(item));
-    console.log("3");
-    console.log(item);
   }, []);
 
   const closeOrderInfoModal = useCallback(() => {
     dispatch(closeOrderModalAction());
   }, [dispatch]);
 
-  console.log("home");
   return (
     <>
       <main className={styles.main}>

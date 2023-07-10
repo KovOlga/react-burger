@@ -5,16 +5,15 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPasswordThunk } from "../services/actions/user";
 import { useAppDispatch } from "../hooks/hooks";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
 import { FormEvent } from "react";
+import { TResetPassword } from "../services/types/data";
 
 export const ResetPassword = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<TResetPassword>({
     password: "",
     code: "",
   });

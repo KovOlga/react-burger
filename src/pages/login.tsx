@@ -3,21 +3,17 @@ import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback, FormEvent } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginUserThunk } from "../services/actions/user";
 import { useForm } from "../hooks/useForm";
-import {
-  HOME_ROUTE,
-  REGISTER_ROUTE,
-  FORGOT_PASSWORD_ROUTE,
-} from "../utils/constants";
+import { REGISTER_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
+import { FC } from "react";
+import { TUserForm } from "../services/types/data";
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<TUserForm>({
     name: "",
     email: "",
     password: "",

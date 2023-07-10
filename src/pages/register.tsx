@@ -10,11 +10,12 @@ import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/constants";
 import { FormEvent } from "react";
+import { TUserForm } from "../services/types/data";
 
 export const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<TUserForm>({
     name: "",
     email: "",
     password: "",

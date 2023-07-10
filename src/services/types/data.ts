@@ -54,6 +54,15 @@ export type TUserForm = {
   password: string;
 };
 
+export type TForgotPassword = {
+  email: string;
+};
+
+export type TResetPassword = {
+  password: string;
+  code: string;
+};
+
 export type TTokenResponse = {
   success?: boolean;
   readonly accessToken: string;
