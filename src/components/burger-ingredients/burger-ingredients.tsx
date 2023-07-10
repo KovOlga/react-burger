@@ -13,7 +13,7 @@ interface BurgerIngredientsProps {
 
 const BurgerIngredients: FC<BurgerIngredientsProps> = memo(
   ({ onOpenIngredientInfo }) => {
-    const [current, setCurrent] = useState("Булки");
+    const [current, setCurrent] = useState<string>("Булки");
 
     const ingredients = useAppSelector(getData);
 

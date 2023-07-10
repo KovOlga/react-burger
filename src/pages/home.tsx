@@ -8,7 +8,6 @@ import OrderDetails from "../components/order-details/order-details";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { useEffect, useCallback } from "react";
 import { getIngredients } from "../services/actions/ingredients";
-import { openIngredientModalThunk } from "../services/actions/ingredient-modal";
 import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
 import {
@@ -22,21 +21,20 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("1");
     dispatch(getIngredients());
-    console.log("4");
   }, [dispatch]);
 
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);
   const dataFailed = useAppSelector(getDataFailed);
 
-  const openIngredientInfo = useCallback(
-    (item: TIngredientConstructor) => {
-      dispatch(openIngredientModalThunk(item));
-    },
-    [dispatch]
-  );
+  const openIngredientInfo = useCallback((item: TIngredientConstructor) => {
+    console.log("1");
+    localStorage.setItem("isIngredientInfoModalShown", "true");
+    localStorage.setItem("currentIngredientShown", JSON.stringify(item));
+    console.log("3");
+    console.log(item);
+  }, []);
 
   const closeOrderInfoModal = useCallback(() => {
     dispatch(closeOrderModalAction());
@@ -59,9 +57,7 @@ export const HomePage = () => {
         )}
       </main>
 
-      {JSON.parse(
-        localStorage.getItem("isOrderDetailsInfoModalShown") || ""
-      ) && (
+      {localStorage.getItem("isOrderDetailsInfoModalShown") === "true" && (
         <Modal onClose={closeOrderInfoModal}>
           <OrderDetails />
         </Modal>

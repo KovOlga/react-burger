@@ -45,11 +45,9 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
 
 export const getIngredients: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    console.log("2");
     dispatch(getIngredientsAction());
     return getIngredientsList()
       .then(({ data }) => {
-        console.log("3");
         dispatch(getIngredientsSuccessAction(data));
       })
       .catch((e) => {
