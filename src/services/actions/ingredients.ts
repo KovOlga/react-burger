@@ -43,11 +43,13 @@ export const getIngredientsFailedAction = (): IGetIngredientsFailedAction => ({
   type: GET_INGREDIENT_FAILED,
 });
 
-export const getIngredients = (): any => (dispatch: any) => {
-  return () => {
+export const getIngredients: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
+    console.log("2");
     dispatch(getIngredientsAction());
-    getIngredientsList()
+    return getIngredientsList()
       .then(({ data }) => {
+        console.log("3");
         dispatch(getIngredientsSuccessAction(data));
       })
       .catch((e) => {

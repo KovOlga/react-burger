@@ -106,30 +106,33 @@ export const sortDraggingItemAction = (
   hoverIndex,
 });
 
-export const addConstructorItemThunk =
-  (itemId: string): any =>
-  (dispatch: any) => {
+export const addConstructorItemThunk: AppThunk = (itemId: string) => {
+  return function (dispatch: AppDispatch) {
     const uuid: string = uuidv4();
     return () => {
       dispatch(addConstructorItemAction(itemId, uuid));
       dispatch(updateIngredientCounterAction(itemId));
     };
   };
+};
 
-export const deleteConstructorItemThunk =
-  (itemId: string, uniqueId: string): any =>
-  (dispatch: any) => {
+export const deleteConstructorItemThunk: AppThunk = (
+  itemId: string,
+  uniqueId: string
+) => {
+  return function (dispatch: AppDispatch) {
     return () => {
       dispatch(deleteConstructorItemAction(uniqueId));
       dispatch(updateIngredientCounterAction(itemId));
     };
   };
+};
 
-export const swapConstructorBunAction =
-  (itemId: string): any =>
-  (dispatch: any) => {
+export const swapConstructorBunAction: AppThunk = (itemId: string) => {
+  return function (dispatch: AppDispatch) {
     return () => {
       dispatch(setCurrentBunAction(itemId));
       dispatch(updateBunCounterAction(itemId));
     };
   };
+};

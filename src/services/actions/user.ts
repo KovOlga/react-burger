@@ -196,64 +196,63 @@ export const ClearUserAction = (): IClearUserAction => ({
   type: CLEAR_USER,
 });
 
-export const getUserInfoThunk: any = () => (dispatch: any) => {
-  return () => {
-    getUserInfo()
+export const getUserInfoThunk: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
+    return () => {
+      getUserInfo()
+        .then((res) => {
+          dispatch(UpdateUserAction(res.user));
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
+    };
+  };
+};
+
+export const updateUserInfoThunk: AppThunk = (userNewInfo: TUserForm) => {
+  return function (dispatch: AppDispatch) {
+    dispatch(UpdateUserRequestAction());
+    return updateUserInfo(userNewInfo)
       .then((res) => {
         dispatch(UpdateUserAction(res.user));
+        dispatch(UpdateUserSuccessAction());
       })
       .catch((e) => {
         console.log("error:", e);
+        dispatch(UpdateUserFailedAction());
       });
   };
 };
 
-export const updateUserInfoThunk: any =
-  (userNewInfo: TUserForm) => (dispatch: any) => {
-    return () => {
-      dispatch(UpdateUserRequestAction());
-      return updateUserInfo(userNewInfo)
-        .then((res) => {
+export const loginUserThunk: AppThunk = (form: TUserForm) => {
+  return function (dispatch: AppDispatch) {
+    dispatch(LoginRequestAction());
+    return loginUser(form)
+      .then((res) => {
+        const location = useLocation();
+        const navigate = useNavigate();
+        handleTokens(res);
+        localStorage.setItem(IS_USER_AUTHED, "true");
+        if (res.success) {
+          dispatch(LoginSuccessAction());
           dispatch(UpdateUserAction(res.user));
-          dispatch(UpdateUserSuccessAction());
-        })
-        .catch((e) => {
-          console.log("error:", e);
-          dispatch(UpdateUserFailedAction());
-        });
-    };
+        }
+        if (location.state !== null && location.state.from) {
+          navigate(location.state.from.pathname);
+        } else {
+          navigate(HOME_ROUTE);
+        }
+      })
+      .catch((e) => {
+        console.log(e.message);
+        dispatch(LoginFailedAction());
+      });
   };
+};
 
-export const loginUserThunk =
-  (form: TUserForm): AppThunk =>
-  (dispatch: AppDispatch) => {
-    return () => {
-      dispatch(LoginRequestAction());
-      return loginUser(form)
-        .then((res) => {
-          const location = useLocation();
-          const navigate = useNavigate();
-          handleTokens(res);
-          localStorage.setItem(IS_USER_AUTHED, "true");
-          if (res.success) {
-            dispatch(LoginSuccessAction());
-            dispatch(UpdateUserAction(res.user));
-          }
-          if (location.state !== null && location.state.from) {
-            navigate(location.state.from.pathname);
-          } else {
-            navigate(HOME_ROUTE);
-          }
-        })
-        .catch((e) => {
-          console.log(e.message);
-          dispatch(LoginFailedAction());
-        });
-    };
-  };
-
-export const logoutUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
-  return () => {
+export const logoutUserThunk: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch(LogoutRequestAction());
     return logoutUser()
       .then((res) => {
@@ -274,59 +273,59 @@ export const logoutUserThunk = (): AppThunk => (dispatch: AppDispatch) => {
   };
 };
 
-export const forgotPasswordThunk =
-  (email: string): AppThunk =>
-  (dispatch: any) => {
-    return () => {
-      dispatch(ForgotPasswordRequestAction());
-      return forgotPassword(email)
-        .then(() => {
-          dispatch(ForgotPasswordSuccessAction());
-          localStorage.setItem("resetPasswordSent", "true");
-        })
-        .catch((e) => {
-          dispatch(ForgotPasswordFailedAction());
-        });
-    };
+export const forgotPasswordThunk: AppThunk = (email: string) => {
+  return function (dispatch: AppDispatch) {
+    dispatch(ForgotPasswordRequestAction());
+    return forgotPassword(email)
+      .then(() => {
+        dispatch(ForgotPasswordSuccessAction());
+        localStorage.setItem("resetPasswordSent", "true");
+      })
+      .catch((e) => {
+        dispatch(ForgotPasswordFailedAction());
+      });
   };
+};
 
-export const resetPasswordThunk =
-  ({ password, code }: { password: string; code: string }): AppThunk =>
-  (dispatch: any) => {
-    return () => {
-      dispatch(ResetPasswordRequestAction());
-      return resetPassword(password, code)
-        .then((res) => {
-          if (res.success) {
-            const navigate = useNavigate();
-            dispatch(ResetPasswordSuccessAction());
-            localStorage.removeItem("resetPasswordSent");
-            navigate(LOGIN_ROUTE);
-          }
-          return res;
-        })
-        .catch((e) => {
-          dispatch(ResetPasswordFailedAction());
-        });
-    };
+export const resetPasswordThunk: AppThunk = ({
+  password,
+  code,
+}: {
+  password: string;
+  code: string;
+}) => {
+  return function (dispatch: AppDispatch) {
+    dispatch(ResetPasswordRequestAction());
+    return resetPassword(password, code)
+      .then((res) => {
+        if (res.success) {
+          const navigate = useNavigate();
+          dispatch(ResetPasswordSuccessAction());
+          localStorage.removeItem("resetPasswordSent");
+          navigate(LOGIN_ROUTE);
+        }
+        return res;
+      })
+      .catch((e) => {
+        dispatch(ResetPasswordFailedAction());
+      });
   };
+};
 
-export const registerUserThunk =
-  (form: TUserForm): AppThunk =>
-  (dispatch: any) => {
-    return () => {
-      dispatch(RegisterRequestAction());
-      return registerUser(form)
-        .then((res) => {
-          if (res.success) {
-            const navigate = useNavigate();
-            dispatch(RegisterSuccessAction());
-            navigate(LOGIN_ROUTE);
-          }
-          return res;
-        })
-        .catch((e) => {
-          dispatch(RegisterFailedAction());
-        });
-    };
+export const registerUserThunk: AppThunk = (form: TUserForm) => {
+  return function (dispatch: AppDispatch) {
+    dispatch(RegisterRequestAction());
+    return registerUser(form)
+      .then((res) => {
+        if (res.success) {
+          const navigate = useNavigate();
+          dispatch(RegisterSuccessAction());
+          navigate(LOGIN_ROUTE);
+        }
+        return res;
+      })
+      .catch((e) => {
+        dispatch(RegisterFailedAction());
+      });
   };
+};

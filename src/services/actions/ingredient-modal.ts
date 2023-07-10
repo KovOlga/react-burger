@@ -4,18 +4,22 @@ import { AppThunk, AppDispatch } from "../types";
 // export const TOGGLE_INGREDIENT_INFO_MODAL: "TOGGLE_INGREDIENT_INFO_MODAL" =
 //   "TOGGLE_INGREDIENT_INFO_MODAL";
 
-export const openIngredientModalThunk =
-  (item: TIngredientConstructor): any =>
-  (dispatch: any) => {
+export const openIngredientModalThunk: AppThunk = (
+  item: TIngredientConstructor
+) => {
+  return function (dispatch: AppDispatch) {
     return () => {
       localStorage.setItem("isIngredientInfoModalShown", "true");
       localStorage.setItem("currentIngredientShown", JSON.stringify(item));
     };
   };
+};
 
-export const closeIngredientModalThunk = (): any => (dispatch: any) => {
-  return () => {
-    localStorage.setItem("isIngredientInfoModalShown", "false");
-    localStorage.removeItem("currentIngredientShown");
+export const closeIngredientModalThunk: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
+    return () => {
+      localStorage.setItem("isIngredientInfoModalShown", "false");
+      localStorage.removeItem("currentIngredientShown");
+    };
   };
 };

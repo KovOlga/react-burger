@@ -22,7 +22,9 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log("1");
     dispatch(getIngredients());
+    console.log("4");
   }, [dispatch]);
 
   const data = useAppSelector(getData);
@@ -40,6 +42,7 @@ export const HomePage = () => {
     dispatch(closeOrderModalAction());
   }, [dispatch]);
 
+  console.log("home");
   return (
     <>
       <main className={styles.main}>

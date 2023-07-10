@@ -68,32 +68,32 @@ export const ResetCountersAction = (): IResetCountersAction => ({
   type: RESET_COUNTERS,
 });
 
-export const getOrderNumber =
-  (orderArr: string[]): any =>
-  (dispatch: any) => {
-    return function () {
-      if (orderArr.length === 0) {
-        dispatch(UpdateConstructorEmptinessAction(true));
-        return;
-      }
-      dispatch(GetOrderNumberRequestAction());
-      getOrderNumberFetch(orderArr)
-        .then((res) => {
-          if (res.success) {
-            dispatch(GetOrderNumberSuccessAction(res));
-            localStorage.setItem("isOrderDetailsInfoModalShown", "true");
-          }
-        })
-        .catch((e) => {
-          dispatch(GetOrderNumberFailedAction());
-        });
-    };
+export const getOrderNumber: AppThunk = (orderArr: string[]) => {
+  return function (dispatch: AppDispatch) {
+    if (orderArr.length === 0) {
+      dispatch(UpdateConstructorEmptinessAction(true));
+      return;
+    }
+    dispatch(GetOrderNumberRequestAction());
+    getOrderNumberFetch(orderArr)
+      .then((res) => {
+        if (res.success) {
+          dispatch(GetOrderNumberSuccessAction(res));
+          localStorage.setItem("isOrderDetailsInfoModalShown", "true");
+        }
+      })
+      .catch((e) => {
+        dispatch(GetOrderNumberFailedAction());
+      });
   };
+};
 
-export const closeOrderModalAction = (): any => (dispatch: any) => {
-  return () => {
-    dispatch(ClearConstructorAction());
-    dispatch(ResetCountersAction());
-    localStorage.setItem("isOrderDetailsInfoModalShown", "false");
+export const closeOrderModalAction: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
+    return () => {
+      dispatch(ClearConstructorAction());
+      dispatch(ResetCountersAction());
+      localStorage.setItem("isOrderDetailsInfoModalShown", "false");
+    };
   };
 };
