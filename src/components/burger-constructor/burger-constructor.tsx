@@ -13,7 +13,6 @@ import {
 } from "../../services/actions/constructor";
 import { getOrderNumber } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
-import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/actions/order";
 import { LOGIN_ROUTE } from "../../utils/constants";
 import {
   getTotalPrice,
@@ -24,7 +23,6 @@ import {
   getorderNumberRequest,
   getConstructorEmpty,
 } from "../../services/selectors/order";
-import { TIngredientConstructor } from "../../services/types/data";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { UpdateConstructorEmptinessAction } from "../../services/actions/order";
 
@@ -37,12 +35,12 @@ const BurgerConstructor: FC = memo(() => {
   const constructorIngredients = useAppSelector(getConstructorIngredients);
   const orderNumberRequest = useAppSelector(getorderNumberRequest);
 
-  const changeConstructorBun = (item: TIngredientConstructor) => {
-    dispatch(swapConstructorBunAction(item._id));
+  const changeConstructorBun = (id: string) => {
+    dispatch(swapConstructorBunAction(id));
   };
 
-  const addConstructorIngredient = (item: TIngredientConstructor) => {
-    dispatch(addConstructorItemThunk(item._id));
+  const addConstructorIngredient = (id: string) => {
+    dispatch(addConstructorItemThunk(id));
   };
 
   const openConfirm = useCallback(() => {
@@ -70,11 +68,11 @@ const BurgerConstructor: FC = memo(() => {
 
   const [{ canDrop }, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
-    drop(itemId: TIngredientConstructor) {
-      if (itemId.type === "ingredient") {
-        addConstructorIngredient(itemId);
+    drop(typeAndId: { _id: string; type: string }) {
+      if (typeAndId.type === "ingredient") {
+        addConstructorIngredient(typeAndId._id);
       } else {
-        changeConstructorBun(itemId);
+        changeConstructorBun(typeAndId._id);
       }
     },
     collect: (monitor) => ({

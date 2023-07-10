@@ -29,7 +29,7 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({
 
   const [, drop] = useDrop({
     accept: "constructorItem",
-    hover(item: any, monitor) {
+    hover(item: { id: string; index: number }, monitor) {
       if (!ref.current) {
         return;
       }

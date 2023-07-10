@@ -109,10 +109,8 @@ export const sortDraggingItemAction = (
 export const addConstructorItemThunk: AppThunk = (itemId: string) => {
   return function (dispatch: AppDispatch) {
     const uuid: string = uuidv4();
-    return () => {
-      dispatch(addConstructorItemAction(itemId, uuid));
-      dispatch(updateIngredientCounterAction(itemId));
-    };
+    dispatch(addConstructorItemAction(itemId, uuid));
+    dispatch(updateIngredientCounterAction(itemId));
   };
 };
 
@@ -121,18 +119,14 @@ export const deleteConstructorItemThunk: AppThunk = (
   uniqueId: string
 ) => {
   return function (dispatch: AppDispatch) {
-    return () => {
-      dispatch(deleteConstructorItemAction(uniqueId));
-      dispatch(updateIngredientCounterAction(itemId));
-    };
+    dispatch(deleteConstructorItemAction(uniqueId));
+    dispatch(updateIngredientCounterAction(itemId));
   };
 };
 
 export const swapConstructorBunAction: AppThunk = (itemId: string) => {
   return function (dispatch: AppDispatch) {
-    return () => {
-      dispatch(setCurrentBunAction(itemId));
-      dispatch(updateBunCounterAction(itemId));
-    };
+    dispatch(setCurrentBunAction(itemId));
+    dispatch(updateBunCounterAction(itemId));
   };
 };
