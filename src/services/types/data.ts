@@ -81,3 +81,14 @@ export type TUpdatedOrder = {
   updatedAt: string;
   totalPrice: number;
 };
+
+export type TConfirmedOrderResponse = {
+  ingredients: TIngredient[];
+  _id: string;
+  status: string;
+  name: string;
+  number: number;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+};

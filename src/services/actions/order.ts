@@ -1,4 +1,4 @@
-import { TIngredient } from "../types/data";
+import { TConfirmedOrderResponse } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getOrderNumberFetch } from "../api/api";
 
@@ -47,7 +47,7 @@ export const GetOrderNumberRequestAction =
     type: GET_ORDER_NUMBER_REQUEST,
   });
 export const GetOrderNumberSuccessAction = (
-  res: any
+  res: TConfirmedOrderResponse
 ): IGetOrderNumberSuccessAction => ({
   type: GET_ORDER_NUMBER_SUCCESS,
   res,
@@ -78,7 +78,7 @@ export const getOrderNumber: AppThunk = (orderArr: string[]) => {
     getOrderNumberFetch(orderArr)
       .then((res) => {
         if (res.success) {
-          dispatch(GetOrderNumberSuccessAction(res));
+          dispatch(GetOrderNumberSuccessAction(res.order));
           localStorage.setItem("isOrderDetailsInfoModalShown", "true");
         }
       })
@@ -90,10 +90,8 @@ export const getOrderNumber: AppThunk = (orderArr: string[]) => {
 
 export const closeOrderModalAction: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    return () => {
-      dispatch(ClearConstructorAction());
-      dispatch(ResetCountersAction());
-      localStorage.setItem("isOrderDetailsInfoModalShown", "false");
-    };
+    dispatch(ClearConstructorAction());
+    dispatch(ResetCountersAction());
+    localStorage.setItem("isOrderDetailsInfoModalShown", "false");
   };
 };

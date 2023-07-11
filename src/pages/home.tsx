@@ -6,7 +6,7 @@ import BurgerConstructor from "../components/burger-constructor/burger-construct
 import Modal from "../components/modal/modal";
 import OrderDetails from "../components/order-details/order-details";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, FC } from "react";
 import { getIngredients } from "../services/actions/ingredients";
 import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
@@ -17,7 +17,7 @@ import {
 } from "../services/selectors/ingredients";
 import { TIngredientConstructor } from "../services/types/data";
 
-export const HomePage = () => {
+export const HomePage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

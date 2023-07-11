@@ -1,9 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, FC } from "react";
 import OrderModal from "../components/order-modal/order-modal";
 import Modal from "../components/modal/modal";
 import { useNavigate } from "react-router-dom";
 
-export const FeedModalPage = () => {
+export const FeedModalPage: FC = () => {
   const navigate = useNavigate();
 
   const currentOrder = JSON.parse(

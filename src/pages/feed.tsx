@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import styles from "./feed.module.css";
 import { getIngredients } from "../services/actions/ingredients";
@@ -20,7 +20,7 @@ import {
   getWsFeedOrdersTotalToday,
 } from "../services/selectors/wsFeedReducer";
 
-export const FeedPage = () => {
+export const FeedPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const orders = useAppSelector(getWsFeedOrders);

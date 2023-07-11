@@ -7,10 +7,10 @@ import { useAppDispatch } from "../hooks/hooks";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { LOGIN_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
-import { FormEvent } from "react";
+import { FormEvent, FC } from "react";
 import { TResetPassword } from "../services/types/data";
 
-export const ResetPassword = () => {
+export const ResetPassword: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

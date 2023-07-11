@@ -7,4 +7,4 @@ export const getConstructorEmpty = (store: RootState) =>
   store.orderNumber.isConstructorEmpty;
 
 export const getOrderNumber = (store: RootState) =>
-  store.orderNumber.orderInfo?.number; ///check
+  store.orderNumber.orderInfo?.number;

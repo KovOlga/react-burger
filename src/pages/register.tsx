@@ -9,10 +9,10 @@ import { useAppDispatch } from "../hooks/hooks";
 import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/constants";
-import { FormEvent } from "react";
+import { FormEvent, FC } from "react";
 import { TUserForm } from "../services/types/data";
 
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

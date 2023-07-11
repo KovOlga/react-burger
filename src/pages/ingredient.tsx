@@ -1,6 +1,6 @@
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
@@ -11,7 +11,7 @@ import {
   getDataFailed,
 } from "../services/selectors/ingredients";
 
-export const IngredientPage = () => {
+export const IngredientPage: FC = () => {
   const dispatch = useAppDispatch();
   let { id } = useParams();
 

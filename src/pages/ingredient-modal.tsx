@@ -1,9 +1,9 @@
 import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { useCallback } from "react";
+import { useCallback, FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const IngredientModalPage = () => {
+export const IngredientModalPage: FC = () => {
   const navigate = useNavigate();
 
   const currentIngredient = localStorage.getItem("currentIngredientShown");

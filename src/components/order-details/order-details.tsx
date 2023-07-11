@@ -1,10 +1,10 @@
 import styles from "./order-details.module.css";
 import doneIcon from "../../images/doneIcon.png";
-import { memo } from "react";
+import { memo, FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { getOrderNumber } from "../../services/selectors/order";
 
-const OrderDetails = memo(() => {
+const OrderDetails: FC = memo(() => {
   const orderNumber = useAppSelector(getOrderNumber);
 
   return (
