@@ -10,8 +10,6 @@ import {
   resetPassword,
   registerUser,
 } from "../api/api";
-import { useLocation, useNavigate } from "react-router-dom";
-import { HOME_ROUTE, LOGIN_ROUTE } from "../../utils/constants";
 
 export const IS_USER_AUTHED: "isUserAuthed" = "isUserAuthed";
 export const UPDATE_USER: "UPDATE_USER" = "UPDATE_USER";
@@ -230,18 +228,11 @@ export const loginUserThunk: AppThunk = (form: TUserForm) => {
     dispatch(LoginRequestAction());
     return loginUser(form)
       .then((res) => {
-        const location = useLocation();
-        const navigate = useNavigate();
         handleTokens(res);
         localStorage.setItem(IS_USER_AUTHED, "true");
         if (res.success) {
           dispatch(LoginSuccessAction());
           dispatch(UpdateUserAction(res.user));
-        }
-        if (location.state !== null && location.state.from) {
-          navigate(location.state.from.pathname);
-        } else {
-          navigate(HOME_ROUTE);
         }
       })
       .catch((e) => {
@@ -257,13 +248,11 @@ export const logoutUserThunk: AppThunk = () => {
     return logoutUser()
       .then((res) => {
         if (res.success) {
-          const navigate = useNavigate();
           dispatch(ClearUserAction());
           deleteCookie("token");
           localStorage.removeItem(IS_USER_AUTHED);
           localStorage.removeItem("refreshToken");
           dispatch(LogoutSuccessAction());
-          navigate(LOGIN_ROUTE);
         }
       })
       .catch((e) => {
@@ -299,10 +288,8 @@ export const resetPasswordThunk: AppThunk = ({
     return resetPassword(password, code)
       .then((res) => {
         if (res.success) {
-          const navigate = useNavigate();
           dispatch(ResetPasswordSuccessAction());
           localStorage.removeItem("resetPasswordSent");
-          navigate(LOGIN_ROUTE);
         }
         return res;
       })
@@ -318,9 +305,7 @@ export const registerUserThunk: AppThunk = (form: TUserForm) => {
     return registerUser(form)
       .then((res) => {
         if (res.success) {
-          const navigate = useNavigate();
           dispatch(RegisterSuccessAction());
-          navigate(LOGIN_ROUTE);
         }
         return res;
       })

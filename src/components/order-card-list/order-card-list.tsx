@@ -33,7 +33,7 @@ const OrderCardList: FC<OrderCardListProps> = ({
       {orders
         .slice(0)
         .reverse()
-        .map((order: any) => {
+        .map((order) => {
           return (
             <Link
               key={order._id}

@@ -23,7 +23,7 @@ const OrderModal: FC<OrderModalProps> = ({ order }) => {
         <div className={styles.ingredients}>
           <h2 className="text text_type_main-medium">Состав:</h2>
           <ul className={styles.list}>
-            {order.ingredients.map((ingredient: any, i: any) => {
+            {order.ingredients.map((ingredient, i) => {
               return (
                 <li key={i} className={styles.list__item}>
                   <IngredientIcon

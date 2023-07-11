@@ -7,12 +7,19 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginUserThunk } from "../services/actions/user";
 import { useForm } from "../hooks/useForm";
-import { REGISTER_ROUTE, FORGOT_PASSWORD_ROUTE } from "../utils/constants";
+import {
+  REGISTER_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
+  HOME_ROUTE,
+} from "../utils/constants";
 import { FC } from "react";
 import { TUserForm } from "../services/types/data";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { values, handleChange } = useForm<TUserForm>({
     name: "",
     email: "",
@@ -23,8 +30,13 @@ export const LoginPage: FC = () => {
     (e: FormEvent) => {
       e.preventDefault();
       dispatch(loginUserThunk(values));
+      // if (location.state !== null && location.state.from) {
+      //   navigate(location.state.from.pathname);
+      //   return;
+      // }
+      navigate(HOME_ROUTE);
     },
-    [values, dispatch]
+    [values, dispatch, navigate]
   );
 
   return (

@@ -1,14 +1,20 @@
 import styles from "./profile.module.css";
-import { Outlet } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Outlet, useNavigate, NavLink } from "react-router-dom";
 import { useAppDispatch } from "../hooks/hooks";
 import { logoutUserThunk } from "../services/actions/user";
-import { PROFILE_ROUTE, PROFILE_ORDERS_ROUTE } from "../utils/constants";
+import {
+  PROFILE_ROUTE,
+  PROFILE_ORDERS_ROUTE,
+  LOGIN_ROUTE,
+} from "../utils/constants";
 
 export const ProfilePage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const onLogoutUser = () => {
     dispatch(logoutUserThunk());
+    navigate(LOGIN_ROUTE);
   };
 
   console.log("kmkm");

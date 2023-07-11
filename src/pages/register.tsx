@@ -15,6 +15,7 @@ import { TUserForm } from "../services/types/data";
 export const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const { values, handleChange } = useForm<TUserForm>({
     name: "",
     email: "",
@@ -24,6 +25,7 @@ export const RegisterPage = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(registerUserThunk(values));
+    navigate(LOGIN_ROUTE);
   };
 
   return (
