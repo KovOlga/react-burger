@@ -1,6 +1,6 @@
 import { TConfirmedOrderResponse } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
-import { getOrderNumberFetch } from "../api/api";
+import { getNewOrderFetch } from "../api/api";
 
 export const GET_ORDER_NUMBER_REQUEST: "GET_ORDER_NUMBER_REQUEST" =
   "GET_ORDER_NUMBER_REQUEST";
@@ -13,85 +13,84 @@ export const UPDATE_CONSTRUCTOR_EMPTINESS: "UPDATE_CONSTRUCTOR_EMPTINESS" =
 export const CLEAR_CONSTRUCTOR: "CLEAR_CONSTRUCTOR" = "CLEAR_CONSTRUCTOR";
 export const RESET_COUNTERS: "RESET_COUNTERS" = "RESET_COUNTERS";
 
-interface IGetOrderNumberRequestAction {
+interface IgetNewOrderRequestAction {
   readonly type: typeof GET_ORDER_NUMBER_REQUEST;
 }
-interface IGetOrderNumberSuccessAction {
+interface IgetNewOrderSuccessAction {
   readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
-  readonly res: any;
+  readonly res: TConfirmedOrderResponse;
 }
-interface IGetOrderNumberFailedAction {
+interface IgetNewOrderFailedAction {
   readonly type: typeof GET_ORDER_NUMBER_FAILED;
 }
-interface IUpdateConstructorEmptinessAction {
+interface IupdateConstructorEmptinessAction {
   readonly type: typeof UPDATE_CONSTRUCTOR_EMPTINESS;
   state: boolean;
 }
-interface IClearConstructorAction {
+interface IclearConstructorAction {
   readonly type: typeof CLEAR_CONSTRUCTOR;
 }
-interface IResetCountersAction {
+interface IresetCountersAction {
   readonly type: typeof RESET_COUNTERS;
 }
 
 export type TOrdersActions =
-  | IGetOrderNumberRequestAction
-  | IGetOrderNumberSuccessAction
-  | IGetOrderNumberFailedAction
-  | IUpdateConstructorEmptinessAction
-  | IClearConstructorAction
-  | IResetCountersAction;
+  | IgetNewOrderRequestAction
+  | IgetNewOrderSuccessAction
+  | IgetNewOrderFailedAction
+  | IupdateConstructorEmptinessAction
+  | IclearConstructorAction
+  | IresetCountersAction;
 
-export const GetOrderNumberRequestAction =
-  (): IGetOrderNumberRequestAction => ({
-    type: GET_ORDER_NUMBER_REQUEST,
-  });
-export const GetOrderNumberSuccessAction = (
+export const getNewOrderRequestAction = (): IgetNewOrderRequestAction => ({
+  type: GET_ORDER_NUMBER_REQUEST,
+});
+export const getNewOrderSuccessAction = (
   res: TConfirmedOrderResponse
-): IGetOrderNumberSuccessAction => ({
+): IgetNewOrderSuccessAction => ({
   type: GET_ORDER_NUMBER_SUCCESS,
   res,
 });
-export const GetOrderNumberFailedAction = (): IGetOrderNumberFailedAction => ({
+export const getNewOrderFailedAction = (): IgetNewOrderFailedAction => ({
   type: GET_ORDER_NUMBER_FAILED,
 });
-export const UpdateConstructorEmptinessAction = (
+export const updateConstructorEmptinessAction = (
   state: boolean
-): IUpdateConstructorEmptinessAction => ({
+): IupdateConstructorEmptinessAction => ({
   type: UPDATE_CONSTRUCTOR_EMPTINESS,
   state,
 });
-export const ClearConstructorAction = (): IClearConstructorAction => ({
+export const clearConstructorAction = (): IclearConstructorAction => ({
   type: CLEAR_CONSTRUCTOR,
 });
-export const ResetCountersAction = (): IResetCountersAction => ({
+export const resetCountersAction = (): IresetCountersAction => ({
   type: RESET_COUNTERS,
 });
 
-export const getOrderNumber: AppThunk = (orderArr: string[]) => {
+export const getNewOrderThunk: AppThunk = (orderArr: string[]) => {
   return function (dispatch: AppDispatch) {
     if (orderArr.length === 0) {
-      dispatch(UpdateConstructorEmptinessAction(true));
+      dispatch(updateConstructorEmptinessAction(true));
       return;
     }
-    dispatch(GetOrderNumberRequestAction());
-    getOrderNumberFetch(orderArr)
+    dispatch(getNewOrderRequestAction());
+    getNewOrderFetch(orderArr)
       .then((res) => {
         if (res.success) {
-          dispatch(GetOrderNumberSuccessAction(res.order));
+          dispatch(getNewOrderSuccessAction(res.order));
           localStorage.setItem("isOrderDetailsInfoModalShown", "true");
         }
       })
       .catch((e) => {
-        dispatch(GetOrderNumberFailedAction());
+        dispatch(getNewOrderFailedAction());
       });
   };
 };
 
 export const closeOrderModalAction: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    dispatch(ClearConstructorAction());
-    dispatch(ResetCountersAction());
+    dispatch(clearConstructorAction());
+    dispatch(resetCountersAction());
     localStorage.setItem("isOrderDetailsInfoModalShown", "false");
   };
 };

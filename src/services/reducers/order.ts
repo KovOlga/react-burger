@@ -9,21 +9,21 @@ import { TConfirmedOrderResponse } from "../types/data";
 
 export type TInitialState = {
   orderInfo: TConfirmedOrderResponse | null;
-  orderNumberRequest: boolean;
-  orderNumberFailed: boolean;
+  newOrderRequest: boolean;
+  newOrderFailed: boolean;
   isConstructorEmpty: boolean;
-  orderNumberSuccess: boolean;
+  newOrderSuccess: boolean;
 };
 
 const initialState: TInitialState = {
   orderInfo: null,
-  orderNumberRequest: false,
-  orderNumberFailed: false,
+  newOrderRequest: false,
+  newOrderFailed: false,
   isConstructorEmpty: true,
-  orderNumberSuccess: false,
+  newOrderSuccess: false,
 };
 
-export const orderNumberReducer = (
+export const newOrderReducer = (
   state = initialState,
   action: TOrdersActions
 ): TInitialState => {
@@ -31,26 +31,26 @@ export const orderNumberReducer = (
     case GET_ORDER_NUMBER_REQUEST: {
       return {
         ...state,
-        orderNumberRequest: true,
+        newOrderRequest: true,
       };
     }
     case GET_ORDER_NUMBER_SUCCESS: {
       return {
         ...state,
-        orderNumberRequest: false,
-        orderNumberFailed: false,
+        newOrderRequest: false,
+        newOrderFailed: false,
         orderInfo: action.res,
-        orderNumberSuccess: true,
+        newOrderSuccess: true,
       };
     }
     case GET_ORDER_NUMBER_FAILED: {
-      return { ...state, orderNumberFailed: true, orderNumberRequest: false };
+      return { ...state, newOrderFailed: true, newOrderRequest: false };
     }
     case UPDATE_CONSTRUCTOR_EMPTINESS: {
       return {
         ...state,
         isConstructorEmpty: action.state,
-        orderNumberSuccess: false,
+        newOrderSuccess: false,
       };
     }
     default:

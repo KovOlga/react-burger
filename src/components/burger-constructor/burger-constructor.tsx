@@ -11,7 +11,7 @@ import {
   swapConstructorBunAction,
   updateTotalPriceAction,
 } from "../../services/actions/constructor";
-import { getOrderNumber } from "../../services/actions/order";
+import { getNewOrderThunk } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../utils/constants";
 import {
@@ -20,11 +20,11 @@ import {
   getConstructorIngredients,
 } from "../../services/selectors/ingredients";
 import {
-  getorderNumberRequest,
+  getNewOrderRequest,
   getConstructorEmpty,
 } from "../../services/selectors/order";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import { UpdateConstructorEmptinessAction } from "../../services/actions/order";
+import { updateConstructorEmptinessAction } from "../../services/actions/order";
 
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const BurgerConstructor: FC = memo(() => {
 
   const currentBun = useAppSelector(getCurrentBun);
   const constructorIngredients = useAppSelector(getConstructorIngredients);
-  const orderNumberRequest = useAppSelector(getorderNumberRequest);
+  const newOrderRequest = useAppSelector(getNewOrderRequest);
 
   const changeConstructorBun = (id: string) => {
     dispatch(swapConstructorBunAction(id));
@@ -52,7 +52,7 @@ const BurgerConstructor: FC = memo(() => {
         }),
         currentBun._id,
       ];
-      dispatch(getOrderNumber(orderArr));
+      dispatch(getNewOrderThunk(orderArr));
     } else {
       navigate(LOGIN_ROUTE);
     }
@@ -60,9 +60,9 @@ const BurgerConstructor: FC = memo(() => {
 
   useEffect(() => {
     if (constructorIngredients.length < 1 || !currentBun) {
-      dispatch(UpdateConstructorEmptinessAction(true));
+      dispatch(updateConstructorEmptinessAction(true));
     } else {
-      dispatch(UpdateConstructorEmptinessAction(false));
+      dispatch(updateConstructorEmptinessAction(false));
     }
   }, [constructorIngredients, currentBun, dispatch]);
 
@@ -154,7 +154,7 @@ const BurgerConstructor: FC = memo(() => {
           size="large"
           disabled={isConstructorEmpty}
         >
-          {orderNumberRequest ? "Оформляется..." : "Оформить заказ"}
+          {newOrderRequest ? "Оформляется..." : "Оформить заказ"}
         </Button>
       </div>
     </section>

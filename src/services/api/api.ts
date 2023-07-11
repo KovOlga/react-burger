@@ -104,7 +104,7 @@ export const updateUserInfo = ({
   });
 };
 
-export const getOrderNumberFetch = (ingredientsArr: string[]) => {
+export const getNewOrderFetch = (ingredientsArr: string[]) => {
   return fetchWithRefresh(orderEndPoint, {
     method: "POST",
     headers: {
