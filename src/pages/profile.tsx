@@ -7,8 +7,9 @@ import {
   PROFILE_ORDERS_ROUTE,
   LOGIN_ROUTE,
 } from "../utils/constants";
+import { FC } from "react";
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -17,7 +18,6 @@ export const ProfilePage = () => {
     navigate(LOGIN_ROUTE);
   };
 
-  console.log("kmkm");
   return (
     <main className={styles.container}>
       <nav className={styles.nav}>

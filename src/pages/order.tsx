@@ -15,14 +15,17 @@ import {
   getDataRequest,
   getDataFailed,
 } from "../services/selectors/ingredients";
+import { TwsOrderResponse } from "../services/types/data";
 
 export const OrderPage: FC<{ from: string }> = ({ from }) => {
   const dispatch = useAppDispatch();
   let { id } = useParams();
-  const [currentOrder, setCurrentOrder] = useState(null);
+  const [currentOrder, setCurrentOrder] = useState<TwsOrderResponse | null>(
+    null
+  );
 
   const orders = useAppSelector((store) =>
-    from === "feed" ? store.wsfeed.orders.orders : store.wsUser.orders
+    from === "feed" ? store.wsfeed.orders : store.wsUser.orders
   );
 
   const data = useAppSelector(getData);
@@ -42,14 +45,15 @@ export const OrderPage: FC<{ from: string }> = ({ from }) => {
   }, [dispatch, from]);
 
   useEffect(() => {
-    // if (orders) {
-    //   setCurrentOrder(
-    //     orders.find((order) => {
-    //       return order.number === Number(id);
-    //     })
-    //   );
-    // }
-  }, [orders, id]);
+    if (orders) {
+      const order = orders.find((order) => {
+        return order.number === Number(id);
+      });
+      if (order) {
+        setCurrentOrder(order);
+      }
+    }
+  }, [orders, id, currentOrder]);
 
   return (
     <div className={styles.container}>

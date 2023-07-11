@@ -5,9 +5,9 @@ import OrderCard from "../order-card/order-card";
 import { useCallback, FC } from "react";
 import { PROFILE_ROUTE } from "../../utils/constants";
 import {
+  TIngredientCounted,
   TUpdatedOrder,
   TwsOrderResponse,
-  TIngredientCounted,
 } from "../../services/types/data";
 
 interface OrderCardListProps {

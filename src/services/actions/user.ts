@@ -196,15 +196,13 @@ export const ClearUserAction = (): IClearUserAction => ({
 
 export const getUserInfoThunk: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    return () => {
-      getUserInfo()
-        .then((res) => {
-          dispatch(UpdateUserAction(res.user));
-        })
-        .catch((e) => {
-          console.log("error:", e);
-        });
-    };
+    return getUserInfo()
+      .then((res) => {
+        dispatch(UpdateUserAction(res.user));
+      })
+      .catch((e) => {
+        console.log("error:", e);
+      });
   };
 };
 

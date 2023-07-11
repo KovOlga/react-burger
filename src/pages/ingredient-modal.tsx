@@ -17,7 +17,6 @@ export const IngredientModalPage = () => {
     navigate(-1);
   }, [navigate]);
 
-  console.log("IngredientModalPage");
   return (
     <>
       {isIngredientInfoModalShown && currentIngredient && (

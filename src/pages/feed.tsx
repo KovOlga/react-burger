@@ -14,12 +14,19 @@ import {
   getDataRequest,
   getDataFailed,
 } from "../services/selectors/ingredients";
-import { getWsFeedOrders } from "../services/selectors/wsFeedReducer";
+import {
+  getWsFeedOrders,
+  getWsFeedOrdersTotal,
+  getWsFeedOrdersTotalToday,
+} from "../services/selectors/wsFeedReducer";
 
 export const FeedPage = () => {
   const dispatch = useAppDispatch();
 
-  const { orders, total, totalToday } = useAppSelector(getWsFeedOrders);
+  const orders = useAppSelector(getWsFeedOrders);
+  const total = useAppSelector(getWsFeedOrdersTotal);
+  const totalToday = useAppSelector(getWsFeedOrdersTotalToday);
+
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);
   const dataFailed = useAppSelector(getDataFailed);

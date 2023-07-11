@@ -18,7 +18,6 @@ export const IngredientPage = () => {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-  console.log("IngredientPage");
 
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);

@@ -1,12 +1,9 @@
 import { useCallback, FC } from "react";
-import { useAppDispatch } from "../hooks/hooks";
 import OrderModal from "../components/order-modal/order-modal";
 import Modal from "../components/modal/modal";
 import { useNavigate } from "react-router-dom";
-import { closeOrderInfoModalThunk } from "../services/actions/order-info-modal";
 
 export const OrderModalPage: FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentOrder = JSON.parse(
@@ -17,9 +14,10 @@ export const OrderModalPage: FC = () => {
   );
 
   const closeOrderInfoModal = useCallback(() => {
-    dispatch(closeOrderInfoModalThunk());
+    localStorage.setItem("isOrderInfoModalShown", "false");
+    localStorage.removeItem("currentOrderInfoShown");
     navigate(-1);
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return (
     isOrderInfoModalShown && (

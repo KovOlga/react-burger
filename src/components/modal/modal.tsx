@@ -43,8 +43,6 @@ const Modal: FC<ModalProps> = ({ onClose, children }) => {
     };
   }, []);
 
-  console.log("modal");
-
   return createPortal(
     <ModalOverlay>
       <div ref={modalContainer} className={styles.modal}>

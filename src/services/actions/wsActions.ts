@@ -42,7 +42,7 @@ interface IwsUserConnectionError {
 }
 interface IwsGetUserOrders {
   readonly type: typeof WS_GET_USER_ORDERS;
-  payload: any[];
+  payload: TwsOrdersResponse;
 }
 
 export type TWsActions =

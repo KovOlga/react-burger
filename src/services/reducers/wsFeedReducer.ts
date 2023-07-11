@@ -4,21 +4,21 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_FEED,
 } from "../action-types/wsActionTypes";
-import { TwsOrdersResponse } from "../types/data";
+import { TwsOrderResponse, TwsOrdersResponse } from "../types/data";
 import { TWsActions } from "../actions/wsActions";
 
 export type TInitialState = {
   wsConnected: boolean;
-  orders: TwsOrdersResponse;
+  orders: TwsOrderResponse[];
+  total: number;
+  totalToday: number;
 };
 
 const initialState: TInitialState = {
   wsConnected: false,
-  orders: {
-    orders: [],
-    total: 0,
-    totalToday: 0,
-  },
+  orders: [],
+  total: 0,
+  totalToday: 0,
 };
 
 export const wsFeedReducer = (
@@ -45,9 +45,12 @@ export const wsFeedReducer = (
       };
 
     case WS_GET_FEED:
+      const { orders, total, totalToday } = action.payload;
       return {
         ...state,
-        orders: action.payload,
+        orders: orders,
+        total: total,
+        totalToday: totalToday,
       };
 
     default:

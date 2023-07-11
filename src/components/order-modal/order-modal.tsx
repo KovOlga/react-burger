@@ -11,7 +11,6 @@ interface OrderModalProps {
 }
 
 const OrderModal: FC<OrderModalProps> = ({ order }) => {
-  console.log("order", order);
   return (
     <div className={styles.container}>
       <p className="text text_type_digits-default">{`#${order.number}`}</p>

@@ -5,10 +5,11 @@ import {
   WS_USER_CONNECTION_ERROR,
 } from "../action-types/wsActionTypes";
 import { TWsActions } from "../actions/wsActions";
+import { TwsOrderResponse, TwsOrdersResponse } from "../types/data";
 
 export type TInitialState = {
   wsConnected: boolean;
-  orders: any;
+  orders: TwsOrderResponse[];
 };
 
 const initialState: TInitialState = {
@@ -42,7 +43,7 @@ export const wsUserReducer = (
     case WS_GET_USER_ORDERS:
       return {
         ...state,
-        // orders: action.payload.orders,
+        orders: action.payload.orders,
       };
 
     default:
