@@ -3,12 +3,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
-import Modal from "../components/modal/modal";
-import OrderDetails from "../components/order-details/order-details";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { useEffect, useCallback, FC } from "react";
 import { getIngredients } from "../services/actions/ingredients";
-import { closeOrderModalAction } from "../services/actions/order";
 import styles from "./home.module.css";
 import {
   getData,
@@ -16,9 +13,15 @@ import {
   getDataFailed,
 } from "../services/selectors/ingredients";
 import { TIngredientConstructor } from "../services/types/data";
+import {
+  getNewOrderSuccess,
+  getNewOrderNumber,
+} from "../services/selectors/order";
+import { useLocation, Navigate } from "react-router-dom";
 
 export const HomePage: FC = () => {
   const dispatch = useAppDispatch();
+  let location = useLocation();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -28,14 +31,13 @@ export const HomePage: FC = () => {
   const dataRequest = useAppSelector(getDataRequest);
   const dataFailed = useAppSelector(getDataFailed);
 
+  const newOrderSuccess = useAppSelector(getNewOrderSuccess);
+  const number = useAppSelector(getNewOrderNumber);
+
   const openIngredientInfo = useCallback((item: TIngredientConstructor) => {
     localStorage.setItem("isIngredientInfoModalShown", "true");
     localStorage.setItem("currentIngredientShown", JSON.stringify(item));
   }, []);
-
-  const closeOrderInfoModal = useCallback(() => {
-    dispatch(closeOrderModalAction());
-  }, [dispatch]);
 
   return (
     <>
@@ -53,10 +55,8 @@ export const HomePage: FC = () => {
         )}
       </main>
 
-      {localStorage.getItem("isOrderDetailsInfoModalShown") === "true" && (
-        <Modal onClose={closeOrderInfoModal}>
-          <OrderDetails />
-        </Modal>
+      {newOrderSuccess && number && (
+        <Navigate to={`/:${number}`} state={{ background: location }} />
       )}
     </>
   );

@@ -12,7 +12,6 @@ import {
   updateTokenEndPoint,
 } from "../../utils/constants";
 import {
-  TIngredient,
   TTokenResponse,
   TUserResponse,
   IUserRegisterLoginResponse,

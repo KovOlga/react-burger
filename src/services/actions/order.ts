@@ -79,6 +79,10 @@ export const getNewOrderThunk: AppThunk = (orderArr: string[]) => {
         if (res.success) {
           dispatch(getNewOrderSuccessAction(res.order));
           localStorage.setItem("isOrderDetailsInfoModalShown", "true");
+          localStorage.setItem(
+            "newOrderConfirmedDetails",
+            JSON.stringify(res.order)
+          );
         }
       })
       .catch((e) => {
@@ -92,5 +96,6 @@ export const closeOrderModalAction: AppThunk = () => {
     dispatch(clearConstructorAction());
     dispatch(resetCountersAction());
     localStorage.setItem("isOrderDetailsInfoModalShown", "false");
+    localStorage.removeItem("newOrderConfirmedDetails");
   };
 };
