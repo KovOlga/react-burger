@@ -27,8 +27,8 @@ const ProfileForm: FC = () => {
   const updateUserRequest = useAppSelector(getUpdateUserRequest);
   const user = useAppSelector(getUser);
 
-  const [isFormChanging, setFormChanging] = useState(false);
-  const [isNameFocus, setNameFocus] = useState(true);
+  const [isFormChanging, setFormChanging] = useState<boolean>(false);
+  const [isNameFocus, setNameFocus] = useState<boolean>(true);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();

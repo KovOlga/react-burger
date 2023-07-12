@@ -1,6 +1,5 @@
 export const HOME_ROUTE: "/" = "/";
 export const INGREDIENTS_ID_ROUTE: "/ingredients/:id" = "/ingredients/:id";
-export const NEW_ORDER_CONFIRMED_ROUTE: "/:number" = "/:number";
 
 export const FEED_ROUTE: "/feed" = "/feed";
 export const FEED_ID_ROUTE: "/feed/:id" = "/feed/:id";

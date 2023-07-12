@@ -30,10 +30,10 @@ import {
   REGISTER_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   RESET_PASSWORD_ROUTE,
-  NEW_ORDER_CONFIRMED_ROUTE,
 } from "../../utils/constants";
+import { FC } from "react";
 
-const App = () => {
+const App: FC = () => {
   let location = useLocation();
   let background = location.state && location.state.background;
 
