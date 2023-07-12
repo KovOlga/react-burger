@@ -1,5 +1,5 @@
 import { deleteCookie, handleTokens } from "../../utils/utils";
-import { IUserRegisterLoginResponse, TUser, TUserForm } from "../types/data";
+import { TUserRegisterLoginResponse, TUser, TUserForm } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import {
   getUserInfo,

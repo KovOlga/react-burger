@@ -32,7 +32,7 @@ export type TUserResponse = {
   };
 };
 
-export type IUserRegisterLoginResponse = TTokenResponse & TUserResponse;
+export type TUserRegisterLoginResponse = TTokenResponse & TUserResponse;
 
 export type TUserForm = {
   name: string;

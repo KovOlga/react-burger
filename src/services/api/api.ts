@@ -18,7 +18,7 @@ import {
 import {
   TTokenResponse,
   TUserResponse,
-  IUserRegisterLoginResponse,
+  TUserRegisterLoginResponse,
 } from "../types/data";
 
 interface IOptions {
@@ -142,7 +142,7 @@ export const registerUser = ({
   email,
   password,
   name,
-}: TUserForm): Promise<IUserRegisterLoginResponse> => {
+}: TUserForm): Promise<TUserRegisterLoginResponse> => {
   return request(registerEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -160,7 +160,7 @@ export const loginUser = ({
 }: {
   email: string;
   password: string;
-}): Promise<IUserRegisterLoginResponse> => {
+}): Promise<TUserRegisterLoginResponse> => {
   return request(loginEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
