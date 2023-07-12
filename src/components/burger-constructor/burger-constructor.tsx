@@ -29,8 +29,8 @@ import { updateConstructorEmptinessAction } from "../../services/actions/order";
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const totalPrice = useAppSelector(getTotalPrice);
 
+  const totalPrice = useAppSelector(getTotalPrice);
   const currentBun = useAppSelector(getCurrentBun);
   const constructorIngredients = useAppSelector(getConstructorIngredients);
   const newOrderRequest = useAppSelector(getNewOrderRequest);

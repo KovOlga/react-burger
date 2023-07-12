@@ -32,7 +32,6 @@ import {
   RESET_PASSWORD_ROUTE,
   NEW_ORDER_CONFIRMED_ROUTE,
 } from "../../utils/constants";
-import { OrderConfirmedModalPage } from "../../pages/order-confirmed-modal";
 
 const App = () => {
   let location = useLocation();
@@ -111,10 +110,6 @@ const App = () => {
           />
           <Route path={FEED_ID_ROUTE} element={<FeedModalPage />} />
           <Route path={PROFILE_ORDERS_ID_ROUTE} element={<OrderModalPage />} />
-          <Route
-            path={NEW_ORDER_CONFIRMED_ROUTE}
-            element={<OrderConfirmedModalPage />}
-          />
         </Routes>
       )}
     </>

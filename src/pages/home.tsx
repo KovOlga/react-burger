@@ -13,15 +13,13 @@ import {
   getDataFailed,
 } from "../services/selectors/ingredients";
 import { TIngredientConstructor } from "../services/types/data";
-import {
-  getNewOrderSuccess,
-  getNewOrderNumber,
-} from "../services/selectors/order";
-import { useLocation, Navigate } from "react-router-dom";
+import { getNewOrderInfo } from "../services/selectors/order";
+import Modal from "../components/modal/modal";
+import OrderDetails from "../components/order-details/order-details";
+import { closeOrderModalAction } from "../services/actions/order";
 
 export const HomePage: FC = () => {
   const dispatch = useAppDispatch();
-  let location = useLocation();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -30,14 +28,16 @@ export const HomePage: FC = () => {
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);
   const dataFailed = useAppSelector(getDataFailed);
-
-  const newOrderSuccess = useAppSelector(getNewOrderSuccess);
-  const number = useAppSelector(getNewOrderNumber);
+  const newOrderInfo = useAppSelector(getNewOrderInfo);
 
   const openIngredientInfo = useCallback((item: TIngredientConstructor) => {
     localStorage.setItem("isIngredientInfoModalShown", "true");
     localStorage.setItem("currentIngredientShown", JSON.stringify(item));
   }, []);
+
+  const closeOrderInfoModal = useCallback(() => {
+    dispatch(closeOrderModalAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -55,8 +55,10 @@ export const HomePage: FC = () => {
         )}
       </main>
 
-      {newOrderSuccess && number && (
-        <Navigate to={`/:${number}`} state={{ background: location }} />
+      {newOrderInfo && (
+        <Modal onClose={closeOrderInfoModal}>
+          <OrderDetails newOrderNumber={newOrderInfo.number} />
+        </Modal>
       )}
     </>
   );

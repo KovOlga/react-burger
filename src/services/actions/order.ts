@@ -12,6 +12,8 @@ export const UPDATE_CONSTRUCTOR_EMPTINESS: "UPDATE_CONSTRUCTOR_EMPTINESS" =
   "UPDATE_CONSTRUCTOR_EMPTINESS";
 export const CLEAR_CONSTRUCTOR: "CLEAR_CONSTRUCTOR" = "CLEAR_CONSTRUCTOR";
 export const RESET_COUNTERS: "RESET_COUNTERS" = "RESET_COUNTERS";
+export const CLEAR_NEW_ORDER_INFO: "CLEAR_NEW_ORDER_INFO" =
+  "CLEAR_NEW_ORDER_INFO";
 
 interface IgetNewOrderRequestAction {
   readonly type: typeof GET_ORDER_NUMBER_REQUEST;
@@ -34,13 +36,18 @@ interface IresetCountersAction {
   readonly type: typeof RESET_COUNTERS;
 }
 
+interface IclearNewOrderInfoAction {
+  readonly type: typeof CLEAR_NEW_ORDER_INFO;
+}
+
 export type TOrdersActions =
   | IgetNewOrderRequestAction
   | IgetNewOrderSuccessAction
   | IgetNewOrderFailedAction
   | IupdateConstructorEmptinessAction
   | IclearConstructorAction
-  | IresetCountersAction;
+  | IresetCountersAction
+  | IclearNewOrderInfoAction;
 
 export const getNewOrderRequestAction = (): IgetNewOrderRequestAction => ({
   type: GET_ORDER_NUMBER_REQUEST,
@@ -65,6 +72,9 @@ export const clearConstructorAction = (): IclearConstructorAction => ({
 });
 export const resetCountersAction = (): IresetCountersAction => ({
   type: RESET_COUNTERS,
+});
+export const clearNewOrderInfoAction = (): IclearNewOrderInfoAction => ({
+  type: CLEAR_NEW_ORDER_INFO,
 });
 
 export const getNewOrderThunk: AppThunk = (orderArr: string[]) => {
@@ -95,6 +105,7 @@ export const closeOrderModalAction: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch(clearConstructorAction());
     dispatch(resetCountersAction());
+    dispatch(clearNewOrderInfoAction());
     localStorage.setItem("isOrderDetailsInfoModalShown", "false");
     localStorage.removeItem("newOrderConfirmedDetails");
   };

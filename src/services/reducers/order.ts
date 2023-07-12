@@ -3,6 +3,7 @@ import {
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
   UPDATE_CONSTRUCTOR_EMPTINESS,
+  CLEAR_NEW_ORDER_INFO,
 } from "../actions/order";
 import { TOrdersActions } from "../actions/order";
 import { TConfirmedOrderResponse } from "../types/data";
@@ -51,6 +52,12 @@ export const newOrderReducer = (
         ...state,
         isConstructorEmpty: action.state,
         newOrderSuccess: false,
+      };
+    }
+    case CLEAR_NEW_ORDER_INFO: {
+      return {
+        ...state,
+        orderInfo: null,
       };
     }
     default:

@@ -9,5 +9,4 @@ export const getNewOrderSuccess = (store: RootState) =>
 export const getConstructorEmpty = (store: RootState) =>
   store.newOrder.isConstructorEmpty;
 
-export const getNewOrderNumber = (store: RootState) =>
-  store.newOrder.orderInfo?.number;
+export const getNewOrderInfo = (store: RootState) => store.newOrder.orderInfo;
