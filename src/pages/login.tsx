@@ -29,14 +29,18 @@ export const LoginPage: FC = () => {
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
-      dispatch(loginUserThunk(values));
-      // if (location.state !== null && location.state.from) {
-      //   navigate(location.state.from.pathname);
-      //   return;
-      // }
-      navigate(HOME_ROUTE);
+      dispatch(
+        loginUserThunk(values, () => {
+          if (location.state !== null && location.state.from) {
+            navigate(location.state.from.pathname);
+            return;
+          } else {
+            navigate(HOME_ROUTE);
+          }
+        })
+      );
     },
-    [values, dispatch, navigate]
+    [values, dispatch, navigate, location.state]
   );
 
   return (

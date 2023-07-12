@@ -7,7 +7,7 @@ import { FC, ReactNode } from "react";
 import { modalRoot } from "../../utils/constants";
 
 interface ModalProps {
-  onClose: () => void; ///check
+  onClose: () => void;
   children: ReactNode;
 }
 
@@ -25,7 +25,6 @@ const Modal: FC<ModalProps> = ({ onClose, children }) => {
       }
     };
 
-    ///check
     const handleOverlayClose = (evt: MouseEvent) => {
       if (evt.target instanceof Node) {
         if (!modalContainer.current!.contains(evt.target)) {

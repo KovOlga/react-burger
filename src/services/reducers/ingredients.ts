@@ -14,9 +14,8 @@ import {
   SORT_DRAGGING_ITEM,
 } from "../actions/constructor";
 
-// import { TOGGLE_INGREDIENT_INFO_MODAL } from "../actions/ingredient-modal";
 import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
-import { TIngredientConstructor, TIngredientCounted } from "../types/data";
+import { TIngredientConstructor } from "../types/data";
 import { TIngredientsActions } from "../actions/ingredients";
 import { TConstructorActions } from "../actions/constructor";
 import { TOrdersActions } from "../actions/order";
@@ -25,7 +24,7 @@ export type TInitialState = {
   data: TIngredientConstructor[];
   dataRequest: boolean;
   dataFailed: boolean;
-  currentBun: TIngredientConstructor | null | undefined; // check
+  currentBun: TIngredientConstructor | null | undefined;
   constructorIngredients: TIngredientConstructor[];
   totalPrice: number;
   isIngredientInfoModalShown: boolean;
@@ -154,12 +153,6 @@ export const ingredientsReducer = (
         constructorIngredients: newConstructorArr,
       };
     }
-    // case TOGGLE_INGREDIENT_INFO_MODAL: {
-    //   return {
-    //     ...state,
-    //     isIngredientInfoModalShown: !state.isIngredientInfoModalShown,
-    //   };
-    // }
     case CLEAR_CONSTRUCTOR: {
       return {
         ...state,

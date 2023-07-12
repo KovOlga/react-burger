@@ -1,5 +1,9 @@
 import { getCookie, handleTokens } from "../../utils/utils";
-import { TUserForm } from "../types/data";
+import {
+  TConfirmedOrderResponse,
+  TIngredientConstructor,
+  TUserForm,
+} from "../types/data";
 import {
   ingredientsEndPoint,
   orderEndPoint,
@@ -103,7 +107,13 @@ export const updateUserInfo = ({
   });
 };
 
-export const getNewOrderFetch = (ingredientsArr: string[]) => {
+export const getNewOrderFetch = (
+  ingredientsArr: string[]
+): Promise<{
+  success: boolean;
+  name: string;
+  order: TConfirmedOrderResponse;
+}> => {
   return fetchWithRefresh(orderEndPoint, {
     method: "POST",
     headers: {
@@ -118,7 +128,10 @@ export const getNewOrderFetch = (ingredientsArr: string[]) => {
   });
 };
 
-export const getIngredientsList = () => {
+export const getIngredientsList = (): Promise<{
+  success: boolean;
+  data: TIngredientConstructor[];
+}> => {
   return request(ingredientsEndPoint, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -158,7 +171,10 @@ export const loginUser = ({
   });
 };
 
-export const logoutUser = () => {
+export const logoutUser = (): Promise<{
+  success: boolean;
+  message: string;
+}> => {
   const refreshToken = localStorage.getItem("refreshToken");
   return request(logoutEndPoint, {
     method: "POST",
@@ -169,7 +185,12 @@ export const logoutUser = () => {
   });
 };
 
-export const forgotPassword = (email: string) => {
+export const forgotPassword = (
+  email: string
+): Promise<{
+  success: boolean;
+  message: string;
+}> => {
   return request(forgotPasswordEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -179,7 +200,13 @@ export const forgotPassword = (email: string) => {
   });
 };
 
-export const resetPassword = (password: string, token: string) => {
+export const resetPassword = (
+  password: string,
+  token: string
+): Promise<{
+  success: boolean;
+  message: string;
+}> => {
   return request(resetPasswordEndPoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -24,8 +24,11 @@ export const RegisterPage: FC = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(registerUserThunk(values));
-    navigate(LOGIN_ROUTE);
+    dispatch(
+      registerUserThunk(values, () => {
+        navigate(LOGIN_ROUTE);
+      })
+    );
   };
 
   return (

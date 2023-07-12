@@ -221,7 +221,10 @@ export const updateUserInfoThunk: AppThunk = (userNewInfo: TUserForm) => {
   };
 };
 
-export const loginUserThunk: AppThunk = (form: TUserForm) => {
+export const loginUserThunk: AppThunk = (
+  form: TUserForm,
+  onSucces: () => void
+) => {
   return function (dispatch: AppDispatch) {
     dispatch(LoginRequestAction());
     return loginUser(form)
@@ -233,6 +236,9 @@ export const loginUserThunk: AppThunk = (form: TUserForm) => {
           dispatch(UpdateUserAction(res.user));
         }
       })
+      .then(() => {
+        onSucces();
+      })
       .catch((e) => {
         console.log(e.message);
         dispatch(LoginFailedAction());
@@ -240,7 +246,7 @@ export const loginUserThunk: AppThunk = (form: TUserForm) => {
   };
 };
 
-export const logoutUserThunk: AppThunk = () => {
+export const logoutUserThunk: AppThunk = (onSucces: () => void) => {
   return function (dispatch: AppDispatch) {
     dispatch(LogoutRequestAction());
     return logoutUser()
@@ -253,6 +259,9 @@ export const logoutUserThunk: AppThunk = () => {
           dispatch(LogoutSuccessAction());
         }
       })
+      .then(() => {
+        onSucces();
+      })
       .catch((e) => {
         dispatch(LogoutFailedAction());
         console.log(e.message);
@@ -260,7 +269,10 @@ export const logoutUserThunk: AppThunk = () => {
   };
 };
 
-export const forgotPasswordThunk: AppThunk = (email: string) => {
+export const forgotPasswordThunk: AppThunk = (
+  email: string,
+  onSucces: () => void
+) => {
   return function (dispatch: AppDispatch) {
     dispatch(ForgotPasswordRequestAction());
     return forgotPassword(email)
@@ -268,19 +280,19 @@ export const forgotPasswordThunk: AppThunk = (email: string) => {
         dispatch(ForgotPasswordSuccessAction());
         localStorage.setItem("resetPasswordSent", "true");
       })
+      .then(() => {
+        onSucces();
+      })
       .catch((e) => {
         dispatch(ForgotPasswordFailedAction());
       });
   };
 };
 
-export const resetPasswordThunk: AppThunk = ({
-  password,
-  code,
-}: {
-  password: string;
-  code: string;
-}) => {
+export const resetPasswordThunk: AppThunk = (
+  { password, code }: { password: string; code: string },
+  onSucces: () => void
+) => {
   return function (dispatch: AppDispatch) {
     dispatch(ResetPasswordRequestAction());
     return resetPassword(password, code)
@@ -291,13 +303,19 @@ export const resetPasswordThunk: AppThunk = ({
         }
         return res;
       })
+      .then(() => {
+        onSucces();
+      })
       .catch((e) => {
         dispatch(ResetPasswordFailedAction());
       });
   };
 };
 
-export const registerUserThunk: AppThunk = (form: TUserForm) => {
+export const registerUserThunk: AppThunk = (
+  form: TUserForm,
+  onSucces: () => void
+) => {
   return function (dispatch: AppDispatch) {
     dispatch(RegisterRequestAction());
     return registerUser(form)
@@ -306,6 +324,9 @@ export const registerUserThunk: AppThunk = (form: TUserForm) => {
           dispatch(RegisterSuccessAction());
         }
         return res;
+      })
+      .then(() => {
+        onSucces();
       })
       .catch((e) => {
         dispatch(RegisterFailedAction());

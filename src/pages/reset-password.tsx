@@ -22,8 +22,11 @@ export const ResetPassword: FC = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(resetPasswordThunk(values));
-    navigate(LOGIN_ROUTE);
+    dispatch(
+      resetPasswordThunk(values, () => {
+        navigate(LOGIN_ROUTE);
+      })
+    );
   };
 
   return resetPasswordSent ? (

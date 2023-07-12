@@ -8,7 +8,7 @@ import { getData } from "../../services/selectors/ingredients";
 import { TIngredientConstructor } from "../../services/types/data";
 
 interface BurgerIngredientsProps {
-  onOpenIngredientInfo: (ingredient: TIngredientConstructor) => void; //// check
+  onOpenIngredientInfo: (ingredient: TIngredientConstructor) => void;
 }
 
 const BurgerIngredients: FC<BurgerIngredientsProps> = memo(

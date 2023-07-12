@@ -15,14 +15,6 @@ const IngredientIcon: FC<IngredientIconProps> = ({
   index,
   position,
 }) => {
-  // const iconOverlapStyle =
-  //   position === "absolute"
-  //     ? {
-  //         position: "absolute",
-  //         left: `${index * 48}px`,
-  //         zIndex: `${10 - index}`,
-  //       }
-  //     : null;
   return (
     <div
       style={

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TIngredient, TIngredientConstructor } from "../types/data";
+import { TIngredientConstructor } from "../types/data";
 import { AppThunk, AppDispatch } from "../types";
 import { getIngredientsList } from "../api/api";
 

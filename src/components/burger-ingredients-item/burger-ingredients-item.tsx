@@ -8,7 +8,7 @@ import { TIngredientConstructor } from "../../services/types/data";
 
 interface BurgerIngredientsItemProps {
   ingredient: TIngredientConstructor;
-  onIngredientClick: () => void; ///// check
+  onIngredientClick: () => void;
   type: string;
 }
 
