@@ -69,8 +69,6 @@ export const updateToken = (): Promise<TTokenResponse> => {
     body: JSON.stringify({
       token: refreshToken,
     }),
-  }).catch((err) => {
-    console.log("err:", err);
   });
 };
 
@@ -81,8 +79,6 @@ export const getUserInfo = (): Promise<TUserResponse> => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie("token"),
     },
-  }).catch((err) => {
-    console.log("err:", err);
   });
 };
 
@@ -102,8 +98,6 @@ export const updateUserInfo = ({
       password,
       name,
     }),
-  }).catch((err) => {
-    console.log("err:", err);
   });
 };
 
@@ -123,8 +117,6 @@ export const getNewOrderFetch = (
     body: JSON.stringify({
       ingredients: ingredientsArr,
     }),
-  }).catch((err) => {
-    console.log("err:", err);
   });
 };
 
