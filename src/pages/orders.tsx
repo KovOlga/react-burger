@@ -4,7 +4,6 @@ import {
   wsUserConnectionStart,
   wsUserConnectionClosed,
 } from "../services/actions/wsActions";
-import { getIngredients } from "../services/actions/ingredients";
 import OrderCardList from "../components/order-card-list/order-card-list";
 import styles from "./orders.module.css";
 import {
@@ -28,10 +27,6 @@ export const OrdersPage: FC = () => {
     return () => {
       dispatch(wsUserConnectionClosed());
     };
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getIngredients());
   }, [dispatch]);
 
   return (

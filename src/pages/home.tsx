@@ -4,8 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { useEffect, useCallback, FC } from "react";
-import { getIngredients } from "../services/actions/ingredients";
+import { useCallback, FC } from "react";
 import styles from "./home.module.css";
 import {
   getData,
@@ -20,10 +19,6 @@ import { closeOrderModalAction } from "../services/actions/order";
 
 export const HomePage: FC = () => {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);

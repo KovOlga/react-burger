@@ -31,11 +31,18 @@ import {
   FORGOT_PASSWORD_ROUTE,
   RESET_PASSWORD_ROUTE,
 } from "../../utils/constants";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getIngredients } from "../../services/actions/ingredients";
 
 const App: FC = () => {
-  let location = useLocation();
-  let background = location.state && location.state.background;
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <>

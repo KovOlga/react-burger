@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { getIngredients } from "../services/actions/ingredients";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
 import {
@@ -31,10 +30,6 @@ export const OrderPage: FC<{ from: string }> = ({ from }) => {
   const data = useAppSelector(getData);
   const dataRequest = useAppSelector(getDataRequest);
   const dataFailed = useAppSelector(getDataFailed);
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   useEffect(() => {
     if (from === "feed") {

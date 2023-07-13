@@ -1,7 +1,6 @@
 import { useEffect, useMemo, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import styles from "./feed.module.css";
-import { getIngredients } from "../services/actions/ingredients";
 import { Link } from "react-router-dom";
 import {
   wsFeedConnectionStart,
@@ -55,10 +54,6 @@ export const FeedPage: FC = () => {
     return () => {
       dispatch(wsFeedConnectionClosed());
     };
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getIngredients());
   }, [dispatch]);
 
   return (
