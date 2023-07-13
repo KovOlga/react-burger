@@ -55,3 +55,10 @@
   align-items: center;
   box-sizing: border-box;
 }
+
+.link_logo {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

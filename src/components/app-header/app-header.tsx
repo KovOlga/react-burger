@@ -4,7 +4,7 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { memo, FC } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { PROFILE_ROUTE, HOME_ROUTE, FEED_ROUTE } from "../../utils/constants";
 
 const AppHeader: FC = memo(() => {
@@ -49,7 +49,9 @@ const AppHeader: FC = memo(() => {
         </ul>
       </nav>
 
-      <Logo />
+      <Link className={styles.link_logo} to={HOME_ROUTE}>
+        <Logo />
+      </Link>
 
       <nav className={`${styles.nav} ${styles.nav_type_lk}`}>
         <ul className={styles.list}>
