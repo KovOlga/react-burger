@@ -30,29 +30,26 @@ const OrderCardList: FC<OrderCardListProps> = ({
 
   return (
     <ul className={`${styles.list} pr-4`}>
-      {orders
-        .slice(0)
-        .reverse()
-        .map((order) => {
-          return (
-            <Link
-              key={order._id}
-              className={styles.link}
-              to={
-                fromComponent === "feed"
-                  ? `/${fromComponent}/${order.number}`
-                  : `${PROFILE_ROUTE}/${fromComponent}/${order.number}`
-              }
-              state={{ background: location }}
-            >
-              <OrderCard
-                order={parseOrderIngredients(data, order)}
-                onClick={onOpenOrderInfoModal}
-                fromComponent={fromComponent}
-              />
-            </Link>
-          );
-        })}
+      {orders.slice(0).map((order) => {
+        return (
+          <Link
+            key={order._id}
+            className={styles.link}
+            to={
+              fromComponent === "feed"
+                ? `/${fromComponent}/${order.number}`
+                : `${PROFILE_ROUTE}/${fromComponent}/${order.number}`
+            }
+            state={{ background: location }}
+          >
+            <OrderCard
+              order={parseOrderIngredients(data, order)}
+              onClick={onOpenOrderInfoModal}
+              fromComponent={fromComponent}
+            />
+          </Link>
+        );
+      })}
     </ul>
   );
 };
