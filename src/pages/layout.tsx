@@ -6,6 +6,7 @@ import { FC } from "react";
 export const LayoutPage: FC = () => {
   return (
     <div className={styles.body}>
+      <div className={styles.underlay}></div>
       <div className={styles.container}>
         <AppHeader />
         <Outlet />

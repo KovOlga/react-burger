@@ -10,7 +10,6 @@ import { PROFILE_ROUTE, HOME_ROUTE, FEED_ROUTE } from "../../utils/constants";
 const AppHeader: FC = memo(() => {
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
-      <div className={styles.underlay}></div>
       <nav className={`${styles.nav} ${styles.nav_type_links}`}>
         <ul className={styles.list}>
           <li className={`${styles.list__item}  pb-4 pt-4 pl-5 pr-5`}>
