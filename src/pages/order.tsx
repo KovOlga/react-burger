@@ -3,10 +3,6 @@ import { useEffect, useState, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import Loader from "../components/loader/loader";
 import styles from "./ingredient.module.css";
-import {
-  WS_CONNECTION_START,
-  WS_USER_CONNECTION_START,
-} from "../services/action-types/wsActionTypes";
 import { parseOrderIngredients } from "../utils/utils";
 import OrderModal from "../components/order-modal/order-modal";
 import {
@@ -15,6 +11,8 @@ import {
   getDataFailed,
 } from "../services/selectors/ingredients";
 import { TwsOrderResponse } from "../services/types/data";
+import { wsFeedStart } from "../services/slices/wsFeedSlice";
+import { wsUserStart } from "../services/slices/wsUserSlice";
 
 export const OrderPage: FC<{ from: string }> = ({ from }) => {
   const dispatch = useAppDispatch();
@@ -24,7 +22,7 @@ export const OrderPage: FC<{ from: string }> = ({ from }) => {
   );
 
   const orders = useAppSelector((store) =>
-    from === "feed" ? store.wsfeed.orders : store.wsUser.orders
+    from === "feed" ? store.wsFeed.orders : store.wsUser.orders
   );
 
   const data = useAppSelector(getData);
@@ -33,9 +31,9 @@ export const OrderPage: FC<{ from: string }> = ({ from }) => {
 
   useEffect(() => {
     if (from === "feed") {
-      dispatch({ type: WS_CONNECTION_START });
+      dispatch(wsFeedStart());
     } else {
-      dispatch({ type: WS_USER_CONNECTION_START });
+      dispatch(wsUserStart());
     }
   }, [dispatch, from]);
 

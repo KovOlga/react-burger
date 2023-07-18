@@ -69,6 +69,7 @@ export type TwsOrderResponse = {
   ingredients: string[];
   createdAt: string;
   updatedAt: string;
+  counter: number;
 };
 
 export type TUpdatedOrder = {

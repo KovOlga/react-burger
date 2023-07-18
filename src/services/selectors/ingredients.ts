@@ -1,4 +1,4 @@
-import { RootState } from "../types";
+import { RootState } from "../store";
 
 export const getData = (store: RootState) => store.ingredients.data;
 export const getDataRequest = (store: RootState) =>

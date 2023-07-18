@@ -9,7 +9,6 @@ import Skeleton from "../skeleton/skeleton";
 import {
   addConstructorItemThunk,
   swapConstructorBunAction,
-  updateTotalPriceAction,
 } from "../../services/actions/constructor";
 import { getNewOrderThunk } from "../../services/actions/order";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,8 @@ import {
   getConstructorEmpty,
 } from "../../services/selectors/order";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import { updateConstructorEmptinessAction } from "../../services/actions/order";
+import { UPDATE_TOTAL_PRICE } from "../../services/slices/ingredientsSlice";
+import { UPDATE_CONSTRUCTOR_EMPTINESS } from "../../services/slices/orderSlice";
 
 const BurgerConstructor: FC = memo(() => {
   const navigate = useNavigate();
@@ -60,9 +60,9 @@ const BurgerConstructor: FC = memo(() => {
 
   useEffect(() => {
     if (constructorIngredients.length < 1 || !currentBun) {
-      dispatch(updateConstructorEmptinessAction(true));
+      dispatch(UPDATE_CONSTRUCTOR_EMPTINESS(true));
     } else {
-      dispatch(updateConstructorEmptinessAction(false));
+      dispatch(UPDATE_CONSTRUCTOR_EMPTINESS(false));
     }
   }, [constructorIngredients, currentBun, dispatch]);
 
@@ -88,7 +88,7 @@ const BurgerConstructor: FC = memo(() => {
       : styles.incridients;
 
   useEffect(() => {
-    dispatch(updateTotalPriceAction());
+    dispatch(UPDATE_TOTAL_PRICE());
   }, [currentBun, constructorIngredients, dispatch]);
 
   return (

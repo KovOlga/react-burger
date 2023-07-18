@@ -2,10 +2,7 @@ import { useEffect, useMemo, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import styles from "./feed.module.css";
 import { Link } from "react-router-dom";
-import {
-  wsFeedConnectionStart,
-  wsFeedConnectionClosed,
-} from "../services/actions/wsActions";
+import { wsFeedStart, wsFeedClose } from "../services/slices/wsFeedSlice";
 import OrderCardList from "../components/order-card-list/order-card-list";
 import { FEED_ROUTE } from "../utils/constants";
 import {
@@ -49,10 +46,10 @@ export const FeedPage: FC = () => {
   }, [orders]);
 
   useEffect(() => {
-    dispatch(wsFeedConnectionStart());
+    dispatch(wsFeedStart());
 
     return () => {
-      dispatch(wsFeedConnectionClosed());
+      dispatch(wsFeedClose());
     };
   }, [dispatch]);
 

@@ -1,4 +1,4 @@
-import { RootState } from "../types";
+import { RootState } from "../store";
 
 export const getNewOrderRequest = (store: RootState) =>
   store.newOrder.newOrderRequest;

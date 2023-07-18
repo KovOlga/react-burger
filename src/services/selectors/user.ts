@@ -1,4 +1,4 @@
-import { RootState } from "../types";
+import { RootState } from "../store";
 
 export const getUpdateUserRequest = (store: RootState) =>
   store.user.updateUserRequest;

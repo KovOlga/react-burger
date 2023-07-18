@@ -1,9 +1,6 @@
 import { useEffect, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import {
-  wsUserConnectionStart,
-  wsUserConnectionClosed,
-} from "../services/actions/wsActions";
+import { wsUserStart, wsUserClose } from "../services/slices/wsUserSlice";
 import OrderCardList from "../components/order-card-list/order-card-list";
 import styles from "./orders.module.css";
 import {
@@ -22,10 +19,10 @@ export const OrdersPage: FC = () => {
   const dataFailed = useAppSelector(getDataFailed);
 
   useEffect(() => {
-    dispatch(wsUserConnectionStart());
+    dispatch(wsUserStart());
 
     return () => {
-      dispatch(wsUserConnectionClosed());
+      dispatch(wsUserClose());
     };
   }, [dispatch]);
 

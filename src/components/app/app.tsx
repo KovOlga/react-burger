@@ -9,10 +9,10 @@ import {
   ProfilePage,
   OrdersPage,
   IngredientPage,
-  IngredientModalPage,
   FeedPage,
-  FeedModalPage,
   OrderPage,
+  IngredientModalPage,
+  FeedModalPage,
   OrderModalPage,
 } from "../../pages";
 import { ProtectedRouteElement } from "../protected-route";

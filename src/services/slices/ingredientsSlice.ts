@@ -1,24 +1,6 @@
-import {
-  GET_INGREDIENT_REQUEST,
-  GET_INGREDIENT_SUCCESS,
-  GET_INGREDIENT_FAILED,
-} from "../actions/ingredients";
-
-import {
-  SET_CURRENT_BUN,
-  ADD_CONSTRUCTOR_ITEM,
-  DELETE_CONSTRUCTOR_ITEM,
-  UPDATE_TOTAL_PRICE,
-  UPDATE_INGREDIENT_COUNTER,
-  UPDATE_BUN_COUNTER,
-  SORT_DRAGGING_ITEM,
-} from "../actions/constructor";
-
-import { CLEAR_CONSTRUCTOR, RESET_COUNTERS } from "../actions/order";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { TIngredientConstructor } from "../types/data";
-import { TIngredientsActions } from "../actions/ingredients";
-import { TConstructorActions } from "../actions/constructor";
-import { TOrdersActions } from "../actions/order";
 
 export type TInitialState = {
   data: TIngredientConstructor[];
@@ -43,37 +25,31 @@ const initialState: TInitialState = {
   isIngredientInfoModalShown: false,
 };
 
-export const ingredientsReducer = (
-  state = initialState,
-  action: TIngredientsActions | TConstructorActions | TOrdersActions
-): TInitialState => {
-  switch (action.type) {
-    case GET_INGREDIENT_REQUEST: {
-      return {
-        ...state,
-        dataRequest: true,
-      };
-    }
-    case GET_INGREDIENT_SUCCESS: {
-      return {
-        ...state,
-        dataRequest: false,
-        dataFailed: false,
-        data: action.data.map((item) => {
-          return { ...item, counter: 0 };
-        }),
-      };
-    }
-    case GET_INGREDIENT_FAILED: {
-      return { ...state, dataFailed: true, dataRequest: false };
-    }
-    case SET_CURRENT_BUN: {
-      return {
-        ...state,
-        currentBun: state.data.find((item) => item._id === action.itemId),
-      };
-    }
-    case UPDATE_TOTAL_PRICE: {
+export const ingredientsSlice = createSlice({
+  name: "ingredients",
+  initialState,
+  reducers: {
+    GET_INGREDIENT_REQUEST: (state) => {
+      state.dataRequest = true;
+    },
+    GET_INGREDIENT_SUCCESS: (
+      state,
+      action: PayloadAction<TIngredientConstructor[]>
+    ) => {
+      state.dataRequest = false;
+      state.dataFailed = false;
+      state.data = action.payload.map((item: any) => {
+        return { ...item, counter: 0 };
+      });
+    },
+    GET_INGREDIENT_FAILED: (state) => {
+      state.dataFailed = true;
+      state.dataRequest = false;
+    },
+    SET_CURRENT_BUN: (state, { payload }) => {
+      state.currentBun = state.data.find((item) => item._id === payload);
+    },
+    UPDATE_TOTAL_PRICE: (state) => {
       let ingredientsPrice = 0;
       state.constructorIngredients.forEach((item) => {
         ingredientsPrice = ingredientsPrice + item.price;
@@ -84,11 +60,15 @@ export const ingredientsReducer = (
         ...state,
         totalPrice: totalPrice,
       };
-    }
-    case ADD_CONSTRUCTOR_ITEM: {
-      const addedItem = state.data.find((item) => item._id === action.itemId);
+    },
+    ADD_CONSTRUCTOR_ITEM: (
+      state,
+      action: PayloadAction<{ itemId: string; uuid: string }>
+    ) => {
+      const { itemId, uuid } = action.payload;
+      const addedItem = state.data.find((item) => item._id === itemId);
       if (addedItem) {
-        const uniqueId = action.uuid;
+        const uniqueId = uuid;
         const updatedItem = { ...addedItem, uniqueId };
 
         return {
@@ -101,74 +81,91 @@ export const ingredientsReducer = (
       } else {
         return { ...state };
       }
-    }
-    case UPDATE_INGREDIENT_COUNTER: {
+    },
+    UPDATE_INGREDIENT_COUNTER: (state, { payload }: PayloadAction<string>) => {
       return {
         ...state,
         data: state.data.map((ingredient) => {
-          if (ingredient._id === action.itemId) {
+          if (ingredient._id === payload) {
             const counter = state.constructorIngredients.filter((item) => {
-              return item._id === action.itemId;
+              return item._id === payload;
             }).length;
             return { ...ingredient, counter: counter };
           }
           return ingredient;
         }),
       };
-    }
-    case UPDATE_BUN_COUNTER: {
+    },
+    UPDATE_BUN_COUNTER: (state, { payload }: PayloadAction<string>) => {
       return {
         ...state,
         data: state.data.map((ingredient) => {
           if (ingredient.type === "bun") {
-            return ingredient._id === action.itemId
+            return ingredient._id === payload
               ? { ...ingredient, counter: 2 }
               : { ...ingredient, counter: 0 };
           }
           return ingredient;
         }),
       };
-    }
-    case DELETE_CONSTRUCTOR_ITEM: {
+    },
+    DELETE_CONSTRUCTOR_ITEM: (state, { payload }: PayloadAction<string>) => {
       return {
         ...state,
         constructorIngredients: [...state.constructorIngredients].filter(
-          (item) => item.uniqueId !== action.uniqueId
+          (item) => item.uniqueId !== payload
         ),
       };
-    }
-    case SORT_DRAGGING_ITEM: {
+    },
+    SORT_DRAGGING_ITEM: (
+      state,
+      { payload }: PayloadAction<{ hoverIndex: number; dragIndex: number }>
+    ) => {
       const newConstructorArr = state.constructorIngredients.map(
         (item) => item
       );
 
-      newConstructorArr[action.hoverIndex] = newConstructorArr.splice(
-        action.dragIndex,
+      newConstructorArr[payload.hoverIndex] = newConstructorArr.splice(
+        payload.dragIndex,
         1,
-        newConstructorArr[action.hoverIndex]
+        newConstructorArr[payload.hoverIndex]
       )[0];
 
       return {
         ...state,
         constructorIngredients: newConstructorArr,
       };
-    }
-    case CLEAR_CONSTRUCTOR: {
+    },
+    CLEAR_CONSTRUCTOR: (state) => {
       return {
         ...state,
         currentBun: null,
         constructorIngredients: [],
       };
-    }
-    case RESET_COUNTERS: {
+    },
+    RESET_COUNTERS: (state) => {
       return {
         ...state,
         data: state.data.map((item) => {
           return { ...item, counter: 0 };
         }),
       };
-    }
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export default ingredientsSlice.reducer;
+export const {
+  GET_INGREDIENT_REQUEST,
+  GET_INGREDIENT_SUCCESS,
+  GET_INGREDIENT_FAILED,
+  SET_CURRENT_BUN,
+  UPDATE_BUN_COUNTER,
+  UPDATE_INGREDIENT_COUNTER,
+  UPDATE_TOTAL_PRICE,
+  RESET_COUNTERS,
+  CLEAR_CONSTRUCTOR,
+  SORT_DRAGGING_ITEM,
+  DELETE_CONSTRUCTOR_ITEM,
+  ADD_CONSTRUCTOR_ITEM,
+} = ingredientsSlice.actions;

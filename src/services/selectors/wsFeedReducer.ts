@@ -1,6 +1,6 @@
-import { RootState } from "../types";
+import { RootState } from "../store";
 
-export const getWsFeedOrders = (store: RootState) => store.wsfeed.orders;
-export const getWsFeedOrdersTotal = (store: RootState) => store.wsfeed.total;
+export const getWsFeedOrders = (store: RootState) => store.wsFeed.orders;
+export const getWsFeedOrdersTotal = (store: RootState) => store.wsFeed.total;
 export const getWsFeedOrdersTotalToday = (store: RootState) =>
-  store.wsfeed.totalToday;
+  store.wsFeed.totalToday;

@@ -23,8 +23,8 @@ export const parseOrderIngredients = (
         if (isIngredientRepeated >= 0) {
           prevVal[isIngredientRepeated].counter++;
         } else {
-          ingredient.counter = 1;
-          prevVal = [...prevVal, ingredient];
+          const ingredientCounted = { ...ingredient, counter: 1 };
+          prevVal = [...prevVal, ingredientCounted];
         }
       }
 

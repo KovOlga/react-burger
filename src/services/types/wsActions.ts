@@ -1,32 +1,46 @@
 import {
-  WS_CONNECTION_START,
-  WS_SEND_MESSAGE,
-  WS_CONNECTION_SUCCESS,
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_GET_FEED,
-  WS_USER_CONNECTION_START,
-  WS_USER_SEND_MESSAGE,
-  WS_USER_CONNECTION_SUCCESS,
-  WS_USER_CONNECTION_CLOSED,
-  WS_USER_CONNECTION_ERROR,
-  WS_GET_USER_ORDERS,
-} from "../action-types/wsActionTypes";
+  wsFeedConnectionSuccess,
+  wsFeedMessage,
+  wsFeedConnectionClosed,
+  wsFeedConnectionError,
+  wsFeedStart,
+} from "../slices/wsFeedSlice";
+import {
+  wsUserConnectionSuccess,
+  wsUserFeedMessage,
+  wsUserConnectionClosed,
+  wsUserConnectionError,
+  wsUserStart,
+} from "../slices/wsUserSlice";
 
 export interface TwsActions {
-  wsInit: typeof WS_CONNECTION_START;
-  wsSendMessage: typeof WS_SEND_MESSAGE;
-  onOpen: typeof WS_CONNECTION_SUCCESS;
-  onClose: typeof WS_CONNECTION_CLOSED;
-  onError: typeof WS_CONNECTION_ERROR;
-  onMessage: typeof WS_GET_FEED;
+  wsInit: typeof wsFeedStart;
+  onOpen: typeof wsFeedConnectionSuccess;
+  onClose: typeof wsFeedConnectionClosed;
+  onError: typeof wsFeedConnectionError;
+  onMessage: typeof wsFeedMessage;
 }
 
+export const wsActions: TwsActions = {
+  wsInit: wsFeedStart,
+  onOpen: wsFeedConnectionSuccess,
+  onClose: wsFeedConnectionClosed,
+  onError: wsFeedConnectionError,
+  onMessage: wsFeedMessage,
+};
+
 export interface TwsUserActions {
-  wsInit: typeof WS_USER_CONNECTION_START;
-  wsSendMessage: typeof WS_USER_SEND_MESSAGE;
-  onOpen: typeof WS_USER_CONNECTION_SUCCESS;
-  onClose: typeof WS_USER_CONNECTION_CLOSED;
-  onError: typeof WS_USER_CONNECTION_ERROR;
-  onMessage: typeof WS_GET_USER_ORDERS;
+  wsInit: typeof wsUserStart;
+  onOpen: typeof wsUserConnectionSuccess;
+  onClose: typeof wsUserConnectionClosed;
+  onError: typeof wsUserConnectionError;
+  onMessage: typeof wsUserFeedMessage;
 }
+
+export const wsUserActions: TwsUserActions = {
+  wsInit: wsUserStart,
+  onOpen: wsUserConnectionSuccess,
+  onClose: wsUserConnectionClosed,
+  onError: wsUserConnectionError,
+  onMessage: wsUserFeedMessage,
+};

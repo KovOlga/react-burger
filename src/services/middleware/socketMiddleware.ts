@@ -1,8 +1,8 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { getCookie, handleTokens } from "../../utils/utils";
 import { updateToken } from "../api/api";
-import { AppDispatch, RootState } from "../types";
 import { TwsActions, TwsUserActions } from "../types/wsActions";
+import { AppDispatch, RootState } from "../store";
 
 export const socketMiddleware = (
   wsUrl: string,
@@ -17,7 +17,8 @@ export const socketMiddleware = (
       const { type } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
-      if (type === wsInit) {
+      if (type === wsInit.toString()) {
+        console.log("init");
         if (user) {
           const accessToken = getCookie("token");
           socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
@@ -28,11 +29,11 @@ export const socketMiddleware = (
 
       if (socket) {
         socket.onopen = (event) => {
-          dispatch({ type: onOpen, payload: event });
+          dispatch(onOpen());
         };
 
         socket.onerror = (event) => {
-          dispatch({ type: onError, payload: event });
+          dispatch(onError());
         };
 
         socket.onmessage = async (event) => {
@@ -46,14 +47,14 @@ export const socketMiddleware = (
           }
           const { success, ...restParsedData } = parsedData;
 
-          dispatch({ type: onMessage, payload: restParsedData });
+          dispatch(onMessage(restParsedData));
         };
 
         socket.onclose = (event) => {
           if (socket) {
             socket.close();
             socket = null;
-            dispatch({ type: onClose, payload: event });
+            dispatch(onClose());
           }
         };
       }
