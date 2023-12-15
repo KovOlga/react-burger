@@ -1,4 +1,4 @@
-# Проект: stellar-burger
+# Stellar-burger
 
 Проект доступен по [**адресу**](https://kovolga.github.io/react-burger/).
 
